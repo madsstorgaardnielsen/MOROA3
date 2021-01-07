@@ -69,10 +69,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                         //Get selected item id
                         int id = item.getItemId();
                         int fragmentId = AppState.getFragmentLayoutId(id);
+
+                        if (fragmentId ==R.id.fragment_right_now){//If it was "right now"
+                            AppState.get().setSearchCriteriaRightNow();
+                        }
 
                         //Push fragment id to backstack deque
                         AppState.get().pushToBackstackDequeTop(fragmentId);

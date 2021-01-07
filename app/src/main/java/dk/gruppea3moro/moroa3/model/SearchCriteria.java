@@ -40,4 +40,5 @@ public class SearchCriteria {
     public ArrayList<String> getMoods() {
         return moods;
     }
+
 }

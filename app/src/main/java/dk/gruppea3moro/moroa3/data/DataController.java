@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.provider.BaseColumns;
+import android.text.format.DateFormat;
+
 import dk.gruppea3moro.moroa3.data.SQLiteContract;
 
 import com.google.gson.Gson;
@@ -143,19 +145,30 @@ public class DataController {
         Date d1 =searchCriteria.getFromDate();
         Date d2 =searchCriteria.getToDate();
 
+
         if (d1 == null && d2==null){
             selectionArgs=null;
             selection=null;
         } else{
             selectionArgs= new String[2];
-            String SQLfromDate = d1.getYear() + "/" + d1.getMonth() +"/"+ d1.getDay() + " " +
+
+            String d1Day = (String) DateFormat.format("dd",   d1);
+            String d1MonthNumber  = (String) DateFormat.format("MM",   d1);
+            String d1Year         = (String) DateFormat.format("yyyy", d1);
+
+            String d2Day = (String) DateFormat.format("dd",   d2);
+            String d2MonthNumber  = (String) DateFormat.format("MM",   d2);
+            String d2Year         = (String) DateFormat.format("yyyy", d2);
+
+
+            String SQLfromDate = d1Year + "/" + d1MonthNumber +"/"+ d1Day + " " +
                     + d1.getHours() + ":" +d1.getMinutes() + ":00";
-            String SQLtoDate = d2.getYear() + "/" + d2.getMonth() +"/"+ d2.getDay() + " " +
+            String SQLtoDate = d2Year + "/" + d2MonthNumber +"/"+ d2Day + " " +
                     + d2.getHours() + ":" +d2.getMinutes() + ":00";
 
             // Filter results WHERE "title" = 'My Title'
             selection = SQLiteContract.events.COLUMN_NAME_ENDDATE + " > ? AND "
-                    +SQLiteContract.events.COLUMN_NAME_STARTDATE + " < ? AND ";
+                    +SQLiteContract.events.COLUMN_NAME_STARTDATE + " < ?";
             selectionArgs[0] = SQLfromDate;
             selectionArgs[1]=SQLtoDate;
         }
