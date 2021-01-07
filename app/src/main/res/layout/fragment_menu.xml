@@ -56,20 +56,10 @@
             android:onClick="onClick"
             android:text="@string/kontakt_os"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/dropDBbutton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/om_textView" />
 
-        <Button
-            android:id="@+id/dropDBbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="103dp"
-            android:text="Drop Database"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/readDbButton"

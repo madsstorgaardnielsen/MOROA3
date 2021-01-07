@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.provider.BaseColumns;
 import dk.gruppea3moro.moroa3.data.SQLiteContract;
 
@@ -16,6 +17,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import dk.gruppea3moro.moroa3.model.AddressDTO;
 import dk.gruppea3moro.moroa3.model.EventDTO;
@@ -220,10 +223,25 @@ public class DataController {
         SQLiteHelper dbHelper = new SQLiteHelper(context);
 
         //Get database
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        db.execSQL("DROP TABLE IF EXISTS "+SQLiteContract.events.TABLE_NAME);
+        db.execSQL("DELETE FROM "+SQLiteContract.events.TABLE_NAME );
 
 
     }
+
+
+    public void refreshDbInBackground(Context context){
+        Executor bgThread = Executors.newSingleThreadExecutor();
+        Handler uiThread = new Handler();
+        try {
+            DataController.get().dropDatabase(context);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        bgThread.execute(() -> {
+            DataController.get().feedDatabase(context);
+        });
+    }
+
 }
