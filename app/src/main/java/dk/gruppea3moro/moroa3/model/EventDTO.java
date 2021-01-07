@@ -166,4 +166,6 @@ public class EventDTO implements Serializable {
         endTime = sqlEndDate.substring(11,16);
         endDate = sqlEndDate.substring(8,10) + "/"+sqlEndDate.substring(5,7) + "/" +sqlEndDate.substring(0,5);
     }
+
+
 }

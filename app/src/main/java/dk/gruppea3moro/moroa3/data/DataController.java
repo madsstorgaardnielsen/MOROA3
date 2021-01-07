@@ -6,10 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.provider.BaseColumns;
 import android.text.format.DateFormat;
-
-import dk.gruppea3moro.moroa3.data.SQLiteContract;
 
 import com.google.gson.Gson;
 
@@ -18,7 +15,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -106,7 +102,7 @@ public class DataController {
             values.put(SQLiteContract.events.COLUMN_NAME_IMAGELINK, event.getImageLink());
             values.put(SQLiteContract.events.COLUMN_NAME_STARTDATE, event.getSQLstartDate());
             values.put(SQLiteContract.events.COLUMN_NAME_ENDDATE, event.getSQLendDate());
-            values.put(SQLiteContract.events.COLUMN_NAME_ZONE, event.getAddressDTO().getAddressName());
+            values.put(SQLiteContract.events.COLUMN_NAME_ZONE, event.getZone());
             values.put(SQLiteContract.events.COLUMN_NAME_ADDRESSNAME, event.getAddressDTO().getAddressName());
             values.put(SQLiteContract.events.COLUMN_NAME_STREETNAME, event.getAddressDTO().getStreetName());
             values.put(SQLiteContract.events.COLUMN_NAME_STREETNUMBER, event.getAddressDTO().getStreetNumber());
@@ -121,6 +117,7 @@ public class DataController {
             db.insert(SQLiteContract.events.TABLE_NAME, null, values);
         }
 
+        System.out.println("");
 
     }
 
@@ -139,7 +136,8 @@ public class DataController {
         String[] projection =null;
         String sortOrder =null;
         String selection;
-        String[] selectionArgs;
+        ArrayList<String> selArgsArrayList= new ArrayList<String>();
+        String[] selectionArgs=null;
 
         //Format startDate and endDate the way SQL reads it
         Date d1 =searchCriteria.getFromDate();
@@ -150,8 +148,6 @@ public class DataController {
             selectionArgs=null;
             selection=null;
         } else{
-            selectionArgs= new String[2];
-
             String d1Day = (String) DateFormat.format("dd",   d1);
             String d1MonthNumber  = (String) DateFormat.format("MM",   d1);
             String d1Year         = (String) DateFormat.format("yyyy", d1);
@@ -169,10 +165,30 @@ public class DataController {
             // Filter results WHERE "title" = 'My Title'
             selection = SQLiteContract.events.COLUMN_NAME_ENDDATE + " > ? AND "
                     +SQLiteContract.events.COLUMN_NAME_STARTDATE + " < ?";
-            selectionArgs[0] = SQLfromDate;
-            selectionArgs[1]=SQLtoDate;
+
+            selArgsArrayList.add(SQLfromDate);
+            selArgsArrayList.add(SQLtoDate);
         }
 
+        if (searchCriteria.getAreas().size()>0){
+            StringBuilder sb = new StringBuilder();
+            sb.append(" AND (");
+            sb.append(SQLiteContract.events.COLUMN_NAME_ZONE + " = ?");
+            selArgsArrayList.add(searchCriteria.getAreas().get(0));
+            for (int i = 1; i < searchCriteria.getAreas().size(); i++) {
+                sb.append(" OR "+SQLiteContract.events.COLUMN_NAME_ZONE + " = ?");
+                selArgsArrayList.add(searchCriteria.getAreas().get(i));
+            }
+            sb.append(")");
+            selection += sb.toString();
+        }
+
+        if (selArgsArrayList.size()>0){
+            selectionArgs = new String[selArgsArrayList.size()];
+            for (int i = 0; i < selectionArgs.length; i++) {
+                selectionArgs[i]=selArgsArrayList.get(i);
+            }
+        }
 
         Cursor cursor = db.query(
                 SQLiteContract.events.TABLE_NAME,   // The table to query
@@ -231,7 +247,7 @@ public class DataController {
     }
 
 
-    public void dropDatabase(Context context){
+    public void deleteAllFromDatabase(Context context){
         //Create SQLiteHelper object
         SQLiteHelper dbHelper = new SQLiteHelper(context);
 
@@ -248,7 +264,7 @@ public class DataController {
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         try {
-            DataController.get().dropDatabase(context);
+            DataController.get().deleteAllFromDatabase(context);
         } catch (Exception e){
             e.printStackTrace();
         }

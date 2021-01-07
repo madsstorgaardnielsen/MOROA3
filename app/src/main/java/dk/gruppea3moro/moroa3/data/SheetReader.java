@@ -57,6 +57,7 @@ public class SheetReader implements EventLoader {
         event.setAddressDTO(new AddressDTO(fields[9], fields[10], fields[11], fields[12], fields[13], fields[14]));
         event.setMoods(parseTags(fields[15]));
         event.setTypes(parseTags(fields[16]));
+        event.setZone(fields[17]);
         return event;
     }
 

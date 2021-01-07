@@ -151,6 +151,11 @@ public class AppState //extends Application
         sc.setFromDate(date1);
         sc.setToDate(date2);
 
+        sc.getAreas().add("Nørrebro");
+        sc.getAreas().add("Vesterbro");
+        sc.getAreas().add("Østerbro");
+
+
         this.searchCriteria = sc;
     }
 
