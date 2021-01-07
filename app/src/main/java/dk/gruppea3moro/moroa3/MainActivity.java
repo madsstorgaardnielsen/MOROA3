@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -17,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import dk.gruppea3moro.moroa3.data.SQLiteHelper;
 import dk.gruppea3moro.moroa3.model.AppState;
 
 //TODO burgermenu(kontakt os osv), søge menu med filtre, evt?
@@ -188,4 +190,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //The state is saved to PreferenceManager
         AppState.get().saveToPM(getApplicationContext());
     }
+
+
 }

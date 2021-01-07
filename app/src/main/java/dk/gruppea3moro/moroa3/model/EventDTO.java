@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class EventDTO implements Serializable {
-    String title, subtext, eventLink, imageLink, startTime, endTime, startDate, endDate;
+    String title, subtext, eventLink, imageLink, startTime, endTime, startDate, endDate, zone;
     double price;
     AddressDTO addressDTO;
     ArrayList<String> types, moods;
@@ -138,5 +138,25 @@ public class EventDTO implements Serializable {
     public String getStartTime() {
         return startTime;
 
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public String getSQLendDate(){
+        String result = endDate.substring(6,10) + "/" + endDate.substring(4,6) +"/"+ endDate.substring(0,2)
+                + " " +endTime + ":00";
+        return result;
+    }
+
+    public String getSQLstartDate(){
+        String result = startDate.substring(6,10) + "/" + startDate.substring(4,6) +"/"+ startDate.substring(0,2)
+                + " " +startTime + ":00";
+        return result;
     }
 }
