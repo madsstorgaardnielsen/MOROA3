@@ -1,14 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MyProfileListFragment">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/moroGreenBackground"
+    android:padding="5dp">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/showevent_imageView_RV"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/bn_find_event"
+        tools:ignore="VectorDrawableCompat" />
+
     <TextView
+        android:id="@+id/colorBox_TextView_RV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="32dp"
+        android:layout_below="@+id/showevent_imageView_RV"
+        android:layout_marginTop="3dp"
+        android:background="@color/moroDarkGreenBackground"
+        android:gravity="center"
+        />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/area_textView_RV"
+        android:layout_width="103dp"
+        android:layout_height="32dp"
+        android:layout_below="@+id/showevent_imageView_RV"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:textColor="@color/colorWhiteText"
+        tools:text="København V"
+        />
+
+    <TextView
+        android:id="@+id/date_textView_RV"
+        android:layout_width="119dp"
+        android:layout_height="31dp"
+        android:layout_below="@+id/showevent_imageView_RV"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="19dp"
+        android:layout_toStartOf="@+id/time_textView_RV"
+        android:layout_toEndOf="@+id/area_textView_RV"
+        android:gravity="center"
+        android:textColor="@color/colorWhiteText"
+        tools:text="3/1/2020"
+        />
+
+    <TextView
+        android:id="@+id/time_textView_RV"
+        android:layout_width="103dp"
+        android:layout_height="32dp"
+        android:layout_below="@+id/showevent_imageView_RV"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="9dp"
+        android:gravity="center"
+        android:textColor="@color/colorWhiteText"
+        tools:text="10:00"
+        />
+
+    <TextView
+        android:id="@+id/title_textView_RV"
+        android:layout_width="348dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowRadius="1"
+        android:textColor="@color/colorBlackBackground"
+        android:textSize="24sp"
+        tools:text="Hygge på Hjørnet" />
+
+    <ImageView
+        android:id="@+id/removeSaved_imageView"
+        android:layout_width="44dp"
+        android:layout_height="42dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_toEndOf="@+id/title_textView_RV"
+        android:src="@android:drawable/btn_dialog" />
+
+
+</RelativeLayout>

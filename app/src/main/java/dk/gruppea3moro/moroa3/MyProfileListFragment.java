@@ -32,10 +32,15 @@ public class MyProfileListFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<EventDTO> eventDTOs;
 
+    ImageView removeSaved_imageView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_my_profile_list, container, false);
+        removeSaved_imageView = root.findViewById(R.id.removeSaved_imageView);
+
 
         recyclerView = new RecyclerView(getContext());
 
@@ -74,7 +79,7 @@ public class MyProfileListFragment extends Fragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             System.out.println("onCreateViewHolder ");
-            View itemView = getLayoutInflater().inflate(R.layout.showevent_recyclerview, parent, false);
+            View itemView = getLayoutInflater().inflate(R.layout.fragment_my_profile_list, parent, false);
 
             //Set OnClickListener to inner class RVOnClickListener
             itemView.setOnClickListener(mOnClickListener);
