@@ -146,15 +146,10 @@ public class AppState //extends Application
 
         long millis=System.currentTimeMillis();
         java.util.Date date1=new java.util.Date(millis); //From right now
-        java.util.Date date2=new java.util.Date(millis+3600000); //To 1 hour1 later
+        java.util.Date date2=new java.util.Date(millis+3600000); //until 1 hour later
 
         sc.setFromDate(date1);
         sc.setToDate(date2);
-
-        sc.getAreas().add("Nørrebro");
-        sc.getAreas().add("Vesterbro");
-        sc.getAreas().add("Østerbro");
-
 
         this.searchCriteria = sc;
     }

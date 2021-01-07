@@ -242,9 +242,42 @@ public class DataController {
             }
         }
 
+        //Refine search by removing events not containing correct mood and type
+        boolean match;
+        if (searchCriteria.getMoods().size()>0){
+            for (EventDTO event:eventDTOS) {
+                match=false;
+                for (String mood:event.getMoods()) {
+                    if (searchCriteria.getMoods().contains(mood)){
+                        match=true;
+                        break;
+                    }
+                }
+                if (!match){
+                    eventDTOS.remove(event);
+                }
+
+            }
+        }
+        if (searchCriteria.getTypes().size()>0){
+            for (EventDTO event:eventDTOS) {
+                match=false;
+                for (String type:event.getTypes()) {
+                    if (searchCriteria.getTypes().contains(type)){
+                        match=true;
+                        break;
+                    }
+                }
+                if (!match){
+                    eventDTOS.remove(event);
+                }
+            }
+        }
 
         return eventDTOS;
     }
+
+
 
 
     public void deleteAllFromDatabase(Context context){
