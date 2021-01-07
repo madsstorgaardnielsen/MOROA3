@@ -3,11 +3,13 @@ package dk.gruppea3moro.moroa3;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +19,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
+import dk.gruppea3moro.moroa3.data.DataController;
 import dk.gruppea3moro.moroa3.data.SQLiteHelper;
 import dk.gruppea3moro.moroa3.model.AppState;
 
@@ -34,6 +39,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Read database from google sheet in background thread
+        Executor bgThread = Executors.newSingleThreadExecutor();
+        Handler uiThread = new Handler();
+        bgThread.execute(() -> {
+            DataController.get().feedDatabase(this);
+        });
+
 
         //Top bar.
         topBarFragment = new TopBarFragment();

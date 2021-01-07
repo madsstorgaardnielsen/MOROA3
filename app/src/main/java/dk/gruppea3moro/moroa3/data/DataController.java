@@ -14,7 +14,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import dk.gruppea3moro.moroa3.model.AddressDTO;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
@@ -108,13 +110,18 @@ public class DataController {
             //TODO her ville det nok være bedst at gemme typer og stemning i separate tabeller
             values.put(SQLiteContract.events.COLUMN_NAME_STEMNINGTAGS, gson.toJson(event.getTypes()));
             values.put(SQLiteContract.events.COLUMN_NAME_TYPETAGS, gson.toJson(event.getMoods()));
+
+            // Insert the new row, returning the primary key value of the new row
+            db.insert(SQLiteContract.events.TABLE_NAME, null, values);
         }
 
-        // Insert the new row, returning the primary key value of the new row
-        db.insert(SQLiteContract.events.TABLE_NAME, null, values);
+
     }
 
     public ArrayList<EventDTO> searchEvents(Context context, SearchCriteria searchCriteria) {
+        //Result arraylist
+        ArrayList<EventDTO> eventDTOS = new ArrayList<EventDTO>();
+
         //Create SQLiteHelper object
         SQLiteHelper dbHelper = new SQLiteHelper(context);
 
@@ -125,20 +132,30 @@ public class DataController {
         // you will actually use after this query.
         String[] projection =null;
         String sortOrder =null;
+        String selection;
+        String[] selectionArgs;
 
         //Format startDate and endDate the way SQL reads it
         Date d1 =searchCriteria.getFromDate();
         Date d2 =searchCriteria.getToDate();
 
-        String SQLfromDate = d1.getYear() + "/" + d1.getMonth() +"/"+ d1.getDay() + " " +
-            + d1.getHours() + ":" +d1.getMinutes() + ":00";
-        String SQLtoDate = d2.getYear() + "/" + d2.getMonth() +"/"+ d2.getDay() + " " +
-                + d2.getHours() + ":" +d2.getMinutes() + ":00";
+        if (d1 == null && d2==null){
+            selectionArgs=null;
+            selection=null;
+        } else{
+            selectionArgs= new String[2];
+            String SQLfromDate = d1.getYear() + "/" + d1.getMonth() +"/"+ d1.getDay() + " " +
+                    + d1.getHours() + ":" +d1.getMinutes() + ":00";
+            String SQLtoDate = d2.getYear() + "/" + d2.getMonth() +"/"+ d2.getDay() + " " +
+                    + d2.getHours() + ":" +d2.getMinutes() + ":00";
 
-        // Filter results WHERE "title" = 'My Title'
-        String selection = SQLiteContract.events.COLUMN_NAME_ENDDATE + " > ? AND "
-                +SQLiteContract.events.COLUMN_NAME_STARTDATE + " < ? AND ";
-        String[] selectionArgs = {SQLfromDate,SQLtoDate};
+            // Filter results WHERE "title" = 'My Title'
+            selection = SQLiteContract.events.COLUMN_NAME_ENDDATE + " > ? AND "
+                    +SQLiteContract.events.COLUMN_NAME_STARTDATE + " < ? AND ";
+            selectionArgs[0] = SQLfromDate;
+            selectionArgs[1]=SQLtoDate;
+        }
+
 
         Cursor cursor = db.query(
                 SQLiteContract.events.TABLE_NAME,   // The table to query
@@ -149,6 +166,33 @@ public class DataController {
                 null,             // don't filter by row groups
                 sortOrder               // The sort order
         );
-        return null;
+
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                EventDTO eventDTO = new EventDTO();
+                eventDTO.setTitle(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_TITLE)));
+                eventDTO.setSubtext(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_SUBTEXT)));
+                eventDTO.setEventLink(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_EVENTLINK)));
+                eventDTO.setImageLink(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_IMAGELINK)));
+                eventDTO.setStartTime("18:30"); //TODO fix
+                eventDTO.setEndTime("19:30");//TODO fix
+                eventDTO.setStartDate("30/12/2020");//TODO fix
+                eventDTO.setEndDate("30/12/2020");//TODO fix
+                eventDTO.setZone(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ZONE)));
+                eventDTO.setPrice(Double.parseDouble(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_PRICE))));
+                eventDTO.setAddressDTO(new AddressDTO("","","","","",""));//TODO fix
+                eventDTO.setTypes(null);//TODO fix
+                eventDTO.setMoods(null);//TODO fix
+
+                //Add to result list
+                eventDTOS.add(eventDTO);
+
+                cursor.moveToNext();
+            }
+        }
+
+
+        return eventDTOS;
     }
 }

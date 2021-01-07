@@ -49,7 +49,7 @@ public class ShowResultFragment extends Fragment {
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. DataController
-            eventDTOs = DataController.get().searchEvents(searchCriteria);
+            eventDTOs = DataController.get().searchEvents(getContext(),searchCriteria);
 
             uiThread.post(() -> {
                 // Inflate the layout (recyclerview) for this fragment
