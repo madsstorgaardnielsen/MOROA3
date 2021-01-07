@@ -5,16 +5,23 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import dk.gruppea3moro.moroa3.data.DataController;
 import dk.gruppea3moro.moroa3.model.AppState;
 
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
     TextView contact_TextView, about_TextView, tip_Textview;
+    Button dropDBbutton, readDbButton;//TODO remove this
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +36,11 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         contact_TextView.setOnClickListener(this);
         about_TextView.setOnClickListener(this);
         tip_Textview.setOnClickListener(this);
+
+        dropDBbutton=root.findViewById(R.id.dropDBbutton);//TODO remove this
+        dropDBbutton.setOnClickListener(this);//TODO remove this
+        readDbButton=root.findViewById(R.id.readDbButton);
+        readDbButton.setOnClickListener(this);
 
         return root;
     }
@@ -48,6 +60,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             AppState.get().pushToBackstackDequeTop(R.id.fragment_tip_us);
             TipUsFragment tipUsFragment = new TipUsFragment();
             ma.loadFragment(tipUsFragment);
+        } else if (v==dropDBbutton){//TODO delete this
+            DataController.get().dropDatabase(getContext());
+        } else if (v==readDbButton){
+            Executor bgThread = Executors.newSingleThreadExecutor();
+            Handler uiThread = new Handler();
+            bgThread.execute(() -> {
+                DataController.get().feedDatabase(getContext());
+            });
         }
     }
 }

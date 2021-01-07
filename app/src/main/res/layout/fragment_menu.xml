@@ -15,50 +15,70 @@
         <TextView
             android:id="@+id/tip_textView"
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="42dp"
             android:layout_marginTop="140dp"
-            android:gravity="center"
-            android:text="@string/tip_os"
-            android:textSize="24sp"
-            android:onClick="onClick"
+            android:layout_marginBottom="142dp"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@string/tip_os"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/om_textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/om_textView"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:layout_marginTop="92dp"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:text="@string/om_os"
-            android:onClick="onClick"
+            android:layout_marginTop="274dp"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@string/om_os"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tip_textView" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/kontakt_textView"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:gravity="center"
-            android:text="@string/kontakt_os"
-            android:textSize="24sp"
-            android:onClick="onClick"
+            android:layout_marginTop="104dp"
+            android:layout_marginBottom="102dp"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@string/kontakt_os"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/dropDBbutton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/om_textView"
-            app:layout_constraintVertical_bias="0.291" />
+            app:layout_constraintTop_toBottomOf="@+id/om_textView" />
+
+        <Button
+            android:id="@+id/dropDBbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="103dp"
+            android:text="Drop Database"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/readDbButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="49dp"
+            android:layout_marginBottom="97dp"
+            android:text="Refresh the database"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

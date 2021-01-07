@@ -149,14 +149,21 @@ public class EventDTO implements Serializable {
     }
 
     public String getSQLendDate(){
-        String result = endDate.substring(6,10) + "/" + endDate.substring(4,6) +"/"+ endDate.substring(0,2)
+        String result = endDate.substring(6,10) + "/" + endDate.substring(3,5) +"/"+ endDate.substring(0,2)
                 + " " +endTime + ":00";
         return result;
     }
 
     public String getSQLstartDate(){
-        String result = startDate.substring(6,10) + "/" + startDate.substring(4,6) +"/"+ startDate.substring(0,2)
+        String result = startDate.substring(6,10) + "/" + startDate.substring(3,5) +"/"+ startDate.substring(0,2)
                 + " " +startTime + ":00";
         return result;
+    }
+
+    public void setDateFields(String sqlStartDate, String sqlEndDate){
+        startTime = sqlStartDate.substring(11,16);
+        startDate = sqlStartDate.substring(8,10) + "/"+sqlStartDate.substring(5,7) + "/" +sqlStartDate.substring(0,5);
+        endTime = sqlEndDate.substring(11,16);
+        endDate = sqlEndDate.substring(8,10) + "/"+sqlEndDate.substring(5,7) + "/" +sqlEndDate.substring(0,5);
     }
 }

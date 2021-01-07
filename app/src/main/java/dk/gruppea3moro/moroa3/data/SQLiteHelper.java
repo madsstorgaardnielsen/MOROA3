@@ -9,7 +9,7 @@ import dk.gruppea3moro.moroa3.data.SQLiteContract.*;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final  int    DATABASE_VERSION   = 1;
+    public static final  int    DATABASE_VERSION   = 6;
     public static final  String DATABASE_NAME      = "database.db";
     private static final String TEXT_TYPE          = " TEXT";
     private static final String DATE_TYPE          = " SMALLDATETYPE";
@@ -56,5 +56,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_ALL_ENTRIES);
         onCreate(db);
     }
+
+
 
 }

@@ -40,12 +40,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         //Read database from google sheet in background thread
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             DataController.get().feedDatabase(this);
         });
+         */
 
 
         //Top bar.
@@ -203,6 +205,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //The state is saved to PreferenceManager
         AppState.get().saveToPM(getApplicationContext());
     }
-
 
 }

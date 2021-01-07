@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.provider.BaseColumns;
+import dk.gruppea3moro.moroa3.data.SQLiteContract;
 
 import com.google.gson.Gson;
 
@@ -108,8 +109,8 @@ public class DataController {
             values.put(SQLiteContract.events.COLUMN_NAME_ZIPCODE, event.getAddressDTO().getZipCode());
             values.put(SQLiteContract.events.COLUMN_NAME_AREA, event.getAddressDTO().getArea());
             //TODO her ville det nok være bedst at gemme typer og stemning i separate tabeller
-            values.put(SQLiteContract.events.COLUMN_NAME_STEMNINGTAGS, gson.toJson(event.getTypes()));
-            values.put(SQLiteContract.events.COLUMN_NAME_TYPETAGS, gson.toJson(event.getMoods()));
+            values.put(SQLiteContract.events.COLUMN_NAME_TYPETAGS, gson.toJson(event.getTypes()));
+            values.put(SQLiteContract.events.COLUMN_NAME_STEMNINGTAGS, gson.toJson(event.getMoods()));
 
             // Insert the new row, returning the primary key value of the new row
             db.insert(SQLiteContract.events.TABLE_NAME, null, values);
@@ -167,23 +168,40 @@ public class DataController {
                 sortOrder               // The sort order
         );
 
+        //Gson for decoding ArrayLists
+        Gson gson = new Gson();
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 EventDTO eventDTO = new EventDTO();
+                //Set all the easy fields
                 eventDTO.setTitle(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_TITLE)));
                 eventDTO.setSubtext(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_SUBTEXT)));
                 eventDTO.setEventLink(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_EVENTLINK)));
                 eventDTO.setImageLink(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_IMAGELINK)));
-                eventDTO.setStartTime("18:30"); //TODO fix
-                eventDTO.setEndTime("19:30");//TODO fix
-                eventDTO.setStartDate("30/12/2020");//TODO fix
-                eventDTO.setEndDate("30/12/2020");//TODO fix
                 eventDTO.setZone(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ZONE)));
                 eventDTO.setPrice(Double.parseDouble(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_PRICE))));
-                eventDTO.setAddressDTO(new AddressDTO("","","","","",""));//TODO fix
-                eventDTO.setTypes(null);//TODO fix
-                eventDTO.setMoods(null);//TODO fix
+
+                //Set the date related fields
+                String startDateString = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_STARTDATE));
+                String endDateString = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ENDDATE));
+                eventDTO.setDateFields(startDateString,endDateString);
+
+                //Address
+                eventDTO.setAddressDTO(new AddressDTO( cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ADDRESSNAME)),
+                        cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_STREETNAME)),
+                        cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_STREETNUMBER)),
+                        cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ADDITIONALTEXT)),
+                        cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ZIPCODE)),
+                        cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_AREA))
+                        ));
+
+
+                //Tags
+                String typesJson = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_TYPETAGS));
+                String moodsJson = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_STEMNINGTAGS));
+                eventDTO.setTypes(gson.fromJson(typesJson,ArrayList.class));
+                eventDTO.setMoods(gson.fromJson(moodsJson,ArrayList.class));
 
                 //Add to result list
                 eventDTOS.add(eventDTO);
@@ -194,5 +212,18 @@ public class DataController {
 
 
         return eventDTOS;
+    }
+
+
+    public void dropDatabase(Context context){
+        //Create SQLiteHelper object
+        SQLiteHelper dbHelper = new SQLiteHelper(context);
+
+        //Get database
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        db.execSQL("DROP TABLE IF EXISTS "+SQLiteContract.events.TABLE_NAME);
+
+
     }
 }
