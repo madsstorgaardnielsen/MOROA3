@@ -1,17 +1,19 @@
 package dk.gruppea3moro.moroa3;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -25,14 +27,15 @@ import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 
-public class MyProfileListFragment extends Fragment {
+public class MyProfileListFragment extends Fragment implements View.OnClickListener {
 
     private final View.OnClickListener mOnClickListener = new RVOnClickListener();
+    private final View.OnLongClickListener mOnLongClickListener = new RVOnClickListener();
 
     RecyclerView recyclerView;
     ArrayList<EventDTO> eventDTOs;
 
-    ImageView removeSaved_imageView;
+    ImageView removeSaved_imageView, showevent_imageView_RV;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +43,11 @@ public class MyProfileListFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_profile_list, container, false);
         removeSaved_imageView = root.findViewById(R.id.removeSaved_imageView);
+        showevent_imageView_RV = root.findViewById(R.id.showevent_imageView_RV);
+        removeSaved_imageView.setOnClickListener(this);
+
+
+        //showevent_imageView_RV.setOnClickListener(this);
 
 
         recyclerView = new RecyclerView(getContext());
@@ -66,7 +74,7 @@ public class MyProfileListFragment extends Fragment {
         //return recyclerview
         return recyclerView;
 
-       // return inflater.inflate(R.layout.fragment_my_profile_list, container, false);
+        // return inflater.inflate(R.layout.fragment_my_profile_list, container, false);
     }
 
 
@@ -80,8 +88,16 @@ public class MyProfileListFragment extends Fragment {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             System.out.println("onCreateViewHolder ");
             View itemView = getLayoutInflater().inflate(R.layout.fragment_my_profile_list, parent, false);
+            showevent_imageView_RV = itemView.findViewById(R.id.showevent_imageView_RV);
+
+            /*for(int index = 0; index < ((ViewGroup) itemView).getChildCount(); index++) {
+                View nextChild = ((ViewGroup) itemView).getChildAt(index);
+                System.out.println("");
+            }*/
+            //View nextChild = ((ViewGroup) itemView).getChildAt(0);
 
             //Set OnClickListener to inner class RVOnClickListener
+            itemView.setOnLongClickListener(mOnLongClickListener);
             itemView.setOnClickListener(mOnClickListener);
             return new RecyclerView.ViewHolder(itemView) {
             };
@@ -114,9 +130,36 @@ public class MyProfileListFragment extends Fragment {
         }
     };
 
-    class RVOnClickListener implements View.OnClickListener {
+    @Override
+    public void onClick(View v) {
+        if (v == removeSaved_imageView) {
+            System.out.println("odwoajdwoakdowakdoawkdoawdkaowkdaowdkaowdkawokowadkoawkdaw");
+            Toast.makeText(getContext(), "Removing", Toast.LENGTH_SHORT).show();
+        } else if (v == showevent_imageView_RV) {
+
+            System.out.println("jdkwajdkwajdkwajkdwjakdjwkajdwkajdwkajdkawjdkwajdkwajkdwajdkwajdkwajkdwajdkawjdkawjdaw");
+            //Get posistion of clicked event
+            int position = recyclerView.getChildLayoutPosition(v);
+
+            //Get event at that position
+            EventDTO event = eventDTOs.get(position);
+
+            //Fragment transaction with event as argument
+            Fragment f = AppState.getFragmentFromLayoutId(R.id.fragment_show_event);
+            AppState.get().setLastViewedEvent(event);
+            Bundle b = new Bundle();
+            b.putSerializable("event", event);
+            f.setArguments(b);
+            AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
+            ((MainActivity) getActivity()).loadFragment(f);
+        }
+    }
+
+    class RVOnClickListener implements View.OnClickListener, View.OnLongClickListener {
         @Override
         public void onClick(View view) {
+
+            System.out.println("jdkwajdkwajdkwajkdwjakdjwkajdwkajdwkajdkawjdkwajdkwajkdwajdkwajdkwajkdwajdkawjdkawjdaw");
             //Get posistion of clicked event
             int position = recyclerView.getChildLayoutPosition(view);
 
@@ -132,6 +175,31 @@ public class MyProfileListFragment extends Fragment {
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
             ((MainActivity) getActivity()).loadFragment(f);
 
+
+        }
+
+
+        @Override
+        public boolean onLongClick(View v) {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Gør intet
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //TODO Fjern eventet
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setMessage("Vil du fjerne eventet fra dine gemte?").setNegativeButton("Ja", dialogClickListener)
+                    .setPositiveButton("Nej", dialogClickListener).show();
+            return false;
         }
     }
 
