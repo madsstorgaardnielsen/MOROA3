@@ -27,7 +27,7 @@ import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 
-public class MyProfileListFragment extends Fragment implements View.OnClickListener {
+public class MyProfileListFragment extends Fragment  {
 
     private final View.OnClickListener mOnClickListener = new RVOnClickListener();
     private final View.OnLongClickListener mOnLongClickListener = new RVOnClickListener();
@@ -44,10 +44,8 @@ public class MyProfileListFragment extends Fragment implements View.OnClickListe
         View root = inflater.inflate(R.layout.fragment_my_profile_list, container, false);
         removeSaved_imageView = root.findViewById(R.id.removeSaved_imageView);
         showevent_imageView_RV = root.findViewById(R.id.showevent_imageView_RV);
-        removeSaved_imageView.setOnClickListener(this);
 
 
-        //showevent_imageView_RV.setOnClickListener(this);
 
 
         recyclerView = new RecyclerView(getContext());
@@ -130,36 +128,11 @@ public class MyProfileListFragment extends Fragment implements View.OnClickListe
         }
     };
 
-    @Override
-    public void onClick(View v) {
-        if (v == removeSaved_imageView) {
-            System.out.println("odwoajdwoakdowakdoawkdoawdkaowkdaowdkaowdkawokowadkoawkdaw");
-            Toast.makeText(getContext(), "Removing", Toast.LENGTH_SHORT).show();
-        } else if (v == showevent_imageView_RV) {
 
-            System.out.println("jdkwajdkwajdkwajkdwjakdjwkajdwkajdwkajdkawjdkwajdkwajkdwajdkwajdkwajkdwajdkawjdkawjdaw");
-            //Get posistion of clicked event
-            int position = recyclerView.getChildLayoutPosition(v);
-
-            //Get event at that position
-            EventDTO event = eventDTOs.get(position);
-
-            //Fragment transaction with event as argument
-            Fragment f = AppState.getFragmentFromLayoutId(R.id.fragment_show_event);
-            AppState.get().setLastViewedEvent(event);
-            Bundle b = new Bundle();
-            b.putSerializable("event", event);
-            f.setArguments(b);
-            AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
-            ((MainActivity) getActivity()).loadFragment(f);
-        }
-    }
 
     class RVOnClickListener implements View.OnClickListener, View.OnLongClickListener {
         @Override
         public void onClick(View view) {
-
-            System.out.println("jdkwajdkwajdkwajkdwjakdjwkajdwkajdwkajdkawjdkwajdkwajkdwajdkwajdkwajkdwajdkawjdkawjdaw");
             //Get posistion of clicked event
             int position = recyclerView.getChildLayoutPosition(view);
 
@@ -174,10 +147,7 @@ public class MyProfileListFragment extends Fragment implements View.OnClickListe
             f.setArguments(b);
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
             ((MainActivity) getActivity()).loadFragment(f);
-
-
         }
-
 
         @Override
         public boolean onLongClick(View v) {
