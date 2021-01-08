@@ -38,11 +38,20 @@ public class ShowResultFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //Gets SearchCriteria from appstate
-        SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
-
         //Create RecyclerView -  empty at first
         recyclerView = new RecyclerView(getContext());
+        refreshSearch();
+
+        //TODO lav LOADING-animation med MaterialIO eller lign.
+        Toast.makeText(getContext(), getString(R.string.loading), Toast.LENGTH_SHORT).show();
+
+        //return recyclerview
+        return recyclerView;
+    }
+
+    public void refreshSearch() {
+        //Gets SearchCriteria from appstate
+        SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
 
         //Get events with DataController from BackgroundThread
         Executor bgThread = Executors.newSingleThreadExecutor();
@@ -57,12 +66,6 @@ public class ShowResultFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
             });
         });
-
-        //TODO lav LOADING-animation med MaterialIO eller lign.
-        Toast.makeText(getContext(), getString(R.string.loading), Toast.LENGTH_SHORT).show();
-
-        //return recyclerview
-        return recyclerView;
     }
 
     RecyclerView.Adapter adapter = new RecyclerView.Adapter() {
@@ -127,6 +130,14 @@ public class ShowResultFragment extends Fragment {
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
             ((MainActivity) getActivity()).loadFragment(f);
 
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (AppState.get().isRefreshSearch()){
+            refreshSearch();
         }
     }
 }

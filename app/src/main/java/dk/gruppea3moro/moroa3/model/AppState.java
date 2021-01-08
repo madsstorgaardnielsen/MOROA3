@@ -31,6 +31,7 @@ public class AppState //extends Application
     SearchCriteria searchCriteria;
     private EventDTO lastViewedEvent;
     private EventDTO featuredEvent;
+    private boolean refreshSearch;
 
     //STATIC METHODS--------------------------------------------------------------------------------
     public static AppState get() {
@@ -172,5 +173,13 @@ public class AppState //extends Application
 
     public void setLastViewedEvent(EventDTO lastViewedEvent) {
         this.lastViewedEvent = lastViewedEvent;
+    }
+
+    public boolean isRefreshSearch() {
+        return refreshSearch;
+    }
+
+    public void setRefreshSearch(boolean refreshSearch) {
+        this.refreshSearch = refreshSearch;
     }
 }

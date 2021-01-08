@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.ShowResultFragment;
+import dk.gruppea3moro.moroa3.model.AppState;
 
 
 //TODO viewpager
@@ -45,7 +46,7 @@ public class FindEventFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (position == 3) {
-
+                    AppState.get().setRefreshSearch(true);
                 }
                 System.out.println("position = " + position);
                 changeTabLayoutColor(position);
