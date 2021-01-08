@@ -5,12 +5,42 @@ import java.util.Date;
 
 public class SearchCriteria {
     private Date fromDate, toDate;
-    private ArrayList<String> areas, types, moods;
+    public ArrayList<String> zone, types, moods;
 
     public SearchCriteria() {
-        areas = new ArrayList<String>();
-        types = new ArrayList<String>();
-        moods = new ArrayList<String>();
+        zone = new ArrayList<>();
+        types = new ArrayList<>();
+        moods = new ArrayList<>();
+    }
+
+    public void addZone(String addArea) {
+        if (!zone.contains(addArea)) {
+            zone.add(addArea);
+        }
+    }
+
+    public void addType(String addType) {
+        if (!types.contains(addType)) {
+            types.add(addType);
+        }
+    }
+
+    public void addMood(String addMood) {
+        if (!moods.contains(addMood)) {
+            moods.add(addMood);
+        }
+    }
+
+    public void removeZone(String removeArea) {
+        zone.remove(removeArea);
+    }
+
+    public void removeType(String removeType) {
+        types.remove(removeType);
+    }
+
+    public void removeMood(String removeMood) {
+        moods.remove(removeMood);
     }
 
     public void setFromDate(Date fromDate) {
@@ -29,8 +59,8 @@ public class SearchCriteria {
         return toDate;
     }
 
-    public ArrayList<String> getAreas() {
-        return areas;
+    public ArrayList<String> getZone() {
+        return zone;
     }
 
     public ArrayList<String> getTypes() {
@@ -40,5 +70,17 @@ public class SearchCriteria {
     public ArrayList<String> getMoods() {
         return moods;
     }
+/*
+    @Override
+    public String toString() {
+        return "SearchCriteria{" +
+                "fromDate=" + fromDate.getTime() + fromDate.getDate() + "/" + fromDate.getMonth() + 1 + "/" + (fromDate.getYear() + 1900) +
+                ", toDate=" + toDate.getTime() + toDate.getDate() + "/" + toDate.getMonth() + 1 + "/" + (toDate.getYear() + 1900) +
+                ", zone=" + zone +
+                ", types=" + types +
+                ", moods=" + moods +
+                '}';
+    }
 
+ */
 }

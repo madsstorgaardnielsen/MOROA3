@@ -1,10 +1,11 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.findevent;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -13,6 +14,10 @@ import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.ShowResultFragment;
+import dk.gruppea3moro.moroa3.model.AppState;
 
 
 //TODO viewpager
@@ -35,13 +40,14 @@ public class FindEventFragment extends Fragment {
         viewPager.setAdapter(tabFragmentAdapter);
 
         TabLayout tabLayout = view.findViewById(R.id.findEventTabLayout);
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) ->
-                getTabText(tab, position)
-        ).attach();
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> getTabText(tab, position)).attach();
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                if (position == 3) {
+                    AppState.get().setRefreshSearch(true);
+                }
                 System.out.println("position = " + position);
                 changeTabLayoutColor(position);
             }
@@ -65,6 +71,9 @@ public class FindEventFragment extends Fragment {
             case 2:
                 tab.setText(getString(R.string.tab_where));
                 break;
+            case 3:
+                tab.setText("VIS");
+                break;
             default:
                 break;
         }
@@ -73,7 +82,6 @@ public class FindEventFragment extends Fragment {
     public void changeTabLayoutColor(int position) {
         switch (position) {
             case 0:
-
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.moroSalmonRedBackground));
                 break;
             case 1:
@@ -106,12 +114,15 @@ class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapte
             case 2:
                 fragment = new WhereTabFragment();
                 break;
+            case 3:
+                fragment = new ShowResultFragment();
+                break;
         }
         return fragment;
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

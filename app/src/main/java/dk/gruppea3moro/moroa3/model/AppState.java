@@ -13,7 +13,7 @@ import java.util.Deque;
 
 import dk.gruppea3moro.moroa3.AboutUsFragment;
 import dk.gruppea3moro.moroa3.ContactUsFragment;
-import dk.gruppea3moro.moroa3.FindEventFragment;
+import dk.gruppea3moro.moroa3.findevent.FindEventFragment;
 import dk.gruppea3moro.moroa3.FrontpageFragment;
 import dk.gruppea3moro.moroa3.MenuFragment;
 import dk.gruppea3moro.moroa3.MyProfileFragment;
@@ -31,6 +31,7 @@ public class AppState //extends Application
     SearchCriteria searchCriteria;
     private EventDTO lastViewedEvent;
     private EventDTO featuredEvent;
+    private boolean refreshSearch;
 
     //STATIC METHODS--------------------------------------------------------------------------------
     public static AppState get() {
@@ -172,5 +173,13 @@ public class AppState //extends Application
 
     public void setLastViewedEvent(EventDTO lastViewedEvent) {
         this.lastViewedEvent = lastViewedEvent;
+    }
+
+    public boolean isRefreshSearch() {
+        return refreshSearch;
+    }
+
+    public void setRefreshSearch(boolean refreshSearch) {
+        this.refreshSearch = refreshSearch;
     }
 }
