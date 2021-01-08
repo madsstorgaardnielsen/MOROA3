@@ -12,6 +12,47 @@ public class EventDTO implements Serializable {
     AddressDTO addressDTO;
     ArrayList<String> types, moods;
 
+    //zones
+    public static final String ZONE_NORREBRO ="NØRREBRO";
+    public static final String ZONE_OSTERBRO ="ØSTERBRO";
+    public static final String ZONE_ISLANDS_BRYGGE ="ISLANDS BRYGGE";
+    public static final String ZONE_INDRE_BY ="INDRE BY";
+    public static final String ZONE_NORDVEST ="NORDVEST";
+    public static final String ZONE_VALBY ="VALBY";
+    public static final String ZONE_BRONSHOJ_OG_HUSUM ="BRØSHØJ & HUSUM";
+    public static final String ZONE_AMAGER ="AMAGER";
+    public static final String ZONE_VANLOSE ="VANLØSE";
+    public static final String ZONE_CHRISTIANSHAVN ="CHRISTIANSHAVN";
+    public static final String ZONE_REFSHALEOEN ="REFSHALEØEN";
+    //types
+    public static final String TYPE_KONCERT ="KONCERT";
+    public static final String TYPE_UDSTILLING_OG_KUNST ="UDSTILLING & KUNST";
+    public static final String TYPE_LITTERATUR ="LITTERATUR";
+    public static final String TYPE_FILM ="FILM";
+    public static final String TYPE_COMEDY ="COMEDY";
+    public static final String TYPE_TALK ="TALK";
+    public static final String TYPE_TEATER_OG_FORESTILLINGER ="TEATER & FORESTILLINGER";
+    public static final String TYPE_FEST ="FEST";
+    public static final String TYPE_GRATIS ="GRATIS";
+    public static final String TYPE_SPORT_OG_SPIL ="SPORT & SPIL";
+    public static final String TYPE_MAD_OG_DRIKKE ="MAD & DRIKKE";
+    public static final String TYPE_MODE ="MODE";
+    //stemninger
+    public static final String STEMNING_IKKE_HJEM ="DU IKKE VIL HJEM, MEN VIDERE";
+    public static final String STEMNING_UD_I_DET_BLA ="DU VIL UD I DET BLÅ";
+    public static final String STEMNING_TOMMERMAND ="DU HAR TØMMERMÆND";
+    public static final String STEMNING_UDVIDE_HORISONT ="DU VIL UDVIDE DIN HORISONT";
+    public static final String STEMNING_TOMME_LOMMER ="DU HAR TOMME LOMMER";
+    public static final String STEMNING_MAD_GLAD ="MAD GØR DIG GLAD";
+    public static final String STEMNING_FORKALE_DIG_SELV ="DU VIL FORKÆLE DIG SELV";
+    public static final String STEMNING_IMPONERE_DATE ="DU VIL IMPONERE DIN DATE";
+    public static final String STEMNING_DE_GAMLE_BESOG ="DE GAMLE KOMMER PÅ BESØG";
+    public static final String STEMNING_GANG_I_KROPPEN ="DU VIL HAVE GANG I KROPPEN";
+
+
+
+
+
     public EventDTO(String title, String subtext, String eventLink, String startDate, String endDate, double price, String imageLink) {
         this.title = title;
         this.subtext = subtext;
