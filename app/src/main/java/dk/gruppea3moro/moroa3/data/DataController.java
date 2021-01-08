@@ -4,15 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
-
-
 import com.google.gson.Gson;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -99,7 +93,6 @@ public class DataController {
             db.insert(SQLiteContract.events.TABLE_NAME, null, values);
         }
         db.close();
-        System.out.println("");
         System.out.println("done updating db");
     }
 
@@ -116,7 +109,9 @@ public class DataController {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = null;
-        String sortOrder = null;
+
+        //Default get the events sorted in chronological order - newest first
+        String sortOrder = SQLiteContract.events.COLUMN_NAME_STARTDATE + " ASC";
         String selection;
         ArrayList<String> selArgsArrayList = new ArrayList<String>();
         String[] selectionArgs = null;
@@ -217,7 +212,7 @@ public class DataController {
         }
         db.close();
 
-        //Remove those events, that don't match eiter a mood or a type (if these are not null)
+        //Remove the events, that don't match either a mood or a type (if these are not null)
         SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria,eventDTOS);
 
         return eventDTOS;
