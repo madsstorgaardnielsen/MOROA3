@@ -24,8 +24,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     Button readDbButton;//TODO remove this
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         View root = inflater.inflate(R.layout.fragment_menu, container, false);
@@ -37,7 +36,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         about_TextView.setOnClickListener(this);
         tip_Textview.setOnClickListener(this);
 
-        readDbButton=root.findViewById(R.id.readDbButton);//TODO delete this
+        readDbButton = root.findViewById(R.id.readDbButton);//TODO delete this
         readDbButton.setOnClickListener(this);//TODO delete this
 
         return root;
@@ -58,7 +57,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             AppState.get().pushToBackstackDequeTop(R.id.fragment_tip_us);
             TipUsFragment tipUsFragment = new TipUsFragment();
             ma.loadFragment(tipUsFragment);
-        } else if (v==readDbButton){//TODO delete this
+        } else if (v == readDbButton) {//TODO delete this
             DataController.get().refreshDbInBackground(getContext());
         }
     }

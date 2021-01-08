@@ -142,12 +142,12 @@ public class AppState //extends Application
         return searchCriteria;
     }
 
-    public void setSearchCriteriaRightNow(){
+    public void setSearchCriteriaRightNow() {
         SearchCriteria sc = new SearchCriteria();
 
-        long millis=System.currentTimeMillis();
-        java.util.Date date1=new java.util.Date(millis); //From right now
-        java.util.Date date2=new java.util.Date(millis+3600000); //until 1 hour later
+        long millis = System.currentTimeMillis();
+        java.util.Date date1 = new java.util.Date(millis); //From right now
+        java.util.Date date2 = new java.util.Date(millis + 3600000); //until 1 hour later
 
         sc.setFromDate(date1);
         sc.setToDate(date2);

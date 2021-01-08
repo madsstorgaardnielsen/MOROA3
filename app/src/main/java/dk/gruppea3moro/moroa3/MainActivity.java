@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int id = item.getItemId();
                         int fragmentId = AppState.getFragmentLayoutId(id);
 
-                        if (fragmentId ==R.id.fragment_right_now){//If it was "right now"
+                        if (fragmentId == R.id.fragment_right_now) {//If it was "right now"
                             AppState.get().setSearchCriteriaRightNow();
                         }
 

@@ -35,8 +35,7 @@ public class ShowResultFragment extends Fragment {
     ArrayList<EventDTO> eventDTOs;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //Create RecyclerView -  empty at first
         recyclerView = new RecyclerView(getContext());
@@ -58,7 +57,7 @@ public class ShowResultFragment extends Fragment {
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. DataController
-            eventDTOs = DataController.get().searchEvents(getContext(),searchCriteria);
+            eventDTOs = DataController.get().searchEvents(getContext(), searchCriteria);
 
             uiThread.post(() -> {
                 // Inflate the layout (recyclerview) for this fragment
@@ -136,7 +135,7 @@ public class ShowResultFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (AppState.get().isRefreshSearch()){
+        if (AppState.get().isRefreshSearch()) {
             refreshSearch();
         }
     }

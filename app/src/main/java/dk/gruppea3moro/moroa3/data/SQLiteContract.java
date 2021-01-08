@@ -5,7 +5,8 @@ import android.provider.BaseColumns;
 public final class SQLiteContract {
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor private.
-    private SQLiteContract() {}
+    private SQLiteContract() {
+    }
 
     /* Inner class that defines the table contents */
     public static class events implements BaseColumns {

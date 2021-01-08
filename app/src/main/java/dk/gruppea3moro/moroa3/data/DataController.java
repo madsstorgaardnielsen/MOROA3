@@ -143,7 +143,6 @@ public class DataController {
         Date d1 = searchCriteria.getFromDate();
         Date d2 = searchCriteria.getToDate();
 
-
         if (d1 == null && d2 == null) {
             selectionArgs = null;
             selection = null;
@@ -228,7 +227,6 @@ public class DataController {
                         cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_AREA))
                 ));
 
-
                 //Tags
                 String typesJson = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_TYPETAGS));
                 String moodsJson = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_STEMNINGTAGS));
@@ -257,7 +255,6 @@ public class DataController {
                 if (!match) {
                     eventDTOS.remove(event);
                 }
-
             }
         }
         if (searchCriteria.getTypes().size() > 0) {
@@ -277,7 +274,6 @@ public class DataController {
             }
             eventDTOS.removeAll(eventsToRemove);
         }
-
         return eventDTOS;
     }
 
@@ -290,8 +286,6 @@ public class DataController {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         db.execSQL("DELETE FROM " + SQLiteContract.events.TABLE_NAME);
-
-
     }
 
 
@@ -307,5 +301,4 @@ public class DataController {
             DataController.get().feedDatabase(context);
         });
     }
-
 }

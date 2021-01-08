@@ -80,7 +80,6 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
             return; //No need to proceed if featuredEvent was in AppState
         }
 
-
         //Create object for bg and fg threads
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
@@ -137,5 +136,4 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
                 .replace(R.id.mainFL, featuredEventFragment)
                 .commit();
     }
-
 }

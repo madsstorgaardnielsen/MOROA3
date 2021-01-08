@@ -20,8 +20,7 @@ public class TypeOrMoodFragment extends Fragment implements View.OnClickListener
     MoodTabFragment moodTabFragment = new MoodTabFragment();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_type_or_mood, container, false);
         type_textView = root.findViewById(R.id.type_textView);
