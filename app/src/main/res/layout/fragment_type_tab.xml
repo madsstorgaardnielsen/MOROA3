@@ -25,7 +25,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/koncert"
+            android:text="@string/TYPE_KONCERT"
+            android:hint="@string/TYPE_KONCERT"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -43,7 +44,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/udstilling_og_kunst"
+            android:text="@string/TYPE_UDSTILLING_OG_KUNST"
+            android:hint="@string/TYPE_UDSTILLING_OG_KUNST"
             android:textColor="#000000"
             android:textSize="21sp"
 
@@ -62,7 +64,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/litteratur"
+            android:text="@string/TYPE_LITTERATUR"
+            android:hint="@string/TYPE_LITTERATUR"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -95,7 +98,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/film"
+            android:text="@string/TYPE_FILM"
+            android:hint="@string/TYPE_FILM"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -131,7 +135,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/talk"
+            android:text="@string/TYPE_TALK"
+            android:hint="@string/TYPE_TALK"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -165,6 +170,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/teater"
+            android:hint="@string/TYPE_TEATER_OG_FORESTILLINGER"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -182,7 +188,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/fest"
+            android:text="@string/TYPE_FEST"
+            android:hint="@string/TYPE_FEST"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -200,7 +207,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/gratis"
+            android:text="@string/TYPE_GRATIS"
+            android:hint="@string/TYPE_GRATIS"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -233,7 +241,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/sport_og_spil"
+            android:text="@string/TYPE_SPORT_OG_SPIL"
+            android:hint="@string/TYPE_SPORT_OG_SPIL"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -251,7 +260,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/mad_og_drikke"
+            android:text="@string/TYPE_MAD_OG_DRIKKE"
+            android:hint="@string/TYPE_MAD_OG_DRIKKE"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -270,7 +280,8 @@
             android:background="@drawable/yellowborder"
             android:gravity="center"
             android:tag="yellow"
-            android:text="@string/mode"
+            android:text="@string/TYPE_MODE"
+            android:hint="@string/TYPE_MODE"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />

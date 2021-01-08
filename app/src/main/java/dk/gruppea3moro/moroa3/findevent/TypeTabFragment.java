@@ -1,6 +1,5 @@
 package dk.gruppea3moro.moroa3.findevent;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,14 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.AppState;
@@ -30,7 +22,7 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
 
         //TODO Man skal vente efter at have skiftet mellem Hvad og Hvor før man kan klikke
-        View root = inflater.inflate(R.layout.whattab_vertview, container, false);
+        View root = inflater.inflate(R.layout.fragment_type_tab, container, false);
 
         textView1 = root.findViewById(R.id.textView1);
         textView2 = root.findViewById(R.id.textView2);

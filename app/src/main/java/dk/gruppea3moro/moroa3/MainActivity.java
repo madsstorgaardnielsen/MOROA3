@@ -40,10 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //Read database from google sheet in background thread
         DataController.get().refreshDbInBackground(this);
-
 
         //Top bar.
         topBarFragment = new TopBarFragment();
