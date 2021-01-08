@@ -46,7 +46,7 @@
             android:gravity="center"
             android:tag="red"
             android:text="@string/Islands_brygge"
-            android:hint="@string/Islands_brygge"
+            android:hint="@string/ZONE_ISLANDS_BRYGGE"
             android:textColor="#000000"
             android:textSize="21sp"
 

@@ -5,16 +5,16 @@ import java.util.Date;
 
 public class SearchCriteria {
     private Date fromDate, toDate;
-    public ArrayList<String> areas, types, moods;
+    public ArrayList<String> zone, types, moods;
 
     public SearchCriteria() {
-        areas = new ArrayList<String>();
+        zone = new ArrayList<String>();
         types = new ArrayList<String>();
         moods = new ArrayList<String>();
     }
 
-    public void addArea(String addArea) {
-        areas.add(addArea);
+    public void addZone(String addArea) {
+        zone.add(addArea);
     }
 
     public void addType(String addType) {
@@ -25,8 +25,8 @@ public class SearchCriteria {
         moods.add(addMood);
     }
 
-    public void removeArea(String removeArea) {
-        areas.remove(removeArea);
+    public void removeZone(String removeArea) {
+        zone.remove(removeArea);
     }
 
     public void removeType(String removeType) {
@@ -53,8 +53,8 @@ public class SearchCriteria {
         return toDate;
     }
 
-    public ArrayList<String> getAreas() {
-        return areas;
+    public ArrayList<String> getZone() {
+        return zone;
     }
 
     public ArrayList<String> getTypes() {
@@ -65,4 +65,14 @@ public class SearchCriteria {
         return moods;
     }
 
+    @Override
+    public String toString() {
+        return "SearchCriteria{" +
+                "fromDate=" + fromDate.getDate()+"/"+ fromDate.getMonth()+"/"+ fromDate.getYear() +
+                ", toDate=" + fromDate.getDate()+"/"+ fromDate.getMonth()+"/"+ fromDate.getYear() +
+                ", zone=" + zone +
+                ", types=" + types +
+                ", moods=" + moods +
+                '}';
+    }
 }
