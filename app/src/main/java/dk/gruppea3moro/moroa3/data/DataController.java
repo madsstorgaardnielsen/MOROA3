@@ -118,7 +118,7 @@ public class DataController {
         }
         db.close();
         System.out.println("");
-
+        System.out.println("done updating db");
     }
 
     public ArrayList<EventDTO> searchEvents(Context context, SearchCriteria searchCriteria) {
@@ -261,6 +261,7 @@ public class DataController {
             }
         }
         if (searchCriteria.getTypes().size() > 0) {
+            ArrayList<EventDTO> eventsToRemove = new ArrayList<>();
             for (EventDTO event : eventDTOS) {
                 match = false;
                 for (String type : event.getTypes()) {
@@ -270,9 +271,11 @@ public class DataController {
                     }
                 }
                 if (!match) {
-                    eventDTOS.remove(event);
+                    eventsToRemove.add(event);
+                    //eventDTOS.remove(event);
                 }
             }
+            eventDTOS.removeAll(eventsToRemove);
         }
 
         return eventDTOS;
