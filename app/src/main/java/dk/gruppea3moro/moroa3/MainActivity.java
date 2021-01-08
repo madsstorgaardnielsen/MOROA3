@@ -4,24 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 
+import dk.gruppea3moro.moroa3.data.DataController;
+import dk.gruppea3moro.moroa3.home.FrontpageFragment;
 import dk.gruppea3moro.moroa3.model.AppState;
 
 //TODO burgermenu(kontakt os osv), søge menu med filtre, evt?
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     BottomNavigationView bottomNavigationView;
     Fragment mainFragment, topBarFragment;
 
@@ -33,11 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Read database from google sheet in background thread
+        DataController.get().refreshDbInBackground(this);
+
         //Top bar.
-        topBarFragment = new TopBarFragment();
+/*        topBarFragment = new TopBarFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.topBarFL, topBarFragment)  // tom container i layout
-                .commit();
+                .commit();*/
 
         //Main FL
         mainFragment = new FrontpageFragment();
@@ -57,10 +58,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                         //Get selected item id
                         int id = item.getItemId();
                         int fragmentId = AppState.getFragmentLayoutId(id);
+
+                        if (fragmentId == R.id.fragment_right_now) {//If it was "right now"
+                            AppState.get().setSearchCriteriaRightNow();
+                        }
 
                         //Push fragment id to backstack deque
                         AppState.get().pushToBackstackDequeTop(fragmentId);
@@ -188,4 +192,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //The state is saved to PreferenceManager
         AppState.get().saveToPM(getApplicationContext());
     }
+
 }

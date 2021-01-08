@@ -27,7 +27,7 @@
     <string name="sport_og_spil">Sport og spil</string>
     <string name="mode">Mode</string>
     <string name="fest">Fest</string>
-    <string name="teater"><![CDATA[Teater & \n forestill- \n inger]]></string>
+    <string name="teater"><![CDATA[TEATER & \n FORESTIL- \n LINGER]]></string>
     <string name="gratis">Gratis</string>
     <string name="comedy">Comedy</string>
     <string name="talk">Talk</string>
@@ -38,19 +38,19 @@
     <string name="Stemning">Stemning</string>
     <string name="TYPE">Type</string>
     <string name="loading">Loader...</string>
-    <string name="Du_ikke_vil_hjem_men_videre"><![CDATA[Du ikke \n vil hjem, men \n videre]]></string>
-    <string name="Du_vil_ud_i_det_blå"><![CDATA[Du vil ud i \n det blå]]></string>
-    <string name="Du_har_tømmermænd"><![CDATA[Du har tømmer- \n mænd]]></string>
-    <string name="Du_vil_udvide_din_horisont"><![CDATA[Du vil \n udvide din \n horisont]]></string>
-    <string name="Du_har_tomme_lommer"><![CDATA[Du har \n tomme \n lommer]]></string>
-    <string name="Mad_gør_dig_glad"><![CDATA[Mad gør \n dig glad]]></string>
-    <string name="Du_vil_forkæle_dig_selv"><![CDATA[Du vil \n forkæle \n dig selv]]></string>
-    <string name="Du_vil_imponere_din_date"><![CDATA[Du vil \n imponere \n din date]]></string>
-    <string name="De_gamle_kommer_på_besøg"><![CDATA[De gamle \n kommer \n på besøg]]></string>
-    <string name="Du_vil_have_gang_i_kroppen"><![CDATA[Du vil \n have gang \n i kroppen]]></string>
+    <string name="Du_ikke_vil_hjem_men_videre"><![CDATA[DU IKKE \n VIL HJEM \n MEN VIDERE]]></string>
+    <string name="Du_vil_ud_i_det_blå"><![CDATA[DU VIL UD I\n DET BLÅ]]></string>
+    <string name="Du_har_tømmermænd"><![CDATA[DU HAR TØMMER- \n MÆND]]></string>
+    <string name="Du_vil_udvide_din_horisont"><![CDATA[DU VIL \n UDIVDE DIN \n HORISONT]]></string>
+    <string name="Du_har_tomme_lommer"><![CDATA[DU HAR \n TOMME \n LOMMER]]></string>
+    <string name="Mad_gør_dig_glad"><![CDATA[MAD GØR \n DIG GLAD]]></string>
+    <string name="Du_vil_forkæle_dig_selv"><![CDATA[DU VIL \n FORKÆLE \n DIG SELV]]></string>
+    <string name="Du_vil_imponere_din_date"><![CDATA[DU VIL \n IMPONERE \n DIN DATE]]></string>
+    <string name="De_gamle_kommer_på_besøg"><![CDATA[DE GAMLE \n KOMMER \n PÅ BESØG]]></string>
+    <string name="Du_vil_have_gang_i_kroppen"><![CDATA[DU VIL \n HAVE GANG \n I KROPPEN]]></string>
     <string name="temp">Temp</string>
     <string name="Nørrebro">Nørrebro</string>
-    <string name="Islands_brygge">Islands brygge</string>
+    <string name="Islands_brygge">ISLANDS BRYGGE</string>
     <string name="Indre_by">Indre by</string>
     <string name="Østerbro">Østerbro</string>
     <string name="Nordvest">Nordvest</string>
@@ -59,66 +59,46 @@
     <string name="Amager">Amager</string>
     <string name="Vesterbro">Vesterbro</string>
     <string name="Vanløse">Vanløse</string>
-    <string name="Christianshavn">Christians- havn</string>
-    <string name="Refshaleøen">Refshale- øen</string>
+    <string name="Christianshavn"><![CDATA[CHRISTIANS- \n HAVN]]></string>
+    <string name="Refshaleøen"><![CDATA[REFSHALE- \n ØEN]]></string>
 
-    <!--
-    TODO Skal muligvis bare slettes afhænig af hvad MORO gerne vil have af valg af dato metode
-    <string-array name="month">
-        <item>Januar</item>
-        <item>Februar</item>
-        <item>Marts</item>
-        <item>April</item>
-        <item>Maj</item>
-        <item>Juni</item>
-        <item>Juli</item>
-        <item>August</item>
-        <item>September</item>
-        <item>Oktober</item>
-        <item>November</item>
-        <item>December</item>
-    </string-array>
-    <string-array name="date">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
-        <item>25</item>
-        <item>26</item>
-        <item>27</item>
-        <item>28</item>
-        <item>29</item>
-        <item>30</item>
-        <item>31</item>
-    </string-array>
-    <string-array name="year">
-        <item>2020</item>
-        <item>2021</item>
-        <item>2022</item>
-        <item>2023</item>
-        <item>2024</item>
-        <item>2025</item>
-    </string-array>
--->
-    <!--  TODO skal ændres -->
-</resources>
+    <!-- STRING CONSTANTS - DE OFFICIELLE-->
+    //zones
+    <string name="ZONE_NORREBRO">NØRREBRO</string>;
+    <string name="ZONE_VESTERBRO">VESTERBRO</string>;
+    <string name="ZONE_OSTERBRO">ØSTERBRO</string>;
+    <string name="ZONE_ISLANDS_BRYGGE">ISLANDS BRYGGE</string>;
+    <string name="ZONE_INDRE_BY">INDRE BY</string>;
+    <string name="ZONE_NORDVEST">NORDVEST</string>;
+    <string name="ZONE_VALBY">VALBY</string>;
+    <string name="ZONE_BRONSHOJ_OG_HUSUM">BRØSHØJ &amp; HUSUM</string>;
+    <string name="ZONE_AMAGER">AMAGER</string>;
+    <string name="ZONE_VANLOSE">VANLØSE</string>;
+    <string name="ZONE_CHRISTIANSHAVN">CHRISTIANSHAVN</string>;
+    <string name="ZONE_REFSHALEOEN">REFSHALEØEN</string>;
+    //types
+    <string name="TYPE_KONCERT">KONCERT</string>;
+    <string name="TYPE_UDSTILLING_OG_KUNST">UDSTILLING &amp; KUNST</string>;
+    <string name="TYPE_LITTERATUR">LITTERATUR</string>;
+    <string name="TYPE_FILM">FILM</string>;
+    <string name="TYPE_COMEDY">COMEDY</string>;
+    <string name="TYPE_TALK">TALK</string>;
+    <string name="TYPE_TEATER_OG_FORESTILLINGER">TEATER &amp; FORESTILLINGER</string>;
+    <string name="TYPE_FEST">FEST</string>;
+    <string name="TYPE_GRATIS">GRATIS</string>;
+    <string name="TYPE_SPORT_OG_SPIL">SPORT &amp; SPIL</string>;
+    <string name="TYPE_MAD_OG_DRIKKE">MAD &amp; DRIKKE</string>;
+    <string name="TYPE_MODE">MODE</string>;
+    //stemninger
+    <string name="STEMNING_IKKE_HJEM">DU IKKE VIL HJEM MEN VIDERE</string>;
+    <string name="STEMNING_UD_I_DET_BLA">DU VIL UD I DET BLÅ</string>;
+    <string name="STEMNING_TOMMERMAND">DU HAR TØMMERMÆND</string>;
+    <string name="STEMNING_UDVIDE_HORISONT">DU VIL UDVIDE DIN HORISONT</string>;
+    <string name="STEMNING_TOMME_LOMMER">DU HAR TOMME LOMMER</string>;
+    <string name="STEMNING_MAD_GLAD">MAD GØR DIG GLAD</string>;
+    <string name="STEMNING_FORKALE_DIG_SELV">DU VIL FORKÆLE DIG SELV</string>;
+    <string name="STEMNING_IMPONERE_DATE">DU VIL IMPONERE DIN DATE</string>;
+    <string name="STEMNING_DE_GAMLE_BESOG">DE GAMLE KOMMER PÅ BESØG</string>;
+    <string name="STEMNING_GANG_I_KROPPEN">DU VIL HAVE GANG I KROPPEN</string>;
+
+ </resources>

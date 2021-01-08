@@ -11,16 +11,16 @@ import com.google.gson.Gson;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import dk.gruppea3moro.moroa3.AboutUsFragment;
-import dk.gruppea3moro.moroa3.ContactUsFragment;
-import dk.gruppea3moro.moroa3.FindEventFragment;
-import dk.gruppea3moro.moroa3.FrontpageFragment;
-import dk.gruppea3moro.moroa3.MenuFragment;
-import dk.gruppea3moro.moroa3.MyProfileFragment;
+import dk.gruppea3moro.moroa3.burgermenu.AboutUsFragment;
+import dk.gruppea3moro.moroa3.burgermenu.ContactUsFragment;
+import dk.gruppea3moro.moroa3.findevent.FindEventFragment;
+import dk.gruppea3moro.moroa3.home.FrontpageFragment;
+import dk.gruppea3moro.moroa3.burgermenu.MenuFragment;
+import dk.gruppea3moro.moroa3.profile.MyProfileFragment;
 import dk.gruppea3moro.moroa3.R;
-import dk.gruppea3moro.moroa3.ShowResultFragment;
-import dk.gruppea3moro.moroa3.ShowEventFragment;
-import dk.gruppea3moro.moroa3.TipUsFragment;
+import dk.gruppea3moro.moroa3.findevent.ShowResultFragment;
+import dk.gruppea3moro.moroa3.findevent.ShowEventFragment;
+import dk.gruppea3moro.moroa3.burgermenu.TipUsFragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -31,6 +31,7 @@ public class AppState //extends Application
     SearchCriteria searchCriteria;
     private EventDTO lastViewedEvent;
     private EventDTO featuredEvent;
+    private boolean refreshSearch;
 
     //STATIC METHODS--------------------------------------------------------------------------------
     public static AppState get() {
@@ -141,8 +142,18 @@ public class AppState //extends Application
         return searchCriteria;
     }
 
-    public void resetFindEventModel() {
-        this.searchCriteria = null;
+    public void setSearchCriteriaRightNow() {
+        SearchCriteria sc = new SearchCriteria();
+
+        long millis = System.currentTimeMillis();
+        sc.setFromDate(DateTime.getDateFromTimeMillis(millis));
+        sc.setToDate(DateTime.getDateFromTimeMillis(millis+3600000));
+
+        this.searchCriteria = sc;
+    }
+
+    public void resetSearchCriteria() {
+        this.searchCriteria = new SearchCriteria();
     }
 
     public EventDTO getFeaturedEvent() {
@@ -159,5 +170,13 @@ public class AppState //extends Application
 
     public void setLastViewedEvent(EventDTO lastViewedEvent) {
         this.lastViewedEvent = lastViewedEvent;
+    }
+
+    public boolean isRefreshSearch() {
+        return refreshSearch;
+    }
+
+    public void setRefreshSearch(boolean refreshSearch) {
+        this.refreshSearch = refreshSearch;
     }
 }

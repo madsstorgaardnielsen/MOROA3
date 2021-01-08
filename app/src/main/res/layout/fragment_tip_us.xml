@@ -4,7 +4,7 @@
     android:id="@+id/fragment_tip_us"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TipUsFragment"
+    tools:context=".burgermenu.TipUsFragment"
     android:background="@color/moroPurpleBackground">
 
 

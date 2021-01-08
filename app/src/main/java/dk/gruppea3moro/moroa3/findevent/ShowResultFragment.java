@@ -1,4 +1,4 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.findevent;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import dk.gruppea3moro.moroa3.MainActivity;
+import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.data.DataController;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
@@ -35,21 +37,29 @@ public class ShowResultFragment extends Fragment {
     ArrayList<EventDTO> eventDTOs;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        //Gets SearchCriteria from appstate
-        SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //Create RecyclerView -  empty at first
         recyclerView = new RecyclerView(getContext());
+        refreshSearch();
+
+        //TODO lav LOADING-animation med MaterialIO eller lign.
+        Toast.makeText(getContext(), getString(R.string.loading), Toast.LENGTH_SHORT).show();
+
+        //return recyclerview
+        return recyclerView;
+    }
+
+    public void refreshSearch() {
+        //Gets SearchCriteria from appstate
+        SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
 
         //Get events with DataController from BackgroundThread
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. DataController
-            eventDTOs = DataController.get().searchEvents(searchCriteria);
+            eventDTOs = DataController.get().searchEvents(getContext(), searchCriteria);
 
             uiThread.post(() -> {
                 // Inflate the layout (recyclerview) for this fragment
@@ -57,12 +67,6 @@ public class ShowResultFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
             });
         });
-
-        //TODO lav LOADING-animation med MaterialIO eller lign.
-        Toast.makeText(getContext(), getString(R.string.loading), Toast.LENGTH_SHORT).show();
-
-        //return recyclerview
-        return recyclerView;
     }
 
     RecyclerView.Adapter adapter = new RecyclerView.Adapter() {
@@ -99,8 +103,8 @@ public class ShowResultFragment extends Fragment {
             //Set views from current event data
             titleTV.setText(currentEvent.getTitle());
             areaTV.setText(currentEvent.getAddressDTO().getArea()); //TODO fix evt. indfør koordinater
-            dateTV.setText(currentEvent.getStartDate());
-            timeTV.setText(currentEvent.getStartTime());
+            dateTV.setText(currentEvent.getStart().getDanishDayFormat());
+            timeTV.setText(currentEvent.getStart().getTimeFormat());
 
             //Let Picasso handle the image
             Picasso.get().load(currentEvent.getImageLink())
@@ -127,6 +131,14 @@ public class ShowResultFragment extends Fragment {
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
             ((MainActivity) getActivity()).loadFragment(f);
 
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (AppState.get().isRefreshSearch()) {
+            refreshSearch();
         }
     }
 }
