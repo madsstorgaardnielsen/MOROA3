@@ -62,63 +62,42 @@
     <string name="Christianshavn">Christians- havn</string>
     <string name="Refshaleøen">Refshale- øen</string>
 
-    <!--
-    TODO Skal muligvis bare slettes afhænig af hvad MORO gerne vil have af valg af dato metode
-    <string-array name="month">
-        <item>Januar</item>
-        <item>Februar</item>
-        <item>Marts</item>
-        <item>April</item>
-        <item>Maj</item>
-        <item>Juni</item>
-        <item>Juli</item>
-        <item>August</item>
-        <item>September</item>
-        <item>Oktober</item>
-        <item>November</item>
-        <item>December</item>
-    </string-array>
-    <string-array name="date">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
-        <item>25</item>
-        <item>26</item>
-        <item>27</item>
-        <item>28</item>
-        <item>29</item>
-        <item>30</item>
-        <item>31</item>
-    </string-array>
-    <string-array name="year">
-        <item>2020</item>
-        <item>2021</item>
-        <item>2022</item>
-        <item>2023</item>
-        <item>2024</item>
-        <item>2025</item>
-    </string-array>
--->
-    <!--  TODO skal ændres -->
-</resources>
+    <!-- STEMNINGER-->
+    //zones
+    <string name="ZONE_NORREBRO">NØRREBRO</string>;
+    <string name="ZONE_OSTERBRO">ØSTERBRO</string>;
+    <string name="ZONE_ISLANDS_BRYGGE">ISLANDS BRYGGE</string>;
+    <string name="ZONE_INDRE_BY">INDRE BY</string>;
+    <string name="ZONE_NORDVEST">NORDVEST</string>;
+    <string name="ZONE_VALBY">VALBY</string>;
+    <string name="ZONE_BRONSHOJ_OG_HUSUM">BRØSHØJ &amp; HUSUM</string>;
+    <string name="ZONE_AMAGER">AMAGER</string>;
+    <string name="ZONE_VANLOSE">VANLØSE</string>;
+    <string name="ZONE_CHRISTIANSHAVN">CHRISTIANSHAVN</string>;
+    <string name="ZONE_REFSHALEOEN">REFSHALEØEN</string>;
+    //types
+    <string name="TYPE_KONCERT">KONCERT</string>;
+    <string name="TYPE_UDSTILLING_OG_KUNST">UDSTILLING &amp; KUNST</string>;
+    <string name="TYPE_LITTERATUR">LITTERATUR</string>;
+    <string name="TYPE_FILM">FILM</string>;
+    <string name="TYPE_COMEDY">COMEDY</string>;
+    <string name="TYPE_TALK">TALK</string>;
+    <string name="TYPE_TEATER_OG_FORESTILLINGER">TEATER &amp; FORESTILLINGER</string>;
+    <string name="TYPE_FEST">FEST</string>;
+    <string name="TYPE_GRATIS">GRATIS</string>;
+    <string name="TYPE_SPORT_OG_SPIL">SPORT &amp; SPIL</string>;
+    <string name="TYPE_MAD_OG_DRIKKE">MAD &amp; DRIKKE</string>;
+    <string name="TYPE_MODE">MODE</string>;
+    //stemninger
+    <string name="STEMNING_IKKE_HJEM">DU IKKE VIL HJEM, MEN VIDERE</string>;
+    <string name="STEMNING_UD_I_DET_BLA">DU VIL UD I DET BLÅ</string>;
+    <string name="STEMNING_TOMMERMAND">DU HAR TØMMERMÆND</string>;
+    <string name="STEMNING_UDVIDE_HORISONT">DU VIL UDVIDE DIN HORISONT</string>;
+    <string name="STEMNING_TOMME_LOMMER">DU HAR TOMME LOMMER</string>;
+    <string name="STEMNING_MAD_GLAD">MAD GØR DIG GLAD</string>;
+    <string name="STEMNING_FORKALE_DIG_SELV">DU VIL FORKÆLE DIG SELV</string>;
+    <string name="STEMNING_IMPONERE_DATE">DU VIL IMPONERE DIN DATE</string>;
+    <string name="STEMNING_DE_GAMLE_BESOG">DE GAMLE KOMMER PÅ BESØG</string>;
+    <string name="STEMNING_GANG_I_KROPPEN">DU VIL HAVE GANG I KROPPEN</string>;
+
+ </resources>
