@@ -38,7 +38,7 @@ public class FeaturedEventFragment extends Fragment {
 
         //Set text views
         title.setText(eventDTO.getTitle());
-        startTime.setText(eventDTO.getStartTime());
+        startTime.setText(eventDTO.getStart().getTimeFormat());
         address.setText(eventDTO.getAddressDTO().toString());
 
         //Let Picasso handle the image

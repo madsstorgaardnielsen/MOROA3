@@ -57,8 +57,8 @@ public class ShowEventFragment extends Fragment {
         }
 
         eventLink.setText("Læs mere: " + eventDTO.getEventLink());
-        startDay.setText("Dato: " + eventDTO.getStartDate());
-        startTime.setText("Start: " + eventDTO.getStartTime());
+        startDay.setText("Dato: " + eventDTO.getStart().getDanishDayFormat());
+        startTime.setText("Start: " + eventDTO.getStart().getTimeFormat());
         address.setText(eventDTO.getAddressDTO().toString());
 
         //Let Picasso handle the image

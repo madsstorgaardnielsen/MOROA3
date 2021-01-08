@@ -15,6 +15,23 @@ public class DateTime {
         this.minute = minute;
     }
 
+    public DateTime(String sqlDateTime){
+        //SQL DateTime format: "YYYY/MM/DD hh:mm:ss"
+        this.year = sqlDateTime.substring(0,4);
+        this.month = sqlDateTime.substring(5,7);
+        this.day = sqlDateTime.substring(8,10);
+        this.hour = sqlDateTime.substring(11,13);
+        this.minute = sqlDateTime.substring(14,16);
+    }
+
+    public DateTime(String danishDate, String time) {
+        this.day = danishDate.substring(0,2);
+        this.month = danishDate.substring(3,5);
+        this.year = danishDate.substring(6,10);;
+        this.hour = time.substring(0,2);
+        this.minute = time.substring(3,5);
+    }
+
     public String getDay() {
         return day;
     }

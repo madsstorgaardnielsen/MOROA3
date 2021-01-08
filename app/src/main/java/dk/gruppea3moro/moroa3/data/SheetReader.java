@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import dk.gruppea3moro.moroa3.model.AddressDTO;
+import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
@@ -50,10 +51,8 @@ public class SheetReader implements EventLoader {
         event.setPrice(Integer.parseInt(fields[2]));
         event.setEventLink(fields[3]);
         event.setImageLink(fields[4]);
-        event.setStartTime(fields[5]);
-        event.setStartDate(fields[6]);
-        event.setEndTime(fields[7]);
-        event.setEndDate(fields[8]);
+        event.setStart(new DateTime(fields[6],fields[5]));
+        event.setEnd(new DateTime(fields[8],fields[7]));
         event.setAddressDTO(new AddressDTO(fields[9], fields[10], fields[11], fields[12], fields[13], fields[14]));
         event.setMoods(parseTags(fields[15]));
         event.setTypes(parseTags(fields[16]));
@@ -70,18 +69,8 @@ public class SheetReader implements EventLoader {
 
 
     @Override
-    public ArrayList<EventDTO> searchEvents(SearchCriteria sc) throws IOException {
-        //TODO find en måde at udfylde metoden på
-        return getAllEvents();
-    }
-
-    @Override
-    public ArrayList<EventDTO> getNextNEvents(int offset, int numberOfEvents, SearchCriteria sc) throws IOException {
-        return getAllEvents();
-    }
-
-    @Override
     public EventDTO getFeaturedEvent() throws IOException {
+        //TODO fix this
         return getAllEvents().get(0);
     }
 }

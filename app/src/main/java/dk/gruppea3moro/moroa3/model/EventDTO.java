@@ -7,35 +7,15 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class EventDTO implements Serializable {
-    String title, subtext, eventLink, imageLink, startTime, endTime, startDate, endDate, zone;
+    String title, subtext, eventLink, imageLink, zone;
     double price;
+
+    DateTime start, end;
     AddressDTO addressDTO;
     ArrayList<String> types, moods;
 
-    public EventDTO(String title, String subtext, String eventLink, String startDate, String endDate, double price, String imageLink) {
-        this.title = title;
-        this.subtext = subtext;
-        this.eventLink = eventLink;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.price = price;
-        this.imageLink = imageLink;
-    }
 
     public EventDTO() {
-
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
     }
 
     public String getTitle() {
@@ -60,22 +40,6 @@ public class EventDTO implements Serializable {
 
     public void setEventLink(String eventLink) {
         this.eventLink = eventLink;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
     }
 
     public double getPrice() {
@@ -118,28 +82,6 @@ public class EventDTO implements Serializable {
         this.moods = moods;
     }
 
-    @Override
-    public String toString() {
-        return "EventDTO{" +
-                "title='" + title + '\'' +
-                ", subtext='" + subtext + '\'' +
-                ", eventLink='" + eventLink + '\'' +
-                ", imageLink='" + imageLink + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", price=" + price +
-                ", addressDTO=" + addressDTO +
-                ", types=" + types +
-                ", moods=" + moods +
-                '}';
-    }
-
-
-    public String getStartTime() {
-        return startTime;
-
-    }
-
     public String getZone() {
         return zone;
     }
@@ -148,24 +90,20 @@ public class EventDTO implements Serializable {
         this.zone = zone;
     }
 
-    public String getSQLendDate() {
-        String result = endDate.substring(6, 10) + "/" + endDate.substring(3, 5) + "/" + endDate.substring(0, 2)
-                + " " + endTime + ":00";
-        return result;
+    public DateTime getStart() {
+        return start;
     }
 
-    public String getSQLstartDate() {
-        String result = startDate.substring(6, 10) + "/" + startDate.substring(3, 5) + "/" + startDate.substring(0, 2)
-                + " " + startTime + ":00";
-        return result;
+    public void setStart(DateTime start) {
+        this.start = start;
     }
 
-    public void setDateFields(String sqlStartDate, String sqlEndDate) {
-        startTime = sqlStartDate.substring(11, 16);
-        startDate = sqlStartDate.substring(8, 10) + "/" + sqlStartDate.substring(5, 7) + "/" + sqlStartDate.substring(0, 5);
-        endTime = sqlEndDate.substring(11, 16);
-        endDate = sqlEndDate.substring(8, 10) + "/" + sqlEndDate.substring(5, 7) + "/" + sqlEndDate.substring(0, 5);
+    public DateTime getEnd() {
+        return end;
     }
 
+    public void setEnd(DateTime end) {
+        this.end = end;
+    }
 
 }

@@ -103,8 +103,8 @@ public class ShowResultFragment extends Fragment {
             //Set views from current event data
             titleTV.setText(currentEvent.getTitle());
             areaTV.setText(currentEvent.getAddressDTO().getArea()); //TODO fix evt. indfør koordinater
-            dateTV.setText(currentEvent.getStartDate());
-            timeTV.setText(currentEvent.getStartTime());
+            dateTV.setText(currentEvent.getStart().getDanishDayFormat());
+            timeTV.setText(currentEvent.getStart().getTimeFormat());
 
             //Let Picasso handle the image
             Picasso.get().load(currentEvent.getImageLink())

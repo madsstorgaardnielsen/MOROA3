@@ -19,6 +19,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import dk.gruppea3moro.moroa3.model.AddressDTO;
+import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
@@ -52,14 +53,6 @@ public class DataController {
     }
 
 
-    public ArrayList<EventDTO> getNextNEvents(int offset, int numberOfEvents, SearchCriteria sc) {
-        try {
-            return getEventLoader().getNextNEvents(offset, numberOfEvents, sc);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public EventDTO getFeaturedEvent() {
         try {
@@ -100,8 +93,8 @@ public class DataController {
             values.put(SQLiteContract.events.COLUMN_NAME_PRICE, event.getPrice());
             values.put(SQLiteContract.events.COLUMN_NAME_EVENTLINK, event.getEventLink());
             values.put(SQLiteContract.events.COLUMN_NAME_IMAGELINK, event.getImageLink());
-            values.put(SQLiteContract.events.COLUMN_NAME_STARTDATE, event.getSQLstartDate());
-            values.put(SQLiteContract.events.COLUMN_NAME_ENDDATE, event.getSQLendDate());
+            values.put(SQLiteContract.events.COLUMN_NAME_STARTDATE, event.getStart().getSqlDateTimeFormat());
+            values.put(SQLiteContract.events.COLUMN_NAME_ENDDATE, event.getEnd().getSqlDateTimeFormat());
             values.put(SQLiteContract.events.COLUMN_NAME_ZONE, event.getZone());
             values.put(SQLiteContract.events.COLUMN_NAME_ADDRESSNAME, event.getAddressDTO().getAddressName());
             values.put(SQLiteContract.events.COLUMN_NAME_STREETNAME, event.getAddressDTO().getStreetName());
@@ -223,7 +216,9 @@ public class DataController {
                 //Set the date related fields
                 String startDateString = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_STARTDATE));
                 String endDateString = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ENDDATE));
-                eventDTO.setDateFields(startDateString, endDateString);
+                eventDTO.setStart(new DateTime(startDateString));
+                eventDTO.setEnd(new DateTime(endDateString));
+
 
                 //Address
                 eventDTO.setAddressDTO(new AddressDTO(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ADDRESSNAME)),
