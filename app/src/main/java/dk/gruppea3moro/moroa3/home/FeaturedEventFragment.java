@@ -1,4 +1,4 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.home;
 
 import android.os.Bundle;
 
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 
 public class FeaturedEventFragment extends Fragment {
@@ -20,7 +21,6 @@ public class FeaturedEventFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_featured_event, container, false);
         title = root.findViewById(R.id.featuredEventTitleTV);
 

@@ -1,4 +1,4 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.burgermenu;
 
 import android.os.Bundle;
 
@@ -14,6 +14,8 @@ import android.widget.Spinner;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 
+import dk.gruppea3moro.moroa3.R;
+
 
 public class TipUsFragment extends Fragment implements View.OnClickListener {
     Button chooseDate, saveEvent;
@@ -21,10 +23,8 @@ public class TipUsFragment extends Fragment implements View.OnClickListener {
     //TODO Knappen som skal gemme variablerne mangler at blive implementeret
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tip_os, container, false);
-        // Inflate the layout for this fragment
 
         chooseDate = root.findViewById(R.id.eventChooseDate);
         chooseDate.setOnClickListener(this);

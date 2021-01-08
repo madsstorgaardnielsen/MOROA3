@@ -1,9 +1,8 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.home;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -15,6 +14,9 @@ import android.widget.FrameLayout;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import dk.gruppea3moro.moroa3.MainActivity;
+import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.findevent.ShowEventFragment;
 import dk.gruppea3moro.moroa3.data.DataController;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
@@ -25,9 +27,7 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
     FrameLayout featuredEventFL;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_frontpage, container, false);
 
         //Call method to get featured event from bg-thread and more
