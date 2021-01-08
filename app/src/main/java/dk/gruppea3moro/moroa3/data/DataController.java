@@ -62,16 +62,6 @@ public class DataController {
         return null;
     }
 
-    public static Drawable loadImageFromURL(EventDTO eventDTO) {
-        try {
-            InputStream is = (InputStream) new URL(eventDTO.getImageLink()).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
     public void feedDatabase(Context context) {
         //Get dbhelper
         SQLiteHelper dbHelper = new SQLiteHelper(context);
@@ -227,39 +217,9 @@ public class DataController {
         }
         db.close();
 
-        //Refine search by removing events not containing correct mood and type
-        boolean match;
-        if (searchCriteria.getMoods().size() > 0) {
-            for (EventDTO event : eventDTOS) {
-                match = false;
-                for (String mood : event.getMoods()) {
-                    if (searchCriteria.getMoods().contains(mood)) {
-                        match = true;
-                        break;
-                    }
-                }
-                if (!match) {
-                    eventDTOS.remove(event);
-                }
-            }
-        }
-        if (searchCriteria.getTypes().size() > 0) {
-            ArrayList<EventDTO> eventsToRemove = new ArrayList<>();
-            for (EventDTO event : eventDTOS) {
-                match = false;
-                for (String type : event.getTypes()) {
-                    if (searchCriteria.getTypes().contains(type)) {
-                        match = true;
-                        break;
-                    }
-                }
-                if (!match) {
-                    eventsToRemove.add(event);
-                    //eventDTOS.remove(event);
-                }
-            }
-            eventDTOS.removeAll(eventsToRemove);
-        }
+        //Remove those events, that don't match eiter a mood or a type (if these are not null)
+        SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria,eventDTOS);
+
         return eventDTOS;
     }
 
