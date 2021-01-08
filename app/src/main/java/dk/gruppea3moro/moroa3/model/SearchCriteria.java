@@ -5,12 +5,36 @@ import java.util.Date;
 
 public class SearchCriteria {
     private Date fromDate, toDate;
-    private ArrayList<String> areas, types, moods;
+    public ArrayList<String> areas, types, moods;
 
     public SearchCriteria() {
         areas = new ArrayList<String>();
         types = new ArrayList<String>();
         moods = new ArrayList<String>();
+    }
+
+    public void addArea(String addArea) {
+        areas.add(addArea);
+    }
+
+    public void addType(String addType) {
+        types.add(addType);
+    }
+
+    public void addMood(String addMood) {
+        moods.add(addMood);
+    }
+
+    public void removeArea(String removeArea) {
+        areas.remove(removeArea);
+    }
+
+    public void removeType(String removeType) {
+        types.remove(removeType);
+    }
+
+    public void removeMood(String removeMood) {
+        moods.remove(removeMood);
     }
 
     public void setFromDate(Date fromDate) {
