@@ -8,21 +8,27 @@ public class SearchCriteria {
     public ArrayList<String> zone, types, moods;
 
     public SearchCriteria() {
-        zone = new ArrayList<String>();
-        types = new ArrayList<String>();
-        moods = new ArrayList<String>();
+        zone = new ArrayList<>();
+        types = new ArrayList<>();
+        moods = new ArrayList<>();
     }
 
     public void addZone(String addArea) {
-        zone.add(addArea);
+        if (!zone.contains(addArea)) {
+            zone.add(addArea);
+        }
     }
 
     public void addType(String addType) {
-        types.add(addType);
+        if (!types.contains(addType)) {
+            types.add(addType);
+        }
     }
 
     public void addMood(String addMood) {
-        moods.add(addMood);
+        if (!moods.contains(addMood)) {
+            moods.add(addMood);
+        }
     }
 
     public void removeZone(String removeArea) {
@@ -68,8 +74,8 @@ public class SearchCriteria {
     @Override
     public String toString() {
         return "SearchCriteria{" +
-                "fromDate="+fromDate.getTime() + fromDate.getDate()+"/"+ fromDate.getMonth()+1+"/"+ (fromDate.getYear()+1900) +
-                ", toDate="+toDate.getTime() + toDate.getDate()+"/"+ toDate.getMonth()+1+"/"+ (toDate.getYear()+1900) +
+                "fromDate=" + fromDate.getTime() + fromDate.getDate() + "/" + fromDate.getMonth() + 1 + "/" + (fromDate.getYear() + 1900) +
+                ", toDate=" + toDate.getTime() + toDate.getDate() + "/" + toDate.getMonth() + 1 + "/" + (toDate.getYear() + 1900) +
                 ", zone=" + zone +
                 ", types=" + types +
                 ", moods=" + moods +
