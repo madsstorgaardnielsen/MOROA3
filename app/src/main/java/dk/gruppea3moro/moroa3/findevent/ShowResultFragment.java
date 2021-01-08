@@ -1,4 +1,4 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.findevent;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import dk.gruppea3moro.moroa3.MainActivity;
+import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.data.DataController;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;

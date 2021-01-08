@@ -22,8 +22,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         View root = inflater.inflate(R.layout.fragment_menu, container, false);
         contact_TextView = root.findViewById(R.id.kontakt_textView);
         about_TextView = root.findViewById(R.id.om_textView);

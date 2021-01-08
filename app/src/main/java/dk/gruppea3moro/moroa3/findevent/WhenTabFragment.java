@@ -22,7 +22,6 @@ public class WhenTabFragment extends Fragment implements DatePicker.OnDateChange
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_when_tab, container, false);
         picker = (DatePicker) root.findViewById(R.id.when_datePicker);
         picker.setMinDate(System.currentTimeMillis() - 1000);

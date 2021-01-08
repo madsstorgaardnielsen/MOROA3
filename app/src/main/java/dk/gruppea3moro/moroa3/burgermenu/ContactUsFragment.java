@@ -18,7 +18,6 @@ public class ContactUsFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_contact_us, container, false);
         tipus_TextView = root.findViewById(R.id.tipus_textView);
         tipus_TextView.setOnClickListener(this);

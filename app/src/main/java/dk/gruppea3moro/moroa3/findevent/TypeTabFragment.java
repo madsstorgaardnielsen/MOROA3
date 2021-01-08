@@ -18,7 +18,6 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         //TODO Man skal vente efter at have skiftet mellem Hvad og Hvor før man kan klikke
         View root = inflater.inflate(R.layout.fragment_type_tab, container, false);

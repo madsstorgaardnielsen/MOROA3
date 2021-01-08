@@ -20,7 +20,6 @@ import dk.gruppea3moro.moroa3.model.AppState;
 
 //TODO burgermenu(kontakt os osv), søge menu med filtre, evt?
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     BottomNavigationView bottomNavigationView;
     Fragment mainFragment, topBarFragment;
 

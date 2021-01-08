@@ -18,9 +18,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
             textView9, textView10, textView11, textView12;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_where_tab, container, false);
 
         textView1 = root.findViewById(R.id.textView1);

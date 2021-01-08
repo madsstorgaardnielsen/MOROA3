@@ -18,8 +18,8 @@ import dk.gruppea3moro.moroa3.home.FrontpageFragment;
 import dk.gruppea3moro.moroa3.burgermenu.MenuFragment;
 import dk.gruppea3moro.moroa3.profile.MyProfileFragment;
 import dk.gruppea3moro.moroa3.R;
-import dk.gruppea3moro.moroa3.ShowResultFragment;
-import dk.gruppea3moro.moroa3.ShowEventFragment;
+import dk.gruppea3moro.moroa3.findevent.ShowResultFragment;
+import dk.gruppea3moro.moroa3.findevent.ShowEventFragment;
 import dk.gruppea3moro.moroa3.burgermenu.TipUsFragment;
 
 import static android.content.Context.MODE_PRIVATE;
