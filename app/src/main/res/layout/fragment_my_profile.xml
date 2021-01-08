@@ -6,7 +6,7 @@
     android:background="@color/moroGreenBackground"
     android:id="@+id/fragment_my_profile"
 
-    tools:context=".MyProfileFragment">
+    tools:context=".profile.MyProfileFragment">
 
 
 

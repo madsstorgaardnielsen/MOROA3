@@ -6,7 +6,7 @@
     android:id="@+id/fragment_menu"
     android:background="@color/moroPurpleBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MenuFragment">
+    tools:context=".burgermenu.MenuFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

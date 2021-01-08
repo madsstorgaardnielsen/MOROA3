@@ -1,20 +1,17 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.burgermenu;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
+import dk.gruppea3moro.moroa3.MainActivity;
+import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.data.DataController;
 import dk.gruppea3moro.moroa3.model.AppState;
 

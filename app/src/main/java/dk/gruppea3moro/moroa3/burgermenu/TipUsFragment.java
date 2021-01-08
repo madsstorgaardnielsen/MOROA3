@@ -1,4 +1,4 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.burgermenu;
 
 import android.os.Bundle;
 
@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
+
+import dk.gruppea3moro.moroa3.R;
 
 
 public class TipUsFragment extends Fragment implements View.OnClickListener {

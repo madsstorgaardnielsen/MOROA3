@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/moroPurpleBackground"
-    tools:context=".AboutUsFragment">
+    tools:context=".burgermenu.AboutUsFragment">
 
     <TextView
         android:id="@+id/textView2"
