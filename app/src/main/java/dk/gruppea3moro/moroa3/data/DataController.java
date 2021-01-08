@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.text.format.DateFormat;
+
 
 import com.google.gson.Gson;
 
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -133,33 +132,18 @@ public class DataController {
         String[] selectionArgs = null;
 
         //Format startDate and endDate the way SQL reads it
-        Date d1 = searchCriteria.getFromDate();
-        Date d2 = searchCriteria.getToDate();
+        DateTime fromDate = searchCriteria.getFromDate();
+        DateTime toDate = searchCriteria.getToDate();
 
-        if (d1 == null && d2 == null) {
+        if (fromDate == null && toDate == null) {
             selectionArgs = null;
             selection = null;
         } else {
-            String d1Day = (String) DateFormat.format("dd", d1);
-            String d1MonthNumber = (String) DateFormat.format("MM", d1);
-            String d1Year = (String) DateFormat.format("yyyy", d1);
-
-            String d2Day = (String) DateFormat.format("dd", d2);
-            String d2MonthNumber = (String) DateFormat.format("MM", d2);
-            String d2Year = (String) DateFormat.format("yyyy", d2);
-
-
-            String SQLfromDate = d1Year + "/" + d1MonthNumber + "/" + d1Day + " " +
-                    +d1.getHours() + ":" + d1.getMinutes() + ":00";
-            String SQLtoDate = d2Year + "/" + d2MonthNumber + "/" + d2Day + " " +
-                    +d2.getHours() + ":" + d2.getMinutes() + ":00";
-
-            // Filter results WHERE "title" = 'My Title'
             selection = SQLiteContract.events.COLUMN_NAME_ENDDATE + " > ? AND "
                     + SQLiteContract.events.COLUMN_NAME_STARTDATE + " < ?";
 
-            selArgsArrayList.add(SQLfromDate);
-            selArgsArrayList.add(SQLtoDate);
+            selArgsArrayList.add(fromDate.getSqlDateTimeFormat());
+            selArgsArrayList.add(fromDate.getSqlDateTimeFormat());
         }
 
         if (searchCriteria.getZone().size() > 0) {

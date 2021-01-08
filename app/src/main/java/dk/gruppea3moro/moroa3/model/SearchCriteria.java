@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class SearchCriteria {
-    private Date fromDate, toDate;
-    public ArrayList<String> zone, types, moods;
+    private DateTime fromDate, toDate;
+    private ArrayList<String> zone, types, moods;
 
     public SearchCriteria() {
         zone = new ArrayList<>();
@@ -43,20 +43,20 @@ public class SearchCriteria {
         moods.remove(removeMood);
     }
 
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public void setToDate(Date toDate) {
-        this.toDate = toDate;
-    }
-
-    public Date getFromDate() {
+    public DateTime getFromDate() {
         return fromDate;
     }
 
-    public Date getToDate() {
+    public void setFromDate(DateTime fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public DateTime getToDate() {
         return toDate;
+    }
+
+    public void setToDate(DateTime toDate) {
+        this.toDate = toDate;
     }
 
     public ArrayList<String> getZone() {

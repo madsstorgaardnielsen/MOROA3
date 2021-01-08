@@ -1,6 +1,10 @@
 package dk.gruppea3moro.moroa3.model;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class DateTime {
     String day, month, year, hour,minute;
 
@@ -133,5 +137,12 @@ public class DateTime {
         public DateTimeException(String message){
             super(message);
         }
+    }
+
+    public static DateTime getDateFromTimeMillis(long timeMillis){
+        Date date = new Date(timeMillis);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String sqlDate  = formatter.format(date);
+        return new DateTime(sqlDate);
     }
 }

@@ -28,6 +28,8 @@ public class FindEventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_find_event, container, false);
         tabLayout = root.findViewById(R.id.findEventTabLayout);
+        //reset search criteria
+        AppState.get().resetSearchCriteria();
         return root;
     }
 

@@ -146,17 +146,14 @@ public class AppState //extends Application
         SearchCriteria sc = new SearchCriteria();
 
         long millis = System.currentTimeMillis();
-        java.util.Date date1 = new java.util.Date(millis); //From right now
-        java.util.Date date2 = new java.util.Date(millis + 3600000); //until 1 hour later
-
-        sc.setFromDate(date1);
-        sc.setToDate(date2);
+        sc.setFromDate(DateTime.getDateFromTimeMillis(millis));
+        sc.setToDate(DateTime.getDateFromTimeMillis(millis+3600000));
 
         this.searchCriteria = sc;
     }
 
-    public void resetFindEventModel() {
-        this.searchCriteria = null;
+    public void resetSearchCriteria() {
+        this.searchCriteria = new SearchCriteria();
     }
 
     public EventDTO getFeaturedEvent() {
