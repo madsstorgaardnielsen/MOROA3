@@ -38,7 +38,7 @@
     <string name="Stemning">Stemning</string>
     <string name="TYPE">Type</string>
     <string name="loading">Loader...</string>
-    <string name="Du_ikke_vil_hjem_men_videre"><![CDATA[DU IKKE \n VIL HJEM, \n MEN VIDERE]]></string>
+    <string name="Du_ikke_vil_hjem_men_videre"><![CDATA[DU IKKE \n VIL HJEM \n MEN VIDERE]]></string>
     <string name="Du_vil_ud_i_det_blå"><![CDATA[DU VIL UD I\n DET BLÅ]]></string>
     <string name="Du_har_tømmermænd"><![CDATA[DU HAR TØMMER- \n MÆND]]></string>
     <string name="Du_vil_udvide_din_horisont"><![CDATA[DU VIL \n UDIVDE DIN \n HORISONT]]></string>
@@ -90,7 +90,7 @@
     <string name="TYPE_MAD_OG_DRIKKE">MAD &amp; DRIKKE</string>;
     <string name="TYPE_MODE">MODE</string>;
     //stemninger
-    <string name="STEMNING_IKKE_HJEM">DU IKKE VIL HJEM, MEN VIDERE</string>;
+    <string name="STEMNING_IKKE_HJEM">DU IKKE VIL HJEM MEN VIDERE</string>;
     <string name="STEMNING_UD_I_DET_BLA">DU VIL UD I DET BLÅ</string>;
     <string name="STEMNING_TOMMERMAND">DU HAR TØMMERMÆND</string>;
     <string name="STEMNING_UDVIDE_HORISONT">DU VIL UDVIDE DIN HORISONT</string>;
