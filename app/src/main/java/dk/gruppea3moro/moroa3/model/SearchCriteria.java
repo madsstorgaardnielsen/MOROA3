@@ -68,8 +68,8 @@ public class SearchCriteria {
     @Override
     public String toString() {
         return "SearchCriteria{" +
-                "fromDate=" + fromDate.getDate()+"/"+ fromDate.getMonth()+"/"+ fromDate.getYear() +
-                ", toDate=" + fromDate.getDate()+"/"+ fromDate.getMonth()+"/"+ fromDate.getYear() +
+                "fromDate="+fromDate.getTime() + fromDate.getDate()+"/"+ fromDate.getMonth()+1+"/"+ (fromDate.getYear()+1900) +
+                ", toDate="+toDate.getTime() + toDate.getDate()+"/"+ toDate.getMonth()+1+"/"+ (toDate.getYear()+1900) +
                 ", zone=" + zone +
                 ", types=" + types +
                 ", moods=" + moods +

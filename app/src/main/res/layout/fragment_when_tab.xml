@@ -24,26 +24,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.197" />
 
-    <Button
-        android:id="@+id/pickDate_button"
-        android:layout_width="350dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="100dp"
-        android:text="@string/choose_Date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/when_datePicker" />
-
-    <TextView
-        android:id="@+id/chosenDate_TextView"
-        android:layout_width="190dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="34dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickDate_button" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

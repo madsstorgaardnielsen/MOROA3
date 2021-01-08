@@ -75,7 +75,6 @@ public class FindEventFragment extends Fragment {
     public void changeTabLayoutColor(int position) {
         switch (position) {
             case 0:
-
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.moroSalmonRedBackground));
                 break;
             case 1:
