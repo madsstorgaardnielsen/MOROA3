@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_when_tab"
-    tools:context=".WhenTabFragment"
+    tools:context=".findevent.WhenTabFragment"
     android:background="@color/moroSalmonRedBackground">
 
 

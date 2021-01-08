@@ -1,7 +1,9 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.findevent;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -13,33 +15,54 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+
+import java.util.Date;
+
+import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.model.AppState;
+import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 public class WhenTabFragment extends Fragment implements View.OnClickListener {
-
+    //MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder;
     DatePicker picker;
     Button pickDate_button;
     TextView chosenDate_TextView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_when_tab, container, false);
-        picker = (DatePicker) root.findViewById(R.id.when_datePicker);
         pickDate_button = root.findViewById(R.id.pickDate_button);
+        picker = (DatePicker) root.findViewById(R.id.when_datePicker);
         chosenDate_TextView = root.findViewById(R.id.chosenDate_TextView);
-
         pickDate_button.setOnClickListener(this);
+
+        /*materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
+        materialDateBuilder.setTheme(R.style.ThemeOverlay_MaterialComponents_MaterialCalendar);
+        final MaterialDatePicker<?> materialDatePicker = materialDateBuilder.build();
+        materialDatePicker.show(getChildFragmentManager(), "MATERIAL_DATE_PICKER");*/
 
         return root;
     }
 
+    //TODO find ud af om kalender understøtter at man kan vælge et interval
     @Override
     public void onClick(View v) {
+        Date date = new Date();
         if (v == pickDate_button) {
             int month = picker.getMonth() + 1;
-
+            int day = picker.getDayOfMonth();
+            int year = picker.getYear();
             chosenDate_TextView.setText(picker.getDayOfMonth() + "/" + month + "/" + picker.getYear());
+            System.out.println("dag: "+picker.getDayOfMonth()+", måned: "+month+", år: "+picker.getYear());
+
+            date.setDate(day);
+            date.setMonth(month);
+            date.setYear(year);
+
+            AppState.get().getSearchCriteria().setFromDate(date);
+            AppState.get().getSearchCriteria().setToDate(date);
 
             // CategoryTabFragment categoryTabFragment = new CategoryTabFragment();
             // replaceFragment(categoryTabFragment);

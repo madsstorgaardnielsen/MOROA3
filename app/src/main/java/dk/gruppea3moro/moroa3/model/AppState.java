@@ -13,7 +13,7 @@ import java.util.Deque;
 
 import dk.gruppea3moro.moroa3.AboutUsFragment;
 import dk.gruppea3moro.moroa3.ContactUsFragment;
-import dk.gruppea3moro.moroa3.FindEventFragment;
+import dk.gruppea3moro.moroa3.findevent.FindEventFragment;
 import dk.gruppea3moro.moroa3.FrontpageFragment;
 import dk.gruppea3moro.moroa3.MenuFragment;
 import dk.gruppea3moro.moroa3.MyProfileFragment;
