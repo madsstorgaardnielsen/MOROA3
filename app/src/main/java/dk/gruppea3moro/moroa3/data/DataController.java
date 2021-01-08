@@ -171,7 +171,14 @@ public class DataController {
 
         if (searchCriteria.getZone().size() > 0) {
             StringBuilder sb = new StringBuilder();
-            sb.append(" AND (");
+            if (selection!= null){
+                sb.append(" AND (");
+            } else {
+                selection="";
+                sb.append("(");
+            }
+
+
             sb.append(SQLiteContract.events.COLUMN_NAME_ZONE + " = ?");
             selArgsArrayList.add(searchCriteria.getZone().get(0));
             for (int i = 1; i < searchCriteria.getZone().size(); i++) {

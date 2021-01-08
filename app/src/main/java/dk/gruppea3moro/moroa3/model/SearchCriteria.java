@@ -70,7 +70,7 @@ public class SearchCriteria {
     public ArrayList<String> getMoods() {
         return moods;
     }
-
+/*
     @Override
     public String toString() {
         return "SearchCriteria{" +
@@ -81,4 +81,6 @@ public class SearchCriteria {
                 ", moods=" + moods +
                 '}';
     }
+
+ */
 }
