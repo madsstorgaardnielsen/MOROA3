@@ -72,7 +72,7 @@ public class FindEventFragment extends Fragment {
                 tab.setText(getString(R.string.tab_where));
                 break;
             case 3:
-                tab.setText("VIS");
+                tab.setText(getString(R.string.tab_show));
                 break;
             default:
                 break;
