@@ -1,21 +1,23 @@
 package dk.gruppea3moro.moroa3.findevent;
 
-import android.os.Handler;
-
+import android.app.Application;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
-import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
-import dk.gruppea3moro.moroa3.model.EventDTO;
+import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
-public class FindEventViewModel extends ViewModel {
+public class FindEventViewModel extends AndroidViewModel {
     private MutableLiveData<SearchCriteria> searchCriteriaMLD;
+    Application application;
+
+    public FindEventViewModel(@NonNull Application application) {
+        super(application);
+        this.application=application;
+    }
 
     public LiveData<SearchCriteria> getSearchCriteriaLD(){
         return searchCriteriaMLD;
@@ -58,6 +60,10 @@ public class FindEventViewModel extends ViewModel {
             selectedTypes.add(type);
         }
         searchCriteriaMLD.setValue(sc);
+    }
+
+    public void setResultEvents(){
+        EventRepository.get().setResultEvents(searchCriteriaMLD.getValue(),application);
     }
 
 

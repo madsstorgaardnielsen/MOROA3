@@ -1,7 +1,6 @@
 package dk.gruppea3moro.moroa3.findevent;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import dk.gruppea3moro.moroa3.MainActivity;
 import dk.gruppea3moro.moroa3.R;
@@ -35,7 +31,6 @@ public class ShowResultFragment extends Fragment {
     private final View.OnClickListener mOnClickListener = new RVOnClickListener();
 
     RecyclerView recyclerView;
-    ArrayList<EventDTO> eventDTOs;
     ShowResultViewModel showResultViewModel;
 
     @Override
@@ -43,24 +38,19 @@ public class ShowResultFragment extends Fragment {
 
         //Create RecyclerView -  empty at first
         recyclerView = new RecyclerView(getContext());
-        refreshSearch();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
 
-        SearchCriteria sc;
+        //Get search criteria - either from "Right Now" or form parent fragment "Find Event"
+        SearchCriteria sc = getSearchCriteria();
 
-        //Check if in FindEventFragment or from bottom-nav-bar
-        if (getParentFragment() instanceof FindEventFragment){
-
-        } else {
-            sc = AppState.getRightNowSearchCriteria();
-        }
-
-
+        //Set ViewModel
         showResultViewModel = ViewModelProviders.of(this).get(ShowResultViewModel.class);
         showResultViewModel.init(sc);
         showResultViewModel.getResultEventsLD().observe(this, new Observer<List<EventDTO>>() {
             @Override
             public void onChanged(List<EventDTO> eventDTOS) {
-
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -70,7 +60,7 @@ public class ShowResultFragment extends Fragment {
         //return recyclerview
         return recyclerView;
     }
-
+/*
     public void refreshSearch() {
         //Gets SearchCriteria from appstate
         SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
@@ -90,10 +80,16 @@ public class ShowResultFragment extends Fragment {
         });
     }
 
+ */
+
     RecyclerView.Adapter adapter = new RecyclerView.Adapter() {
         @Override
         public int getItemCount() {
-            return eventDTOs.size();
+            if (showResultViewModel.getResultEventsLD().getValue() ==null){
+                return 0;
+            } else{
+                return showResultViewModel.getResultEventsLD().getValue().size();
+            }
         }
 
         @Override
@@ -118,7 +114,7 @@ public class ShowResultFragment extends Fragment {
             ImageView imageView = vh.itemView.findViewById(R.id.showevent_imageView_RV);
 
             //Get current event
-            EventDTO currentEvent = eventDTOs.get(position);
+            EventDTO currentEvent = showResultViewModel.getResultEventsLD().getValue().get(position);
             System.out.println(currentEvent);
 
             //Set views from current event data
@@ -143,11 +139,11 @@ public class ShowResultFragment extends Fragment {
             int position = recyclerView.getChildLayoutPosition(view);
 
             //Get event at that position
-            EventDTO event = eventDTOs.get(position);
+            EventDTO event = showResultViewModel.getResultEventsLD().getValue().get(position);
 
             //Fragment transaction with event as argument
             Fragment f = AppState.getFragmentFromLayoutId(R.id.fragment_show_event);
-            EventRepository.get().setLastViewedEvent(event);
+            EventRepository.get().setLastViewedEventMLD(event);
             Bundle b = new Bundle();
             b.putSerializable("event", event);
             f.setArguments(b);
@@ -156,12 +152,25 @@ public class ShowResultFragment extends Fragment {
 
         }
     }
-
+/*
     @Override
     public void onResume() {
         super.onResume();
         if (AppState.get().isRefreshSearch()) {
             refreshSearch();
         }
+    }
+
+ */
+
+    public SearchCriteria getSearchCriteria(){
+        SearchCriteria sc;
+        //Check if in FindEventFragment or from "Right Now"
+        if (getParentFragment() instanceof FindEventFragment){
+            sc = ((FindEventFragment)(getParentFragment())).getSearchCriteria();
+        } else {
+            sc = AppState.getRightNowSearchCriteria();
+        }
+        return sc;
     }
 }

@@ -24,7 +24,7 @@ public class FeaturedEventViewModel extends ViewModel {
     }
 
     public void setLastViewedEvent(){
-        EventRepository.get().setLastViewedEvent(featuredEvent.getValue());
+        EventRepository.get().setLastViewedEventMLD(featuredEvent.getValue());
     }
 
 }

@@ -33,23 +33,11 @@ public class ShowResultViewModel  extends AndroidViewModel {
             return;
         }
         setResultEvents(sc);
+        resultEventsMLD = EventRepository.get().getResultEventsMLD();
     }
 
     public void setResultEvents(SearchCriteria searchCriteria){
-        //Initialze result
-        List<EventDTO> eventDTOs = new ArrayList<>();
-
-        //Get events with EventRepository from BackgroundThread
-        Executor bgThread = Executors.newSingleThreadExecutor();
-        Handler uiThread = new Handler();
-        bgThread.execute(() -> {
-            //Gets event from searchCriteria via. EventRepository
-             EventRepository.get().searchEvents(application, searchCriteria,eventDTOs);
-
-            uiThread.post(() -> {
-                resultEventsMLD.setValue(eventDTOs);
-            });
-        });
+        EventRepository.get().setResultEvents(searchCriteria,application);
     }
 
     public LiveData<List<EventDTO>> getResultEventsLD(){

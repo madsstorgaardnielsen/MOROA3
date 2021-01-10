@@ -25,7 +25,8 @@ public class EventRepository {
     private static EventRepository instance;
     private EventLoader eventLoader;
     private final MutableLiveData<EventDTO> featuredEventMLD = new MutableLiveData<>();
-    private final MutableLiveData<EventDTO> lastViewedEvent = new MutableLiveData<>();
+    private final MutableLiveData<EventDTO> lastViewedEventMLD = new MutableLiveData<>();
+    private final MutableLiveData<List<EventDTO>> resultEventsMLD = new MutableLiveData<>();
 
 
     public EventRepository() {
@@ -73,7 +74,23 @@ public class EventRepository {
                 featuredEventMLD.setValue(finalFeaturedEvent);
             });
         });
+    }
 
+    public void setResultEvents(SearchCriteria sc, Context context){
+        Executor bgThread = Executors.newSingleThreadExecutor();
+        Handler uiThread = new Handler();
+        bgThread.execute(() -> {
+            //Gets event from searchCriteria via. EventRepository
+            List<EventDTO> eventDTOs = searchEvents(sc,context);
+
+            uiThread.post(() -> {
+                resultEventsMLD.setValue(eventDTOs);
+            });
+        });
+    }
+
+    public MutableLiveData<List<EventDTO>> getResultEventsMLD(){
+        return resultEventsMLD;
     }
 
     public void feedDatabase(Context context) {
@@ -116,12 +133,10 @@ public class EventRepository {
         System.out.println("done updating db");
     }
 
-    public ArrayList<EventDTO> searchEvents(Context context, SearchCriteria searchCriteria,
-                                            List<EventDTO> optResultList) {
+    public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria,Context context) {
 
         //Result arraylist
         ArrayList<EventDTO> eventDTOS = new ArrayList<EventDTO>();
-        if (optResultList!=null)optResultList = eventDTOS;
 
         //Create SQLiteHelper object
         SQLiteHelper dbHelper = new SQLiteHelper(context);
@@ -266,11 +281,11 @@ public class EventRepository {
         });
     }
 
-    public MutableLiveData<EventDTO> getLastViewedEvent() {
-        return lastViewedEvent;
+    public MutableLiveData<EventDTO> getLastViewedEventMLD() {
+        return lastViewedEventMLD;
     }
 
-    public void setLastViewedEvent(EventDTO lastViewedEvent) {
-        this.lastViewedEvent.setValue(lastViewedEvent);
+    public void setLastViewedEventMLD(EventDTO lastViewedEventMLD) {
+        this.lastViewedEventMLD.setValue(lastViewedEventMLD);
     }
 }

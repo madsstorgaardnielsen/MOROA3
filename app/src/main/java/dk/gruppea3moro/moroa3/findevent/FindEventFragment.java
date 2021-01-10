@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.home.FeaturedEventViewModel;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
@@ -60,6 +61,7 @@ public class FindEventFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (position == 3) {
+                    findEventViewModel.setResultEvents();
                     AppState.get().setRefreshSearch(true);
                 }
                 System.out.println("position = " + position);
@@ -110,6 +112,10 @@ public class FindEventFragment extends Fragment {
 
     public FindEventViewModel getFindEventViewModel(){
         return findEventViewModel;
+    }
+
+    public SearchCriteria getSearchCriteria(){
+        return findEventViewModel.getSearchCriteriaLD().getValue();
     }
 }
 
