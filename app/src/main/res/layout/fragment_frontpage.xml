@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_frontpage"
     android:background="@color/moroPinkBackground"
-    tools:context=".FrontpageFragment">
+    tools:context=".home.FrontpageFragment">
 
     <TextView
         android:layout_width="match_parent"

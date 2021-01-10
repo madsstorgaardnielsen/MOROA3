@@ -1,4 +1,4 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.findevent;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import dk.gruppea3moro.moroa3.R;
+
 
 public class TypeOrMoodFragment extends Fragment implements View.OnClickListener {
 
@@ -18,9 +20,7 @@ public class TypeOrMoodFragment extends Fragment implements View.OnClickListener
     MoodTabFragment moodTabFragment = new MoodTabFragment();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_type_or_mood, container, false);
         type_textView = root.findViewById(R.id.type_textView);
         stemning_textView = root.findViewById(R.id.stemning_textView);

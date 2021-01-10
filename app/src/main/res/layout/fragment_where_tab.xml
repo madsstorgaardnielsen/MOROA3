@@ -26,7 +26,8 @@
             android:background="@drawable/blackborder"
             android:gravity="center"
             android:tag="red"
-            android:text="@string/Nørrebro"
+            android:text="@string/ZONE_NORREBRO"
+            android:hint="@string/ZONE_NORREBRO"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -45,6 +46,7 @@
             android:gravity="center"
             android:tag="red"
             android:text="@string/Islands_brygge"
+            android:hint="@string/ZONE_ISLANDS_BRYGGE"
             android:textColor="#000000"
             android:textSize="21sp"
 
@@ -63,7 +65,8 @@
             android:background="@drawable/blackborder"
             android:gravity="center"
             android:tag="red"
-            android:text="@string/Indre_by"
+            android:text="@string/ZONE_INDRE_BY"
+            android:hint="@string/ZONE_INDRE_BY"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -96,7 +99,8 @@
             android:background="@drawable/blackborder"
             android:gravity="center"
             android:tag="red"
-            android:text="@string/Østerbro"
+            android:text="@string/ZONE_OSTERBRO"
+            android:hint="@string/ZONE_OSTERBRO"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -114,7 +118,8 @@
             android:background="@drawable/blackborder"
             android:gravity="center"
             android:tag="red"
-            android:text="@string/Nordvest"
+            android:text="@string/ZONE_NORDVEST"
+            android:hint="@string/ZONE_NORDVEST"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -132,7 +137,8 @@
             android:background="@drawable/blackborder"
             android:gravity="center"
             android:tag="red"
-            android:text="@string/Valby"
+            android:text="@string/ZONE_VALBY"
+            android:hint="@string/ZONE_VALBY"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -165,7 +171,8 @@
             android:background="@drawable/blackborder"
             android:gravity="center"
             android:tag="red"
-            android:text="@string/Brønshøj_og_Husum"
+            android:text="@string/ZONE_BRONSHOJ_OG_HUSUM"
+            android:hint="@string/ZONE_BRONSHOJ_OG_HUSUM"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -183,7 +190,8 @@
             android:background="@drawable/blackborder"
             android:gravity="center"
             android:tag="red"
-            android:text="@string/Amager"
+            android:text="@string/ZONE_AMAGER"
+            android:hint="@string/ZONE_AMAGER"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -201,7 +209,8 @@
             android:background="@drawable/blackborder"
             android:gravity="center"
             android:tag="red"
-            android:text="@string/Vesterbro"
+            android:text="@string/ZONE_VESTERBRO"
+            android:hint="@string/ZONE_VESTERBRO"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -234,7 +243,8 @@
             android:background="@drawable/blackborder"
             android:gravity="center"
             android:tag="red"
-            android:text="@string/Vanløse"
+            android:text="@string/ZONE_VANLOSE"
+            android:hint="@string/ZONE_VANLOSE"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -253,6 +263,7 @@
             android:gravity="center"
             android:tag="red"
             android:text="@string/Christianshavn"
+            android:hint="@string/ZONE_CHRISTIANSHAVN"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -272,6 +283,7 @@
             android:gravity="center"
             android:tag="red"
             android:text="@string/Refshaleøen"
+            android:hint="@string/ZONE_REFSHALEOEN"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />

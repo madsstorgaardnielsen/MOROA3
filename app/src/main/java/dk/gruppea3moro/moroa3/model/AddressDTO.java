@@ -26,6 +26,9 @@ public class AddressDTO implements Serializable {
         this.addressName = addressName;
     }
 
+    public AddressDTO() {
+    }
+
     public String getArea() {
         return area;
     }

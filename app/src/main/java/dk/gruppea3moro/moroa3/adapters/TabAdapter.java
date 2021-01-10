@@ -1,4 +1,4 @@
-package dk.gruppea3moro.moroa3;
+package dk.gruppea3moro.moroa3.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

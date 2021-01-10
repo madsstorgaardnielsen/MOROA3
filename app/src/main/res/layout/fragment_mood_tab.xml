@@ -26,6 +26,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/Du_ikke_vil_hjem_men_videre"
+            android:hint="@string/STEMNING_IKKE_HJEM"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -44,8 +45,9 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/Du_vil_ud_i_det_blå"
-
+            android:hint="@string/STEMNING_UD_I_DET_BLA"
             android:textColor="#000000"
+
             android:textSize="21sp"
             android:textStyle="bold" />
 
@@ -63,6 +65,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/Du_har_tømmermænd"
+            android:hint="@string/STEMNING_TOMMERMAND"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -96,6 +99,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/Du_vil_udvide_din_horisont"
+            android:hint="@string/STEMNING_UDVIDE_HORISONT"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -114,6 +118,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/Du_har_tomme_lommer"
+            android:hint="@string/STEMNING_TOMME_LOMMER"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -132,6 +137,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/Mad_gør_dig_glad"
+            android:hint="@string/STEMNING_MAD_GLAD"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -165,6 +171,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/Du_vil_forkæle_dig_selv"
+            android:hint="@string/STEMNING_FORKALE_DIG_SELV"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -183,6 +190,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/Du_vil_imponere_din_date"
+            android:hint="@string/STEMNING_IMPONERE_DATE"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -201,6 +209,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/De_gamle_kommer_på_besøg"
+            android:hint="@string/STEMNING_DE_GAMLE_BESOG"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -234,6 +243,7 @@
             android:gravity="center"
             android:tag="yellow"
             android:text="@string/Du_vil_have_gang_i_kroppen"
+            android:hint="@string/STEMNING_GANG_I_KROPPEN"
             android:textColor="#000000"
             android:textSize="21sp"
             android:textStyle="bold" />

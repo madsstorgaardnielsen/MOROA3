@@ -5,14 +5,10 @@ import java.util.ArrayList;
 
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
-
+//Loads events from external database into phones local database
 public interface EventLoader {
 
     ArrayList<EventDTO> getAllEvents() throws IOException;
 
-    ArrayList<EventDTO> searchEvents(SearchCriteria sc) throws IOException;
-
-    ArrayList<EventDTO> getNextNEvents(int offset, int numberOfEvents, SearchCriteria sc) throws IOException;
-
-    EventDTO getFeaturedEvent() throws IOException;
+   EventDTO getFeaturedEvent() throws IOException;
 }

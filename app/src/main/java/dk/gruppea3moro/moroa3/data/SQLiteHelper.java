@@ -9,11 +9,11 @@ import dk.gruppea3moro.moroa3.data.SQLiteContract.*;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final  int    DATABASE_VERSION   = 8;
-    public static final  String DATABASE_NAME      = "database.db";
-    private static final String TEXT_TYPE          = " TEXT";
-    private static final String DATE_TYPE          = " SMALLDATETYPE";
-    private static final String COMMA_SEP          = ",";
+    public static final int DATABASE_VERSION = 8;
+    public static final String DATABASE_NAME = "database.db";
+    private static final String TEXT_TYPE = " TEXT";
+    private static final String DATE_TYPE = " SMALLDATETYPE";
+    private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " +
             events.TABLE_NAME + " (" +
@@ -33,7 +33,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             events.COLUMN_NAME_AREA + TEXT_TYPE + COMMA_SEP +
             events.COLUMN_NAME_STEMNINGTAGS + TEXT_TYPE + COMMA_SEP +
             events.COLUMN_NAME_TYPETAGS + TEXT_TYPE +
-             " )";
+            " )";
 
 
     private static final String SQL_DELETE_ALL_ENTRIES = "DROP TABLE IF EXISTS " + events.TABLE_NAME;
@@ -57,7 +57,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_ALL_ENTRIES);
         onCreate(db);
     }
-
 
 
 }
