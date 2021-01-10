@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+
+import androidx.lifecycle.MutableLiveData;
+
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,18 +19,21 @@ import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
-public class DataController {
+public class EventRepository {
 
-    private static DataController instance;
+    private static EventRepository instance;
     private EventLoader eventLoader;
+    private final MutableLiveData<EventDTO> featuredEventMLD = new MutableLiveData<>();
 
-    public DataController() {
+    private EventDTO featuredEvent;
+
+    public EventRepository() {
         eventLoader = new SheetReader();
     }
 
-    public static DataController get() {
+    public static EventRepository get() {
         if (instance == null) {
-            instance = new DataController();
+            instance = new EventRepository();
         }
         return instance;
     }
@@ -46,14 +52,26 @@ public class DataController {
     }
 
 
+    public MutableLiveData<EventDTO> getFeaturedEvent() {
+        fakeSetFeaturedEvent();
+        return featuredEventMLD;
+    }
 
-    public EventDTO getFeaturedEvent() {
+    public void fakeSetFeaturedEvent(){
+        EventDTO e = new EventDTO();
+        e.setTitle("Test");
+        e.setSubtext("test");
+        e.setStart(new DateTime("2020/01/01 18:00"));
+        e.setImageLink("https://www.vega.dk/media/59532/blaue-blume-november-2020.jpg");
+        featuredEventMLD.setValue(e);
+    }
+
+    public void setFeaturedEvent(){
         try {
-            return getEventLoader().getFeaturedEvent();
+            featuredEvent = getEventLoader().getFeaturedEvent();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     public void feedDatabase(Context context) {
@@ -234,12 +252,12 @@ public class DataController {
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         try {
-            DataController.get().deleteAllFromDatabase(context);
+            EventRepository.get().deleteAllFromDatabase(context);
         } catch (Exception e) {
             e.printStackTrace();
         }
         bgThread.execute(() -> {
-            DataController.get().feedDatabase(context);
+            EventRepository.get().feedDatabase(context);
         });
     }
 }

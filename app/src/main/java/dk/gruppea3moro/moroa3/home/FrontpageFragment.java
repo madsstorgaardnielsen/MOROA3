@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 import dk.gruppea3moro.moroa3.MainActivity;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.findevent.ShowEventFragment;
-import dk.gruppea3moro.moroa3.data.DataController;
+import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 
@@ -30,8 +30,11 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_frontpage, container, false);
 
-        //Call method to get featured event from bg-thread and more
-        setupFeaturedEvent();
+        //Show featured event fragment
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.featuredEventFrontpageFL, new FeaturedEventFragment())
+                .commit();
 
         //Buttons
         rightNowButton = root.findViewById(R.id.rightNowButtonFP);
@@ -72,32 +75,7 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    public void setupFeaturedEvent() {
 
-        //Check if featuredEvent is saved in AppState
-        if (AppState.get().getFeaturedEvent() != null) {
-            replaceFeaturedEvent(AppState.get().getFeaturedEvent());
-            return; //No need to proceed if featuredEvent was in AppState
-        }
-
-        //Create object for bg and fg threads
-        Executor bgThread = Executors.newSingleThreadExecutor();
-        Handler uiThread = new Handler();
-
-        //Execute bg thread
-        bgThread.execute(() -> {
-            //Get featured event with DataController from BackgroundThread
-            EventDTO featuredEventDTO = DataController.get().getFeaturedEvent();
-
-            //Set this event to be featuredEvent in AppState
-            AppState.get().setFeaturedEvent(featuredEventDTO);
-
-            //Post the fragment transaction on UI-thread
-            uiThread.post(() -> {
-                replaceFeaturedEvent(featuredEventDTO);
-            });
-        });
-    }
 
     public void replaceFeaturedEvent(EventDTO featuredEvent) {
         //Get ready for fragment transaction for featured event

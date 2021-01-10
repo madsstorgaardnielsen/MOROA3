@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import dk.gruppea3moro.moroa3.MainActivity;
 import dk.gruppea3moro.moroa3.R;
-import dk.gruppea3moro.moroa3.data.DataController;
+import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.AppState;
 
 
@@ -53,7 +53,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             TipUsFragment tipUsFragment = new TipUsFragment();
             ma.loadFragment(tipUsFragment);
         } else if (v == readDbButton) {//TODO delete this
-            DataController.get().refreshDbInBackground(getContext());
+            EventRepository.get().refreshDbInBackground(getContext());
         }
     }
 }

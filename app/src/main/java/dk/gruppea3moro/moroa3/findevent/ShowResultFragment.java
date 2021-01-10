@@ -1,6 +1,5 @@
 package dk.gruppea3moro.moroa3.findevent;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -17,13 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import dk.gruppea3moro.moroa3.MainActivity;
 import dk.gruppea3moro.moroa3.R;
-import dk.gruppea3moro.moroa3.data.DataController;
+import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
@@ -54,12 +52,12 @@ public class ShowResultFragment extends Fragment {
         //Gets SearchCriteria from appstate
         SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
 
-        //Get events with DataController from BackgroundThread
+        //Get events with EventRepository from BackgroundThread
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
-            //Gets event from searchCriteria via. DataController
-            eventDTOs = DataController.get().searchEvents(getContext(), searchCriteria);
+            //Gets event from searchCriteria via. EventRepository
+            eventDTOs = EventRepository.get().searchEvents(getContext(), searchCriteria);
 
             uiThread.post(() -> {
                 // Inflate the layout (recyclerview) for this fragment

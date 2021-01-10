@@ -14,7 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Deque;
 
-import dk.gruppea3moro.moroa3.data.DataController;
+import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.home.FrontpageFragment;
 import dk.gruppea3moro.moroa3.model.AppState;
 
@@ -32,19 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //Read database from google sheet in background thread
-        DataController.get().refreshDbInBackground(this);
-
-        //Top bar.
-/*        topBarFragment = new TopBarFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.topBarFL, topBarFragment)  // tom container i layout
-                .commit();*/
-
-        //Main FL
-        mainFragment = new FrontpageFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.mainFL, mainFragment)  // tom container i layout
-                .commit();
+        EventRepository.get().refreshDbInBackground(this);
 
         //Bottombar
         bottomNavigationView = findViewById(R.id.bottomnavigation);

@@ -19,7 +19,6 @@ import dk.gruppea3moro.moroa3.model.EventDTO;
 public class ShowEventFragment extends Fragment {
     TextView title, subtext, price, startDay, startTime, address, eventLink;
     ImageView image;
-    //TODO add link, image and more?
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
