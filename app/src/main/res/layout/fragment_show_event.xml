@@ -14,30 +14,58 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/evnentImageShowEvent"
                 android:layout_width="match_parent"
-                android:layout_height="341dp"
+                android:layout_height="262dp"
                 android:src="@android:drawable/btn_star_big_on" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/saved_imageView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/emptyheart"
+                    android:tag="Unfilled" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/titleTVShowEvent"
-                    style="@style/AntonRegHeadingTextViewStyle"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textSize="35dp"
-                    tools:text="POTTER MED PATTER" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/titleTVShowEvent"
+                        style="@style/AntonRegHeadingTextViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textSize="35dp"
+                        tools:text="POTTER MED PATTER" />
+
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/descriptionTVShowEvent"
@@ -101,8 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:autoLink="web"
-                    />
+                    android:autoLink="web" />
             </LinearLayout>
 
 

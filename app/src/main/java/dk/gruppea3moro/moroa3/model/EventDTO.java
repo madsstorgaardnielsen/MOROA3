@@ -122,4 +122,5 @@ public class EventDTO implements Serializable {
                 ", moods=" + moods +
                 '}';
     }
+
 }

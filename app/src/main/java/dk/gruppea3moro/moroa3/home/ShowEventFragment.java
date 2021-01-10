@@ -1,15 +1,20 @@
 package dk.gruppea3moro.moroa3.home;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,13 +22,24 @@ import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 
-public class ShowEventFragment extends Fragment {
+public class ShowEventFragment extends Fragment implements View.OnClickListener {
+    EventDTO eventDTO;
     TextView title, subtext, price, startDay, startTime, address, eventLink;
     ImageView image;
     ShowEventViewModel showEventViewModel;
+    AppCompatImageView saved_imageView;
+    SharedPreferences sharedPreferences;
+    private int count = 0;
+    private String eventTitle, eventDate, eventTime;
+
+
+    //TODO add link, image and more?
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         View root = inflater.inflate(R.layout.fragment_show_event, container, false);
         title = root.findViewById(R.id.titleTVShowEvent);
         subtext = root.findViewById(R.id.descriptionTVShowEvent);
@@ -33,6 +49,27 @@ public class ShowEventFragment extends Fragment {
         address = root.findViewById(R.id.addressTVShowEvent);
         image = root.findViewById(R.id.evnentImageShowEvent);
         eventLink = root.findViewById(R.id.eventLinkShowEvent);
+        saved_imageView = root.findViewById(R.id.saved_imageView);
+
+        saved_imageView.setOnClickListener(this);
+
+
+
+
+        if (sharedPreferences.getString("checked","").equals("unchecked")) {
+            System.out.println("UNCHECKED!!!!");
+            System.out.println(sharedPreferences.getString("checked", ""));
+            saved_imageView.setBackgroundResource(R.drawable.emptyheart);
+        } else if (sharedPreferences.getString("checked","").equals("checked")){
+            System.out.println("CHECKED!!!!");
+            System.out.println(sharedPreferences.getString("checked", ""));
+            saved_imageView.setBackgroundResource(R.drawable.filledheart);
+        } else{
+            System.out.println("Checked not set");
+            System.out.println(sharedPreferences.getString("checked", ""));
+            sharedPreferences.edit().putString("checked","unchecked").apply();
+        }
+
 
         //Setup ViewModel
         showEventViewModel = ViewModelProviders.of(this).get(ShowEventViewModel.class);
@@ -66,4 +103,30 @@ public class ShowEventFragment extends Fragment {
         //Let Picasso handle the image
         Picasso.get().load(eventDTO.getImageLink()).into(image);
     }
+
+    @Override
+    public void onClick(View v) {
+        if (v == saved_imageView) {
+            if (sharedPreferences.getString("checked","").equals("unchecked")) {
+                //TODO Tilføj til gemte events
+                sharedPreferences.edit().putString("title"+count, eventTitle).apply();
+                sharedPreferences.edit().putString("startDato"+count, eventDate).apply();
+                sharedPreferences.edit().putString("startTidspunkt"+count, eventTime).apply();
+                count += 1;
+                saved_imageView.setBackgroundResource(R.drawable.filledheart);
+                sharedPreferences.edit().putString("checked","checked").apply();
+                System.out.println("NOW CHECKED!!!!!!");
+                System.out.println(sharedPreferences.getString("checked", ""));
+                saved_imageView.setTag("Filled");
+            } else {
+                //TODO fjern fra gemte events
+                saved_imageView.setBackgroundResource(R.drawable.emptyheart);
+                sharedPreferences.edit().putString("checked","unchecked").apply();
+                System.out.println("NOW UNCHECKED!!!!!");
+                System.out.println(sharedPreferences.getString("checked", ""));
+                saved_imageView.setTag("Unfilled");
+            }
+        }
+    }
+
 }
