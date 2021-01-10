@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
@@ -61,14 +63,25 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
             public void onChanged(SearchCriteria searchCriteria) {
                 //Update all search criteria related to Zones
                 String zoneTextView;
+                ArrayList<String> greenBoxes = new ArrayList<>();
+
+                //Find all textViews that need to be green
                 for (TextView textView : textViews) {
                     zoneTextView = textView.getHint().toString();
                     for (String zone:searchCriteria.getZones()) {
                         if (zone.equals(zoneTextView)) {
-                            textView.setBackgroundResource(R.drawable.greenborder);
-                        } else {
-                            textView.setBackgroundResource(R.drawable.blackborder);
+                            greenBoxes.add(zone);
                         }
+                    }
+                }
+
+                //Make them green
+                for (TextView textView:textViews) {
+                    if (greenBoxes.contains(textView.getHint())){
+                        textView.setBackgroundResource(R.drawable.greenborder);
+                    } else {
+                        textView.setBackgroundResource(R.drawable.blackborder);
+
                     }
                 }
 
