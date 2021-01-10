@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -115,9 +116,12 @@ public class EventRepository {
         System.out.println("done updating db");
     }
 
-    public ArrayList<EventDTO> searchEvents(Context context, SearchCriteria searchCriteria) {
+    public ArrayList<EventDTO> searchEvents(Context context, SearchCriteria searchCriteria,
+                                            List<EventDTO> optResultList) {
+
         //Result arraylist
         ArrayList<EventDTO> eventDTOS = new ArrayList<EventDTO>();
+        if (optResultList!=null)optResultList = eventDTOS;
 
         //Create SQLiteHelper object
         SQLiteHelper dbHelper = new SQLiteHelper(context);

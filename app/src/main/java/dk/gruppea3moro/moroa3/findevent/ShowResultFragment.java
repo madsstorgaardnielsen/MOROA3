@@ -10,12 +10,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -33,6 +36,7 @@ public class ShowResultFragment extends Fragment {
 
     RecyclerView recyclerView;
     ArrayList<EventDTO> eventDTOs;
+    ShowResultViewModel showResultViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +44,25 @@ public class ShowResultFragment extends Fragment {
         //Create RecyclerView -  empty at first
         recyclerView = new RecyclerView(getContext());
         refreshSearch();
+
+        SearchCriteria sc;
+
+        //Check if in FindEventFragment or from bottom-nav-bar
+        if (getParentFragment() instanceof FindEventFragment){
+
+        } else {
+            sc = AppState.getRightNowSearchCriteria();
+        }
+
+
+        showResultViewModel = ViewModelProviders.of(this).get(ShowResultViewModel.class);
+        showResultViewModel.init(sc);
+        showResultViewModel.getResultEventsLD().observe(this, new Observer<List<EventDTO>>() {
+            @Override
+            public void onChanged(List<EventDTO> eventDTOS) {
+
+            }
+        });
 
         //TODO lav LOADING-animation med MaterialIO eller lign.
         Toast.makeText(getContext(), getString(R.string.loading), Toast.LENGTH_SHORT).show();
@@ -57,7 +80,7 @@ public class ShowResultFragment extends Fragment {
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. EventRepository
-            eventDTOs = EventRepository.get().searchEvents(getContext(), searchCriteria);
+            eventDTOs = EventRepository.get().searchEvents(getContext(), searchCriteria,null);
 
             uiThread.post(() -> {
                 // Inflate the layout (recyclerview) for this fragment

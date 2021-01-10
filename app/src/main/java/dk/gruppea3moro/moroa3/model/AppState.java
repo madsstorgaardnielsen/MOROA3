@@ -147,6 +147,16 @@ public class AppState //extends Application
         this.searchCriteria = sc;
     }
 
+    public static SearchCriteria getRightNowSearchCriteria() {
+        SearchCriteria sc = new SearchCriteria();
+
+        long millis = System.currentTimeMillis();
+        sc.setFromDate(DateTime.getDateFromTimeMillis(millis));
+        sc.setToDate(DateTime.getDateFromTimeMillis(millis+3600000));
+
+        return sc;
+    }
+
     public void resetSearchCriteria() {
         this.searchCriteria = new SearchCriteria();
     }
