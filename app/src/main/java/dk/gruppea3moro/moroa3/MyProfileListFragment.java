@@ -54,20 +54,20 @@ public class MyProfileListFragment extends Fragment  {
         //TODO nedenstående slettes og erstattes med gemte i stedet for at hente alle.
         // Er lavet så man kan se det virker
 
-        SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
+        /*SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
         //Get events with DataController from BackgroundThread
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. DataController
-            eventDTOs = DataController.get().searchEvents(searchCriteria);
+            eventDTOs = DataController.get().searchEvents(getContext(), searchCriteria);
 
             uiThread.post(() -> {
                 // Inflate the layout (recyclerview) for this fragment
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(adapter);
             });
-        });
+        });*/
 
         //return recyclerview
         return recyclerView;
