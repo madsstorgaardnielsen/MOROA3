@@ -26,9 +26,7 @@ public class ShowEventViewModel extends ViewModel {
             return;
         }
         //TODO overvej om det bør være fra EventReposioty i stedet
-        MutableLiveData mld = new MutableLiveData();
-        mld.setValue(EventRepository.get().getLastViewedEvent());
-        shownEvent = mld;
+        shownEvent = EventRepository.get().getLastViewedEvent();
 
     }
 
