@@ -56,22 +56,6 @@ public class EventRepository {
         return featuredEventMLD;
     }
 
-    public void fakeSetFeaturedEvent(){
-        EventDTO e = new EventDTO();
-        e.setTitle("Test");
-        e.setSubtext("test");
-        e.setStart(new DateTime("2020/01/01 18:00"));
-        e.setEnd(new DateTime("2020/01/01 18:00"));
-        e.setImageLink("https://www.vega.dk/media/59532/blaue-blume-november-2020.jpg");
-        e.setEventLink("https://www.vega.dk/media/59532/blaue-blume-november-2020.jpg");
-        e.setZone("Vesterbro");
-        e.setMoods(null);
-        e.setTypes(null);
-        e.setPrice(0);
-        e.setAddressDTO(new AddressDTO("1","2","3","4","5","6"));
-        featuredEventMLD.setValue(e);
-    }
-
     public void setFeaturedEvent(){
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();

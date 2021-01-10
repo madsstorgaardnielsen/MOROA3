@@ -13,15 +13,14 @@
             android:id="@+id/featuredEventImageView"
             android:layout_width="match_parent"
             android:layout_height="341dp"
-            android:src="@android:drawable/btn_star_big_on"
-
+            android:src="@drawable/moro_logo"
             />
 
         <TextView
             android:id="@+id/featuredEventTitleTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text=""
             android:textSize="35dp"
             tools:text="POTTER MED PATTER"/>
 
@@ -36,7 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text=""
                 android:textSize="16dp"
                 tools:text="13:30" />
 
@@ -45,7 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text=""
                 android:textSize="16dp"
                 tools:text="Kgs. Nytorv 1" />
         </LinearLayout>
