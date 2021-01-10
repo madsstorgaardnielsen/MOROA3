@@ -9,7 +9,7 @@ import java.util.List;
 
 import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
-
+//TODO klassen mangler at tage høje for hvilken side man var inde på, når Fragmentet vises ved tryk på tilbageknappen
 public class FindEventViewModel extends AndroidViewModel {
     private MutableLiveData<SearchCriteria> searchCriteriaMLD;
     Application application;
@@ -65,7 +65,4 @@ public class FindEventViewModel extends AndroidViewModel {
     public void setResultEvents(){
         EventRepository.get().setResultEvents(searchCriteriaMLD.getValue(),application);
     }
-
-
-
 }

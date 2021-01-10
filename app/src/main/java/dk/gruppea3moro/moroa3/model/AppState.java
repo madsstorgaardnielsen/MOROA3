@@ -15,11 +15,11 @@ import dk.gruppea3moro.moroa3.burgermenu.ContactUsFragment;
 import dk.gruppea3moro.moroa3.findevent.FindEventFragment;
 import dk.gruppea3moro.moroa3.home.FrontpageFragment;
 import dk.gruppea3moro.moroa3.burgermenu.MenuFragment;
-import dk.gruppea3moro.moroa3.profile.MyProfileFragment;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.findevent.ShowResultFragment;
 import dk.gruppea3moro.moroa3.home.ShowEventFragment;
 import dk.gruppea3moro.moroa3.burgermenu.TipUsFragment;
+import dk.gruppea3moro.moroa3.profile.MyProfileFragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -27,10 +27,7 @@ public class AppState //extends Application
 {
     private static AppState instance;
     private Deque<Integer> integerDeque = new ArrayDeque<>(5);
-    SearchCriteria searchCriteria;
     private EventDTO lastViewedEvent;
-    private EventDTO featuredEvent;
-    private boolean refreshSearch;
 
     //STATIC METHODS--------------------------------------------------------------------------------
     public static AppState get() {
@@ -130,23 +127,6 @@ public class AppState //extends Application
     }
 
 
-    public SearchCriteria getSearchCriteria() {
-        if (searchCriteria == null) {
-            searchCriteria = new SearchCriteria();
-        }
-        return searchCriteria;
-    }
-
-    public void setSearchCriteriaRightNow() {
-        SearchCriteria sc = new SearchCriteria();
-
-        long millis = System.currentTimeMillis();
-        sc.setFromDate(DateTime.getDateFromTimeMillis(millis));
-        sc.setToDate(DateTime.getDateFromTimeMillis(millis+3600000));
-
-        this.searchCriteria = sc;
-    }
-
     public static SearchCriteria getRightNowSearchCriteria() {
         SearchCriteria sc = new SearchCriteria();
 
@@ -157,18 +137,6 @@ public class AppState //extends Application
         return sc;
     }
 
-    public void resetSearchCriteria() {
-        this.searchCriteria = new SearchCriteria();
-    }
-
-    public EventDTO getFeaturedEvent() {
-        return featuredEvent;
-    }
-
-    public void setFeaturedEvent(EventDTO featuredEvent) {
-        this.featuredEvent = featuredEvent;
-    }
-
     public EventDTO getLastViewedEvent() {
         return lastViewedEvent;
     }
@@ -177,11 +145,4 @@ public class AppState //extends Application
         this.lastViewedEvent = lastViewedEvent;
     }
 
-    public boolean isRefreshSearch() {
-        return refreshSearch;
-    }
-
-    public void setRefreshSearch(boolean refreshSearch) {
-        this.refreshSearch = refreshSearch;
-    }
 }

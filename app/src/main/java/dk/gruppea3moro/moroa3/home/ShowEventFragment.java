@@ -14,26 +14,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
 
 import dk.gruppea3moro.moroa3.R;
-import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 
+//TODO hele klassen er ret rodet og trænger til en kærlig hånd
 public class ShowEventFragment extends Fragment implements View.OnClickListener {
-    EventDTO eventDTO;
     TextView title, subtext, price, startDay, startTime, address, eventLink;
     ImageView image;
     ShowEventViewModel showEventViewModel;
     AppCompatImageView saved_imageView;
     SharedPreferences sharedPreferences;
     private int count = 0;
-    private String eventTitle, eventDate, eventTime;
 
 
-    //TODO add link, image and more?
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,13 +43,11 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         startDay = root.findViewById(R.id.dateTVShowEvent);
         startTime = root.findViewById(R.id.timeTVShowEvent);
         address = root.findViewById(R.id.addressTVShowEvent);
-        image = root.findViewById(R.id.evnentImageShowEvent);
+        image = root.findViewById(R.id.eventImageShowEvent);
         eventLink = root.findViewById(R.id.eventLinkShowEvent);
         saved_imageView = root.findViewById(R.id.saved_imageView);
 
         saved_imageView.setOnClickListener(this);
-
-
 
 
         if (sharedPreferences.getString("checked","").equals("unchecked")) {
@@ -90,7 +84,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         subtext.setText(eventDTO.getSubtext());
 
         if (eventDTO.getPrice() < 0.1) {
-            price.setText("Pris: Gratis");
+            price.setText(R.string.price_free);
         } else {
             price.setText(String.format("Pris: %.0f", eventDTO.getPrice()) + " kr.");
         }
@@ -106,6 +100,11 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+        String eventTitle = eventDTO.getTitle();
+        String eventDate = eventDTO.getStart().getSqlDateFormat();
+        String eventTime = eventDTO.getStart().getSqlTimeFormat();
+
         if (v == saved_imageView) {
             if (sharedPreferences.getString("checked","").equals("unchecked")) {
                 //TODO Tilføj til gemte events

@@ -108,13 +108,10 @@ public class DateTime {
         } catch (DateTimeException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public String getSqlDateTimeFormat(){
-        adjustStrings();
-        return year + "/" + month + "/" + day + " " + hour + ":" + minute +":00";
+        return getSqlDateFormat() + " " + getSqlTimeFormat();
     }
 
     public String getDanishDateTimeFormat(){
@@ -144,5 +141,15 @@ public class DateTime {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String sqlDate  = formatter.format(date);
         return new DateTime(sqlDate);
+    }
+
+    public String getSqlDateFormat(){
+        adjustStrings();
+        return year + "/" + month + "/" + day;
+    }
+
+    public String getSqlTimeFormat(){
+        adjustStrings();
+        return  hour + ":" + minute +":00";
     }
 }

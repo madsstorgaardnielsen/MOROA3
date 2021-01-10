@@ -16,6 +16,7 @@ import java.util.Date;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.DateTime;
+import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 public class WhenTabFragment extends Fragment implements DatePicker.OnDateChangedListener {
     DatePicker picker;
@@ -36,7 +37,8 @@ public class WhenTabFragment extends Fragment implements DatePicker.OnDateChange
         //Set fromDate and toDate to the same day, but the first and last minute respectively
         DateTime fromDate = new DateTime(""+dayOfMonth,""+monthOfYear,""+year,"00","00");
         DateTime toDate =new DateTime(""+dayOfMonth,""+monthOfYear,""+year,"23","59");
-        AppState.get().getSearchCriteria().setFromDate(fromDate);
-        AppState.get().getSearchCriteria().setToDate(toDate);
+        SearchCriteria sc = ((FindEventFragment)(getParentFragment())).getSearchCriteria();
+        sc.setFromDate(fromDate);
+        sc.setToDate(toDate);
     }
 }

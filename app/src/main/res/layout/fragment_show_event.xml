@@ -8,7 +8,7 @@
 
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -17,10 +17,10 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/evnentImageShowEvent"
+                android:id="@+id/eventImageShowEvent"
                 android:layout_width="match_parent"
                 android:layout_height="262dp"
-                android:src="@android:drawable/btn_star_big_on" />
+                android:src="@drawable/moro_logo" />
 
 
             <LinearLayout

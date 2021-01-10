@@ -55,32 +55,9 @@ public class ShowResultFragment extends Fragment {
         });
 
         //TODO lav LOADING-animation med MaterialIO eller lign.
-        Toast.makeText(getContext(), getString(R.string.loading), Toast.LENGTH_SHORT).show();
 
-        //return recyclerview
         return recyclerView;
     }
-/*
-    public void refreshSearch() {
-        //Gets SearchCriteria from appstate
-        SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
-
-        //Get events with EventRepository from BackgroundThread
-        Executor bgThread = Executors.newSingleThreadExecutor();
-        Handler uiThread = new Handler();
-        bgThread.execute(() -> {
-            //Gets event from searchCriteria via. EventRepository
-            eventDTOs = EventRepository.get().searchEvents(getContext(), searchCriteria,null);
-
-            uiThread.post(() -> {
-                // Inflate the layout (recyclerview) for this fragment
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(adapter);
-            });
-        });
-    }
-
- */
 
     RecyclerView.Adapter adapter = new RecyclerView.Adapter() {
         @Override
@@ -127,8 +104,6 @@ public class ShowResultFragment extends Fragment {
             Picasso.get().load(currentEvent.getImageLink())
                     .placeholder(R.drawable.moro_logo)
                     .into(imageView);
-
-
         }
     };
 
@@ -152,23 +127,15 @@ public class ShowResultFragment extends Fragment {
 
         }
     }
-/*
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (AppState.get().isRefreshSearch()) {
-            refreshSearch();
-        }
-    }
 
- */
-
+    //Get the correct search criteria - either it is "right now" or in "find event"-fragment
     public SearchCriteria getSearchCriteria(){
         SearchCriteria sc;
-        //Check if in FindEventFragment or from "Right Now"
+        //Check if parentFragment is FindEventFragment
         if (getParentFragment() instanceof FindEventFragment){
             sc = ((FindEventFragment)(getParentFragment())).getSearchCriteria();
         } else {
+            //If not - it is right now fragment
             sc = AppState.getRightNowSearchCriteria();
         }
         return sc;

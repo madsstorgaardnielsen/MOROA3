@@ -100,6 +100,7 @@
     <string name="STEMNING_FORKALE_DIG_SELV">DU VIL FORKÆLE DIG SELV</string>;
     <string name="STEMNING_IMPONERE_DATE">DU VIL IMPONERE DIN DATE</string>;
     <string name="STEMNING_DE_GAMLE_BESOG">DE GAMLE KOMMER PÅ BESØG</string>;
-    <string name="STEMNING_GANG_I_KROPPEN">DU VIL HAVE GANG I KROPPEN</string>;
+    <string name="STEMNING_GANG_I_KROPPEN">DU VIL HAVE GANG I KROPPEN</string>
+    <string name="price_free">Pris: Gratis</string>;
 
  </resources>

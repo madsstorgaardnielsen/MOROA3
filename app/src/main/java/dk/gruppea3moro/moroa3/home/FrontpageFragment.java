@@ -58,8 +58,6 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
             AppState.get().pushToBackstackDequeTop(R.id.fragment_right_now);
             //Set selection on bottom navigation bar
             ma.setBottonNavSelection(R.id.fragment_right_now);
-            //Set search criteria to "right now"
-            AppState.get().setSearchCriteriaRightNow();
             //Get fragment object and load
             Fragment f = AppState.get().getFragmentFromLayoutId(R.id.fragment_right_now);
             ((MainActivity) getActivity()).loadFragment(f);
