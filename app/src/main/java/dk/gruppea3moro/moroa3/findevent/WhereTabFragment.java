@@ -19,8 +19,7 @@ import dk.gruppea3moro.moroa3.model.SearchCriteria;
 public class WhereTabFragment extends Fragment implements View.OnClickListener {
     TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8,
             textView9, textView10, textView11, textView12;
-    TextView[] textViews = {textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8,
-            textView9, textView10, textView11, textView12};
+    TextView[] textViews;
     FindEventViewModel findEventViewModel;
 
     @Override
@@ -39,6 +38,8 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
         textView10 = root.findViewById(R.id.textView10);
         textView11 = root.findViewById(R.id.textView11);
         textView12 = root.findViewById(R.id.textView12);
+        textViews = new TextView[]{textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8,
+                textView9, textView10, textView11, textView12};
 
         textView1.setOnClickListener(this);
         textView2.setOnClickListener(this);
@@ -60,13 +61,13 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
             public void onChanged(SearchCriteria searchCriteria) {
                 //Update all search criteria related to Zones
                 String zoneTextView;
-                for (int i = 0; i < textViews.length; i++) {
-                    zoneTextView = textViews[i].getHint().toString();
-                    for (int j = 0; j < searchCriteria.getZones().size(); j++) {
-                        if (searchCriteria.getZones().get(j).equals(zoneTextView)){
-                            textViews[i].setBackgroundResource(R.drawable.greenborder);
-                        } else{
-                            textViews[i].setBackgroundResource(R.drawable.blackborder);
+                for (TextView textView : textViews) {
+                    zoneTextView = textView.getHint().toString();
+                    for (String zone:searchCriteria.getZones()) {
+                        if (zone.equals(zoneTextView)) {
+                            textView.setBackgroundResource(R.drawable.greenborder);
+                        } else {
+                            textView.setBackgroundResource(R.drawable.blackborder);
                         }
                     }
                 }
