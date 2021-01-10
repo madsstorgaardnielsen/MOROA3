@@ -3,6 +3,8 @@ package dk.gruppea3moro.moroa3.findevent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +13,15 @@ import android.widget.TextView;
 
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.AppState;
+import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 
 public class WhereTabFragment extends Fragment implements View.OnClickListener {
     TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8,
             textView9, textView10, textView11, textView12;
+    TextView[] textViews = {textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8,
+            textView9, textView10, textView11, textView12};
+    FindEventViewModel findEventViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,10 +53,40 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
         textView11.setOnClickListener(this);
         textView12.setOnClickListener(this);
 
+        findEventViewModel = ViewModelProviders.of(getParentFragment()).get(FindEventViewModel.class);
+
+        findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
+            @Override
+            public void onChanged(SearchCriteria searchCriteria) {
+                //Update all search criteria related to Zones
+                String zoneTextView;
+                for (int i = 0; i < textViews.length; i++) {
+                    zoneTextView = textViews[i].getHint().toString();
+                    for (int j = 0; j < searchCriteria.getZones().size(); j++) {
+                        if (searchCriteria.getZones().get(j).equals(zoneTextView)){
+                            textViews[i].setBackgroundResource(R.drawable.greenborder);
+                        } else{
+                            textViews[i].setBackgroundResource(R.drawable.blackborder);
+                        }
+                    }
+                }
+
+            }
+
+        });
+
         return root;
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v instanceof TextView){
+            String zone = ((TextView) v).getHint().toString();
+            findEventViewModel.tapOnZone(zone);
+        }
+    }
 
+    /*
     @Override
     public void onClick(View v) {
         if (v == textView1) {
@@ -63,7 +99,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView1.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView1.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
             System.out.println(AppState.get().getSearchCriteria().toString());
         }
 
@@ -77,7 +113,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView2.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView2.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView3) {
@@ -90,7 +126,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView3.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView3.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView4) {
@@ -103,7 +139,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView4.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView4.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView5) {
@@ -116,7 +152,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView5.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView5.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView6) {
@@ -129,7 +165,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView6.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView6.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView7) {
@@ -142,7 +178,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView7.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView7.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView8) {
@@ -155,7 +191,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView8.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView8.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView9) {
@@ -168,7 +204,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView9.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView9.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView10) {
@@ -181,7 +217,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView10.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView10.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView11) {
@@ -194,7 +230,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView11.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView11.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
 
         if (v == textView12) {
@@ -207,7 +243,11 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 textView12.setTag("red");
                 AppState.get().getSearchCriteria().removeZone(textView12.getHint() + "");
             }
-            System.out.println(AppState.get().getSearchCriteria().getZone());
+            System.out.println(AppState.get().getSearchCriteria().getZones());
         }
     }
+
+     */
+
+
 }

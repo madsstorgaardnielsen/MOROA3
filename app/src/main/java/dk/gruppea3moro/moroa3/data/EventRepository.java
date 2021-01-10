@@ -150,7 +150,7 @@ public class EventRepository {
             selArgsArrayList.add(fromDate.getSqlDateTimeFormat());
         }
 
-        if (searchCriteria.getZone().size() > 0) {
+        if (searchCriteria.getZones().size() > 0) {
             StringBuilder sb = new StringBuilder();
             if (selection!= null){
                 sb.append(" AND (");
@@ -161,10 +161,10 @@ public class EventRepository {
 
 
             sb.append(SQLiteContract.events.COLUMN_NAME_ZONE + " = ?");
-            selArgsArrayList.add(searchCriteria.getZone().get(0));
-            for (int i = 1; i < searchCriteria.getZone().size(); i++) {
+            selArgsArrayList.add(searchCriteria.getZones().get(0));
+            for (int i = 1; i < searchCriteria.getZones().size(); i++) {
                 sb.append(" OR " + SQLiteContract.events.COLUMN_NAME_ZONE + " = ?");
-                selArgsArrayList.add(searchCriteria.getZone().get(i));
+                selArgsArrayList.add(searchCriteria.getZones().get(i));
             }
             sb.append(")");
             selection += sb.toString();

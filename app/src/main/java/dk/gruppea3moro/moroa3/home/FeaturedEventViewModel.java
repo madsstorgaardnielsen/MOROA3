@@ -1,22 +1,15 @@
 package dk.gruppea3moro.moroa3.home;
 
-import android.os.Handler;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
 import dk.gruppea3moro.moroa3.data.EventRepository;
-import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 
 public class FeaturedEventViewModel extends ViewModel {
 
     private MutableLiveData<EventDTO> featuredEvent;
-    private EventRepository eventRepository;
 
 
     public LiveData<EventDTO> getFeaturedEvent(){
@@ -26,12 +19,11 @@ public class FeaturedEventViewModel extends ViewModel {
         if (featuredEvent!=null){
             return;
         }
-        eventRepository = EventRepository.get();
-        featuredEvent = eventRepository.getFeaturedEvent();
+        featuredEvent = EventRepository.get().getFeaturedEvent();
 
     }
 
-    public void setLastViewEvent(){
+    public void setLastViewedEvent(){
         EventRepository.get().setLastViewedEvent(featuredEvent.getValue());
     }
 

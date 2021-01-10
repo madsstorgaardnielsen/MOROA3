@@ -1,21 +1,20 @@
 package dk.gruppea3moro.moroa3.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class SearchCriteria {
     private DateTime fromDate, toDate;
-    private ArrayList<String> zone, types, moods;
+    private ArrayList<String> zones, types, moods;
 
     public SearchCriteria() {
-        zone = new ArrayList<>();
+        zones = new ArrayList<>();
         types = new ArrayList<>();
         moods = new ArrayList<>();
     }
 
     public void addZone(String addArea) {
-        if (!zone.contains(addArea)) {
-            zone.add(addArea);
+        if (!zones.contains(addArea)) {
+            zones.add(addArea);
         }
     }
 
@@ -32,7 +31,7 @@ public class SearchCriteria {
     }
 
     public void removeZone(String removeArea) {
-        zone.remove(removeArea);
+        zones.remove(removeArea);
     }
 
     public void removeType(String removeType) {
@@ -59,8 +58,8 @@ public class SearchCriteria {
         this.toDate = toDate;
     }
 
-    public ArrayList<String> getZone() {
-        return zone;
+    public ArrayList<String> getZones() {
+        return zones;
     }
 
     public ArrayList<String> getTypes() {

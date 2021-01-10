@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -15,7 +17,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.home.FeaturedEventViewModel;
 import dk.gruppea3moro.moroa3.model.AppState;
+import dk.gruppea3moro.moroa3.model.EventDTO;
+import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 
 //TODO viewpager
@@ -23,13 +28,22 @@ public class FindEventFragment extends Fragment {
     TabFragmentAdapter tabFragmentAdapter;
     ViewPager2 viewPager;
     static TabLayout tabLayout;
+    FindEventViewModel findEventViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_find_event, container, false);
         tabLayout = root.findViewById(R.id.findEventTabLayout);
-        //reset search criteria
-        AppState.get().resetSearchCriteria();
+
+        findEventViewModel = ViewModelProviders.of(this).get(FindEventViewModel.class);
+        findEventViewModel.init();
+        findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
+            @Override
+            public void onChanged(SearchCriteria searchCriteria) {
+                System.out.println("TEST");
+            }
+        });
+
         return root;
     }
 
@@ -93,6 +107,10 @@ public class FindEventFragment extends Fragment {
 
         }
     }
+
+    public FindEventViewModel getFindEventViewModel(){
+        return findEventViewModel;
+    }
 }
 
 class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapter {
@@ -125,4 +143,6 @@ class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapte
     public int getItemCount() {
         return 4;
     }
+
+
 }
