@@ -25,7 +25,6 @@ public class EventRepository {
     private EventLoader eventLoader;
     private final MutableLiveData<EventDTO> featuredEventMLD = new MutableLiveData<>();
 
-    private EventDTO featuredEvent;
 
     public EventRepository() {
         eventLoader = new SheetReader();
@@ -74,11 +73,21 @@ public class EventRepository {
     }
 
     public void setFeaturedEvent(){
-        try {
-            featuredEvent = getEventLoader().getFeaturedEvent();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Executor bgThread = Executors.newSingleThreadExecutor();
+        Handler uiThread = new Handler();
+        bgThread.execute(() -> {
+            EventDTO featuredEvent = null;
+            try {
+                featuredEvent = getEventLoader().getFeaturedEvent();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            EventDTO finalFeaturedEvent = featuredEvent;
+            uiThread.post(() -> {
+                featuredEventMLD.setValue(finalFeaturedEvent);
+            });
+        });
+
     }
 
     public void feedDatabase(Context context) {

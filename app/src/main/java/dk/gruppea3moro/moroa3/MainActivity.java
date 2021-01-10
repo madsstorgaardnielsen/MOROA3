@@ -21,7 +21,6 @@ import dk.gruppea3moro.moroa3.model.AppState;
 //TODO burgermenu(kontakt os osv), søge menu med filtre, evt?
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     BottomNavigationView bottomNavigationView;
-    Fragment mainFragment, topBarFragment;
 
     public int width;
     public static int height;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottomNavigationView = findViewById(R.id.bottomnavigation);
 
         //Load home fragment
-        loadFragment(new FrontpageFragment());
+        //loadFragment(new FrontpageFragment());
         //Set home as default fragment
         bottomNavigationView.setSelectedItemId(R.id.bn_home);
 
