@@ -3,18 +3,25 @@ package dk.gruppea3moro.moroa3.findevent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.AppState;
+import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 public class TypeTabFragment extends Fragment implements View.OnClickListener {
     TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8,
             textView9, textView10, textView11, textView12;
+    TextView[] textViews;
+    FindEventViewModel findEventViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,10 +54,52 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
         textView10.setOnClickListener(this);
         textView11.setOnClickListener(this);
         textView12.setOnClickListener(this);
+        textViews = new TextView[]{textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8,
+                textView9, textView10, textView11, textView12};
+
+        findEventViewModel = ViewModelProviders.of(getParentFragment())
+                .get(FindEventViewModel.class);
+
+        findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
+            @Override
+            public void onChanged(SearchCriteria searchCriteria) {
+                //Update all search criteria related to Types
+                String typeTextView;
+                ArrayList<String> greenBoxes = new ArrayList<>();
+
+                //Find all textViews that need to be green
+                for (TextView textView : textViews) {
+                    typeTextView = textView.getHint().toString();
+                    for (String type:searchCriteria.getTypes()) {
+                        if (type.equals(typeTextView)) {
+                            greenBoxes.add(type);
+                        }
+                    }
+                }
+
+                //Make them green
+                for (TextView textView:textViews) {
+                    if (greenBoxes.contains(textView.getHint().toString())){
+                        textView.setBackgroundResource(R.drawable.greenborder);
+                    } else {
+                        textView.setBackgroundResource(R.drawable.blackborder);
+                    }
+                }
+            }
+        });
 
         return root;
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v instanceof TextView){
+            String type = ((TextView) v).getHint().toString();
+            findEventViewModel.tapOnType(type);
+        }
+    }
+
+    /*
     @Override
     public void onClick(View v) {
         if (v == textView1) {
@@ -209,4 +258,6 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
             System.out.println("Type valgt: " + AppState.get().getSearchCriteria().getTypes());
         }
     }
+
+     */
 }

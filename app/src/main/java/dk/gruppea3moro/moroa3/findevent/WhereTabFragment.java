@@ -77,7 +77,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
 
                 //Make them green
                 for (TextView textView:textViews) {
-                    if (greenBoxes.contains(textView.getHint())){
+                    if (greenBoxes.contains(textView.getHint().toString())){
                         textView.setBackgroundResource(R.drawable.greenborder);
                     } else {
                         textView.setBackgroundResource(R.drawable.blackborder);

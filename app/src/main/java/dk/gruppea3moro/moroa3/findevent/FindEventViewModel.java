@@ -36,7 +36,28 @@ public class FindEventViewModel extends ViewModel {
             selectedZones.add(zone);
         }
         searchCriteriaMLD.setValue(sc);
+    }
 
+    public void tapOnMood(String mood){
+        SearchCriteria sc = searchCriteriaMLD.getValue();
+        List<String> selectedMoods = sc.getMoods();
+        if (selectedMoods.contains(mood)){
+            selectedMoods.remove(mood);
+        } else {
+            selectedMoods.add(mood);
+        }
+        searchCriteriaMLD.setValue(sc);
+    }
+
+    public void tapOnType(String type){
+        SearchCriteria sc = searchCriteriaMLD.getValue();
+        List<String> selectedTypes = sc.getTypes();
+        if (selectedTypes.contains(type)){
+            selectedTypes.remove(type);
+        } else {
+            selectedTypes.add(type);
+        }
+        searchCriteriaMLD.setValue(sc);
     }
 
 
