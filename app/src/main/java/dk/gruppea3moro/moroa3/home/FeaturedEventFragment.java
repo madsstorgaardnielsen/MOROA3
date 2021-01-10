@@ -41,6 +41,7 @@ public class FeaturedEventFragment extends Fragment {
         featuredEventViewModel = ViewModelProviders.of(this).get(FeaturedEventViewModel.class);
 
         featuredEventViewModel.init();
+
         LiveData<EventDTO> ld =featuredEventViewModel.getFeaturedEvent();
         ld.observe(this, new Observer<EventDTO>() {
             @Override
