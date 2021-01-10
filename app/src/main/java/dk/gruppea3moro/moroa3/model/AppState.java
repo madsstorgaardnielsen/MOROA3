@@ -2,7 +2,6 @@ package dk.gruppea3moro.moroa3.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
@@ -19,7 +18,7 @@ import dk.gruppea3moro.moroa3.burgermenu.MenuFragment;
 import dk.gruppea3moro.moroa3.profile.MyProfileFragment;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.findevent.ShowResultFragment;
-import dk.gruppea3moro.moroa3.findevent.ShowEventFragment;
+import dk.gruppea3moro.moroa3.home.ShowEventFragment;
 import dk.gruppea3moro.moroa3.burgermenu.TipUsFragment;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -71,11 +70,7 @@ public class AppState //extends Application
             case R.id.fragment_show_event:
                 return new ShowEventFragment();
             case R.id.fragment_find_event:
-                Bundle b = new Bundle();
-                b.putSerializable("event", AppState.get().getLastViewedEvent());
-                Fragment f = new FindEventFragment();
-                f.setArguments(b);
-                return f;
+                return new FindEventFragment();
             case R.id.fragment_my_profile:
                 return new MyProfileFragment();
             case R.id.fragment_menu:

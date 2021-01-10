@@ -24,6 +24,7 @@ public class EventRepository {
     private static EventRepository instance;
     private EventLoader eventLoader;
     private final MutableLiveData<EventDTO> featuredEventMLD = new MutableLiveData<>();
+    private final MutableLiveData<EventDTO> lastViewedEvent = new MutableLiveData<>();
 
 
     public EventRepository() {
@@ -259,5 +260,13 @@ public class EventRepository {
         bgThread.execute(() -> {
             EventRepository.get().feedDatabase(context);
         });
+    }
+
+    public MutableLiveData<EventDTO> getLastViewedEvent() {
+        return lastViewedEvent;
+    }
+
+    public void setLastViewedEvent(EventDTO lastViewedEvent) {
+        this.lastViewedEvent.setValue(lastViewedEvent);
     }
 }

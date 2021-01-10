@@ -29,16 +29,10 @@ public class FeaturedEventViewModel extends ViewModel {
         eventRepository = EventRepository.get();
         featuredEvent = eventRepository.getFeaturedEvent();
 
-        /*
-        Executor bgThread = Executors.newSingleThreadExecutor();
-        Handler uiThread = new Handler();
-        bgThread.execute(() -> {
+    }
 
-            //uiThread.post(() -> {});
-        });
-
-         */
-
+    public void setLastViewEvent(){
+        EventRepository.get().setLastViewedEvent(featuredEvent.getValue());
     }
 
 }

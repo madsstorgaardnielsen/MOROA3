@@ -4,22 +4,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
 import dk.gruppea3moro.moroa3.MainActivity;
 import dk.gruppea3moro.moroa3.R;
-import dk.gruppea3moro.moroa3.findevent.ShowEventFragment;
-import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.AppState;
-import dk.gruppea3moro.moroa3.model.EventDTO;
 
 public class FrontpageFragment extends Fragment implements View.OnClickListener {
 
@@ -75,43 +68,14 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-
-
-    public void replaceFeaturedEvent(EventDTO featuredEvent) {
-        //Get ready for fragment transaction for featured event
-        Bundle b = new Bundle();
-        b.putSerializable("event", featuredEvent);
-        Fragment featuredEventFragment = new FeaturedEventFragment();
-        featuredEventFragment.setArguments(b);
-
-        //If Activity is ready for it
-        if (getActivity() != null) {
-            //Make fragment transaction
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.featuredEventFrontpageFL, featuredEventFragment)
-                    .commit();
-        }
-    }
-
     public void openFeaturedEventFragment() {
-        //Get featured event from AppState - should have been initialized by now
-        EventDTO featuredEvent = AppState.get().getFeaturedEvent();
-
-        //Get ready for fragment transaction for featured event
-        Bundle b = new Bundle();
-        b.putSerializable("event", featuredEvent);
-        AppState.get().setLastViewedEvent(featuredEvent);
-        Fragment featuredEventFragment = new ShowEventFragment();
-        featuredEventFragment.setArguments(b);
-
         //Push to backstack
         AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
 
         //Make fragment transaction
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.mainFL, featuredEventFragment)
+                .replace(R.id.mainFL, new FeaturedEventFragment())
                 .commit();
     }
 }

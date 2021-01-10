@@ -106,4 +106,20 @@ public class EventDTO implements Serializable {
         this.end = end;
     }
 
+    @Override
+    public String toString() {
+        return "EventDTO{" +
+                "title='" + title + '\'' +
+                ", subtext='" + subtext + '\'' +
+                ", eventLink='" + eventLink + '\'' +
+                ", imageLink='" + imageLink + '\'' +
+                ", zone='" + zone + '\'' +
+                ", price=" + price +
+                ", start=" + start +
+                ", end=" + end +
+                ", addressDTO=" + addressDTO +
+                ", types=" + types +
+                ", moods=" + moods +
+                '}';
+    }
 }

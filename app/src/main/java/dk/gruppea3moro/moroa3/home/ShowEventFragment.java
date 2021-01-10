@@ -1,8 +1,9 @@
-package dk.gruppea3moro.moroa3.findevent;
+package dk.gruppea3moro.moroa3.home;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import dk.gruppea3moro.moroa3.model.EventDTO;
 public class ShowEventFragment extends Fragment {
     TextView title, subtext, price, startDay, startTime, address, eventLink;
     ImageView image;
+    ShowEventViewModel showEventViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,24 +34,25 @@ public class ShowEventFragment extends Fragment {
         image = root.findViewById(R.id.evnentImageShowEvent);
         eventLink = root.findViewById(R.id.eventLinkShowEvent);
 
+        //Setup ViewModel
+        showEventViewModel = ViewModelProviders.of(this).get(ShowEventViewModel.class);
+        showEventViewModel.init();
+        showEventViewModel.getShownEvent();
+
         setupEventView();
         return root;
     }
 
     public void setupEventView() {
-        Bundle arguments = getArguments();
-        EventDTO eventDTO;
-        try { //TODO evt. gør dette mere elegant - det er lidt en cowboy-løsning men det virker
-            eventDTO = (EventDTO) arguments.getSerializable("event");
-        } catch (Exception e) {
-            eventDTO = AppState.get().getLastViewedEvent();
-        }
+        //Get last viewed event from ViewModel
+        System.out.println(showEventViewModel.getShownEvent().getValue().toString());
+        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
 
         //Set text views
         title.setText(eventDTO.getTitle());
         subtext.setText(eventDTO.getSubtext());
 
-        if (eventDTO.getPrice() < 1) {
+        if (eventDTO.getPrice() < 0.1) {
             price.setText("Pris: Gratis");
         } else {
             price.setText(String.format("Pris: %.0f", eventDTO.getPrice()) + " kr.");

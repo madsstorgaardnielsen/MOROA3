@@ -22,6 +22,7 @@ import java.util.concurrent.Executors;
 
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.data.EventRepository;
+import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 
 public class FeaturedEventFragment extends Fragment {
@@ -50,12 +51,13 @@ public class FeaturedEventFragment extends Fragment {
             }
         });
 
-        //setupEventView(featuredEventViewModel.getFeaturedEvent().getValue());
-
         return root;
     }
 
     public void setupEventView(EventDTO eventDTO) {
+        //Set last view event in ViewModel
+        featuredEventViewModel.setLastViewEvent();
+
         //Set text views
         title.setText(eventDTO.getTitle());
         startTime.setText(eventDTO.getStart().getTimeFormat());
@@ -63,5 +65,7 @@ public class FeaturedEventFragment extends Fragment {
 
         //Let Picasso handle the image
         Picasso.get().load(eventDTO.getImageLink()).into(image);
+
     }
+
 }

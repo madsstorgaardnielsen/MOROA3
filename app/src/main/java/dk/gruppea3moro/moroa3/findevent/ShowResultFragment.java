@@ -124,7 +124,7 @@ public class ShowResultFragment extends Fragment {
 
             //Fragment transaction with event as argument
             Fragment f = AppState.getFragmentFromLayoutId(R.id.fragment_show_event);
-            AppState.get().setLastViewedEvent(event);
+            EventRepository.get().setLastViewedEvent(event);
             Bundle b = new Bundle();
             b.putSerializable("event", event);
             f.setArguments(b);
