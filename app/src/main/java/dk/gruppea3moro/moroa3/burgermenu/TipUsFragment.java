@@ -92,12 +92,12 @@ public class TipUsFragment extends Fragment implements TextWatcher {
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        //tom
+        //skal ikke implementeres
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        //tom
+        //skal ikke implementeres
     }
 
     @Override
