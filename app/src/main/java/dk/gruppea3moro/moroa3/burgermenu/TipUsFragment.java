@@ -17,21 +17,19 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventTipDTO;
 
 
-public class TipUsFragment extends Fragment implements View.OnClickListener, TextWatcher {
+public class TipUsFragment extends Fragment implements TextWatcher {
     Button sendEventTip;
-    //DatePicker datePicker;
     TextView titleTv, whereTv, descriptionTv, emailContactInfo, eventLinkTv, whenTv, phoneContactInfo;
     EventTipDTO eventTipDTO;
-    TextWatcher textWatcher;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tip_us, container, false);
-        //datePicker = root.findViewById(R.id.eventChooseDate);
-        //datePicker.setMinDate(System.currentTimeMillis() - 1000);
+
         eventTipDTO = new EventTipDTO();
         titleTv = root.findViewById(R.id.eventTitle);
         descriptionTv = root.findViewById(R.id.eventDescription);
@@ -41,7 +39,16 @@ public class TipUsFragment extends Fragment implements View.OnClickListener, Tex
         eventLinkTv = root.findViewById(R.id.eventLink);
         phoneContactInfo = root.findViewById(R.id.phoneContactInfo);
 
-
+        //Hvis en bruger forlader formularen inden den er afsendt, vil det allerede indtastede data blive hentet fra appstate.
+        if (AppState.get().getEventTipDTO() != null) {
+            titleTv.setText(AppState.get().getEventTipDTO().getEventTitle());
+            descriptionTv.setText(AppState.get().getEventTipDTO().getEventDescription());
+            whereTv.setText(AppState.get().getEventTipDTO().getEventAddress());
+            whenTv.setText(AppState.get().getEventTipDTO().getEventDate());
+            emailContactInfo.setText(AppState.get().getEventTipDTO().getContactEmail());
+            eventLinkTv.setText(AppState.get().getEventTipDTO().getEventLink());
+            phoneContactInfo.setText(AppState.get().getEventTipDTO().getContactPhoneNumber());
+        }
 
         titleTv.addTextChangedListener(this);
         descriptionTv.addTextChangedListener(this);
@@ -50,12 +57,6 @@ public class TipUsFragment extends Fragment implements View.OnClickListener, Tex
         emailContactInfo.addTextChangedListener(this);
         eventLinkTv.addTextChangedListener(this);
         phoneContactInfo.addTextChangedListener(this);
-
-
-
-
-        sendEventTip = root.findViewById(R.id.eventSendButton);
-        sendEventTip.setOnClickListener(this);
 
         whenTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,23 +78,26 @@ public class TipUsFragment extends Fragment implements View.OnClickListener, Tex
                 mDatePicker.show();
             }
         });
+
         sendEventTip = root.findViewById(R.id.eventSendButton);
+        sendEventTip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO Send tip til email eller googlesheet
+            }
+        });
+
         return root;
     }
 
     @Override
-    public void onClick(View v) {
-        //gem data
-    }
-
-    @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        //tom
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        //tom
     }
 
     @Override
@@ -105,6 +109,7 @@ public class TipUsFragment extends Fragment implements View.OnClickListener, Tex
         eventTipDTO.setEventLink(eventLinkTv.getText().toString());
         eventTipDTO.setContactPhoneNumber(phoneContactInfo.getText().toString());
         eventTipDTO.setContactEmail(emailContactInfo.getText().toString());
+        AppState.get().setTip(eventTipDTO);
         System.out.println(eventTipDTO);
     }
 }

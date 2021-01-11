@@ -6,20 +6,25 @@ import androidx.lifecycle.ViewModel;
 
 import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.EventDTO;
+import dk.gruppea3moro.moroa3.model.EventTipDTO;
+import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 public class TipUsViewModel extends ViewModel {
 
-    private MutableLiveData<EventDTO> shownEvent;
+    private MutableLiveData<EventTipDTO> eventTipFormula;
 
-    public LiveData<EventDTO> getShownEvent(){
-        return shownEvent;
+    public void setEventTipFormula(EventTipDTO eventTipDTO) {
+        eventTipFormula.setValue(eventTipDTO);
     }
-    public void init(){
-        if (shownEvent!=null){
+
+    public LiveData<EventTipDTO> getEventTipFormula() {
+        return eventTipFormula;
+    }
+
+    public void init() {
+        if (eventTipFormula != null) {
             return;
         }
-        //TODO overvej om det bør være fra EventReposioty i stedet
-        shownEvent = EventRepository.get().getLastViewedEventMLD();
-
+        eventTipFormula = new MutableLiveData<>(new EventTipDTO());
     }
 }
