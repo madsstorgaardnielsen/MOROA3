@@ -1,8 +1,28 @@
 package dk.gruppea3moro.moroa3.model;
 
 public class EventTipDTO {
-    String eventTitle, eventDescription, contactEmail, contactPhoneNumber,eventLink;
-    AddressDTO eventAddress;
+    String eventTitle, eventDescription, contactEmail, contactPhoneNumber,eventLink, eventAddress, eventDate;
+
+    @Override
+    public String toString() {
+        return "EventTipDTO{" +
+                "eventTitle='" + eventTitle + '\'' +
+                ", eventDescription='" + eventDescription + '\'' +
+                ", contactEmail='" + contactEmail + '\'' +
+                ", contactPhoneNumber='" + contactPhoneNumber + '\'' +
+                ", eventLink='" + eventLink + '\'' +
+                ", eventAddress='" + eventAddress + '\'' +
+                ", eventDate='" + eventDate + '\'' +
+                '}';
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
 
     public String getEventTitle() {
         return eventTitle;
@@ -44,11 +64,11 @@ public class EventTipDTO {
         this.eventLink = eventLink;
     }
 
-    public AddressDTO getEventAddress() {
+    public String getEventAddress() {
         return eventAddress;
     }
 
-    public void setEventAddress(AddressDTO eventAddress) {
+    public void setEventAddress(String eventAddress) {
         this.eventAddress = eventAddress;
     }
 }

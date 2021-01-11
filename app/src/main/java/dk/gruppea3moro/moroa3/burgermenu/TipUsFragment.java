@@ -1,72 +1,110 @@
 package dk.gruppea3moro.moroa3.burgermenu;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.google.android.material.datepicker.MaterialDatePicker;
+import java.util.Calendar;
 
 import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.model.EventTipDTO;
 
 
-public class TipUsFragment extends Fragment implements View.OnClickListener {
-    Button datePicker, sendEventTip;
-    TextView titleTv, whereTv, descriptionTv, contactInfoTv, eventLinkTv;
-
-    //TODO Knappen som skal gemme variablerne mangler at blive implementeret
+public class TipUsFragment extends Fragment implements View.OnClickListener, TextWatcher {
+    Button sendEventTip;
+    //DatePicker datePicker;
+    TextView titleTv, whereTv, descriptionTv, emailContactInfo, eventLinkTv, whenTv, phoneContactInfo;
+    EventTipDTO eventTipDTO;
+    TextWatcher textWatcher;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_tip_os, container, false);
-        datePicker = root.findViewById(R.id.eventChooseDate);
-        sendEventTip = root.findViewById(R.id.eventSendButton);
+        View root = inflater.inflate(R.layout.fragment_tip_us, container, false);
+        //datePicker = root.findViewById(R.id.eventChooseDate);
+        //datePicker.setMinDate(System.currentTimeMillis() - 1000);
+        eventTipDTO = new EventTipDTO();
         titleTv = root.findViewById(R.id.eventTitle);
-        whereTv = root.findViewById(R.id.eventWhere);
         descriptionTv = root.findViewById(R.id.eventDescription);
-        contactInfoTv = root.findViewById(R.id.eventContactInformation);
+        whereTv = root.findViewById(R.id.eventWhere);
+        whenTv = root.findViewById(R.id.eventChooseDate);
+        emailContactInfo = root.findViewById(R.id.emailContactInfo);
         eventLinkTv = root.findViewById(R.id.eventLink);
+        phoneContactInfo = root.findViewById(R.id.phoneContactInfo);
 
-        datePicker.setOnClickListener(this);
+
+
+        titleTv.addTextChangedListener(this);
+        descriptionTv.addTextChangedListener(this);
+        whereTv.addTextChangedListener(this);
+        whenTv.addTextChangedListener(this);
+        emailContactInfo.addTextChangedListener(this);
+        eventLinkTv.addTextChangedListener(this);
+        phoneContactInfo.addTextChangedListener(this);
+
+
+
+
+        sendEventTip = root.findViewById(R.id.eventSendButton);
+        sendEventTip.setOnClickListener(this);
+
+        whenTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentDate = Calendar.getInstance();
+                int mYear = mcurrentDate.get(Calendar.YEAR);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        String chosenDate = selectedyear + "/" + (selectedmonth + 1) + "/" + selectedday;
+                        eventTipDTO.setEventDate(chosenDate);
+                        String shownDate = selectedday + "/" + (selectedmonth + 1) + "/" + selectedyear;
+                        whenTv.setText(shownDate);
+                        System.out.println(eventTipDTO.getEventDate());
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.show();
+            }
+        });
+        sendEventTip = root.findViewById(R.id.eventSendButton);
         return root;
     }
 
     @Override
     public void onClick(View v) {
-        if (v == datePicker) {
-            MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
-            MaterialDatePicker<Long> picker = builder.build();
-            picker.show(getFragmentManager(), picker.toString());
-        }
+        //gem data
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        eventTipDTO.setEventTitle(titleTv.getText().toString());
+        eventTipDTO.setEventDescription(descriptionTv.getText().toString());
+        eventTipDTO.setEventAddress(whereTv.getText().toString());
+        eventTipDTO.setEventDate(whenTv.getText().toString());
+        eventTipDTO.setEventLink(eventLinkTv.getText().toString());
+        eventTipDTO.setContactPhoneNumber(phoneContactInfo.getText().toString());
+        eventTipDTO.setContactEmail(emailContactInfo.getText().toString());
+        System.out.println(eventTipDTO);
     }
 }
-
-        /*
-        TODO Skal muligvis bare slettes afhænig af hvad MORO gerne vil have af valg af dato metode
-        //Inputs data into the 3 Spinners
-        //TODO Som det er nu vil man kunne vælge d. 31 februar. Der bliver ikke taget højde fro hvilken måned du har valgt.
-        for (int i = 0; i < 3; i++) {
-            int n = R.id.dateDay;
-            int t = R.array.date;
-            if(i==1){
-                n=R.id.dateMonth;
-                t = R.array.month;
-            }else if(i==2){
-                n=R.id.dateYear;
-                t = R.array.year;
-            }
-            Spinner spinner = (Spinner)root.findViewById(n);
-// Create an ArrayAdapter using the string array and a default spinner layout
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                    t, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-            spinner.setAdapter(adapter);
-        }
-*/

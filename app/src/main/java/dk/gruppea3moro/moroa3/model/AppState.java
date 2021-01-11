@@ -28,6 +28,7 @@ public class AppState //extends Application
     private static AppState instance;
     private Deque<Integer> integerDeque = new ArrayDeque<>(5);
     private EventDTO lastViewedEvent;
+    private EventTipDTO eventTipDTO;
 
     //STATIC METHODS--------------------------------------------------------------------------------
     public static AppState get() {
@@ -36,6 +37,16 @@ public class AppState //extends Application
         }
         return instance;
     }
+
+    public void setTip(EventTipDTO eventTipDTO) {
+        this.eventTipDTO = eventTipDTO;
+    }
+
+    public EventTipDTO getEventTipDTO() {
+        return eventTipDTO;
+    }
+
+
 
     //Returns layout id of the fragment corresponding to the item selected in bottom navigation bar
     public static int getFragmentLayoutId(int bnItemId) {
