@@ -131,7 +131,7 @@ public class EventRepository {
     }
 
     public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria,Context context) {
-
+    //TODO den her metode skal bruge de nye tags i stedet
         //Result arraylist
         ArrayList<EventDTO> eventDTOS = new ArrayList<EventDTO>();
 

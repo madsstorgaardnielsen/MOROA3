@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dk.gruppea3moro.moroa3.MainActivity;
@@ -24,9 +25,6 @@ import dk.gruppea3moro.moroa3.model.TagDTO;
 
 
 public class WhereTabFragment extends Fragment implements View.OnClickListener {
-    TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8,
-            textView9, textView10, textView11, textView12;
-    TextView[] textViews;
     private FindEventViewModel findEventViewModel;
     private GridView gridView;
     MainAktivityViewModel mainAktivityViewModel;
@@ -55,9 +53,10 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {;
-                System.out.println("DU TRYKKEDE");
-
+                                    int position, long id) {
+                TextView textView =(TextView)((ViewGroup) view).getChildAt(0);
+                String zone = textView.getHint().toString();
+                findEventViewModel.tapOnZone(zone);
             }
         });
 
@@ -69,13 +68,22 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
             @Override
             public void onChanged(SearchCriteria searchCriteria) {
-                /*
+                TextView[] textViews = new TextView[mainAktivityViewModel.getZonesMLD().getValue().size()];
+
+                for (int i = 0; i < gridView.getChildCount(); i++) {
+                    ViewGroup gridItem = (ViewGroup) gridView.getChildAt(i);
+                    textViews[i] = (TextView) gridItem.getChildAt(0);
+                }
+
                 //Update all search criteria related to Zones
                 String zoneTextView;
+
                 ArrayList<String> greenBoxes = new ArrayList<>();
+
 
                 //Find all textViews that need to be green
                 for (TextView textView : textViews) {
+                    if (textView==null){break;}
                     zoneTextView = textView.getHint().toString();
                     for (String zone:searchCriteria.getZones()) {
                         if (zone.equals(zoneTextView)) {
@@ -86,6 +94,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
 
                 //Make them green
                 for (TextView textView:textViews) {
+                    if (textView==null){break;}
                     if (greenBoxes.contains(textView.getHint().toString())){
                         textView.setBackgroundResource(R.drawable.greenborder);
                     } else {
@@ -93,7 +102,6 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
 
                     }
                 }
-                */
             }
         });
         return root;
@@ -101,12 +109,6 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v instanceof TextView){
-            String zone = ((TextView) v).getHint().toString();
-            findEventViewModel.tapOnZone(zone);
-        }
+
     }
-
-
-
 }
