@@ -32,12 +32,15 @@ public class TagRepository {
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
-            ArrayList<TagDTO> allTags;
+            ArrayList<TagDTO> allTags = new ArrayList<>();
+            /*
             try {
                 allTags = sheetReader.getAllTags();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+             */
             uiThread.post(() -> {
                 for (TagDTO tagDto : allTags) {
                     String cat = tagDto.getCategory();
