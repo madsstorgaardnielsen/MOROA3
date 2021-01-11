@@ -14,7 +14,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dk.gruppea3moro.moroa3.R;
-import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 public class TypeTabFragment extends Fragment implements View.OnClickListener {
