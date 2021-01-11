@@ -100,6 +100,9 @@ public class FindEventFragment extends Fragment {
             case 2:
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.moroPinkBackground));
                 break;
+            case 3:
+                tabLayout.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
+                break;
 
         }
     }

@@ -23,14 +23,14 @@ import dk.gruppea3moro.moroa3.model.SearchCriteria;
 public class EventRepository {
 
     private static EventRepository instance;
-    private EventLoader eventLoader;
+    private SheetReader sheetReader;
     private final MutableLiveData<EventDTO> featuredEventMLD = new MutableLiveData<>();
     private final MutableLiveData<EventDTO> lastViewedEventMLD = new MutableLiveData<>();
     private final MutableLiveData<List<EventDTO>> resultEventsMLD = new MutableLiveData<>();
 
 
     public EventRepository() {
-        eventLoader = new SheetReader();
+        sheetReader = new SheetReader();
     }
 
     public static EventRepository get() {
@@ -40,13 +40,10 @@ public class EventRepository {
         return instance;
     }
 
-    private EventLoader getEventLoader() {
-        return eventLoader;
-    }
 
     public ArrayList<EventDTO> getAllEvents() {
         try {
-            return getEventLoader().getAllEvents();
+            return sheetReader.getAllEvents();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,7 +62,7 @@ public class EventRepository {
         bgThread.execute(() -> {
             EventDTO featuredEvent = null;
             try {
-                featuredEvent = getEventLoader().getFeaturedEvent();
+                featuredEvent = sheetReader.getFeaturedEvent();
             } catch (IOException e) {
                 e.printStackTrace();
             }

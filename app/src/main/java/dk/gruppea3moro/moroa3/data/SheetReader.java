@@ -3,30 +3,27 @@ package dk.gruppea3moro.moroa3.data;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 import dk.gruppea3moro.moroa3.model.AddressDTO;
 import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
-import dk.gruppea3moro.moroa3.model.SearchCriteria;
+import dk.gruppea3moro.moroa3.model.TagDTO;
 
-public class SheetReader implements EventLoader {
+public class SheetReader {
 
-    final String SHEET_ID = "1mZFpWlSVm7v-_lLbbCaWo_OgdN-lP3XmvMTTu1wbqFY";
+    final String EVENT_SHEET_ID = "1mZFpWlSVm7v-_lLbbCaWo_OgdN-lP3XmvMTTu1wbqFY";
+    final String TAG_SHEET_ID = "1omoan2jWUlqZ8AYA2HesJh8U-mUKXqwTwV_tOw8PdFU";
 
-    @Override
     public ArrayList<EventDTO> getAllEvents() throws IOException {
         //Result arraylist
         ArrayList<EventDTO> events = new ArrayList<>();
 
         //URL
-        String url = "https://docs.google.com/spreadsheets/d/" + SHEET_ID + "/export?format=tsv&id=" + SHEET_ID;
+        String url = "https://docs.google.com/spreadsheets/d/" + EVENT_SHEET_ID + "/export?format=tsv&id=" + EVENT_SHEET_ID;
         System.out.println(url);
 
         //Reader
@@ -68,9 +65,38 @@ public class SheetReader implements EventLoader {
     }
 
 
-    @Override
     public EventDTO getFeaturedEvent() throws IOException {
         //TODO fix this
         return getAllEvents().get(0);
     }
+
+    public ArrayList<TagDTO> getAllTags() throws IOException {
+        //Result arraylist
+        ArrayList<TagDTO> tags = new ArrayList<>();
+
+        //URL
+        String url = "https://docs.google.com/spreadsheets/d/" + TAG_SHEET_ID + "/export?format=tsv&id=" + TAG_SHEET_ID;
+        System.out.println(url);
+
+        //Reader
+        BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
+
+        //Skip first line
+        String line = br.readLine();
+        line = br.readLine();
+        while (line != null) {
+            tags.add(createTagDTO(line));
+            line = br.readLine();
+        }
+        br.close();
+        return tags;
+    }
+
+    public TagDTO createTagDTO(String line){
+        String[] fields = line.split("\t");
+        TagDTO tagDTO = new TagDTO(fields[0],fields[1],fields[2],fields[3]);
+        tagDTO.setCategory(fields[0]);//TODO ikke så elegant
+        return tagDTO;
+    }
+
 }
