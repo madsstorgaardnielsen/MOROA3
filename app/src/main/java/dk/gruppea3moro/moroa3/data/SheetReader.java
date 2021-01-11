@@ -33,7 +33,12 @@ public class SheetReader {
         String line = br.readLine();
         line = br.readLine();
         while (line != null) {
-            events.add(createEventDTO(line));
+            try{
+                events.add(createEventDTO(line));
+            } catch (Exception e){
+                System.out.println("DATA: " + line);
+                e.printStackTrace();
+            }
             line = br.readLine();
         }
         br.close();
@@ -85,7 +90,12 @@ public class SheetReader {
         String line = br.readLine();
         line = br.readLine();
         while (line != null) {
-            tags.add(createTagDTO(line));
+            try{
+                tags.add(createTagDTO(line));
+            } catch (Exception e){
+                System.out.println("DATA: " + line);
+                e.printStackTrace();
+            }
             line = br.readLine();
         }
         br.close();
