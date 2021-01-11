@@ -13,19 +13,35 @@ import dk.gruppea3moro.moroa3.model.TagDTO;
 public class GridAdapter extends BaseAdapter{
     private Context mContext;
     private MainAktivityViewModel mainAktivityViewModel;
+    private String category;//MUST BE EITHER "zone", "mood" or "type"
 
 
-    public GridAdapter(Context mContext, MainAktivityViewModel mainAktivityViewModel) {
+    public GridAdapter(Context mContext, MainAktivityViewModel mainAktivityViewModel, String category) {
         this.mContext=mContext;
         this.mainAktivityViewModel=mainAktivityViewModel;
+        this.category=category.toLowerCase().trim();
     }
 
     @Override
     public int getCount() {
-        if (mainAktivityViewModel.getZonesMLD().getValue() ==null){
-            return 0;
+        if (category.equals("type")){
+            if (mainAktivityViewModel.getTypesMLD().getValue() ==null){
+                return 0;
+            } else{
+                return mainAktivityViewModel.getTypesMLD().getValue().size();
+            }
+        } else if (category.equals("mood")){
+            if (mainAktivityViewModel.getMoodsMLD().getValue() ==null){
+                return 0;
+            } else{
+                return mainAktivityViewModel.getMoodsMLD().getValue().size();
+            }
         } else{
-            return mainAktivityViewModel.getZonesMLD().getValue().size();
+            if (mainAktivityViewModel.getZonesMLD().getValue() ==null){
+                return 0;
+            } else{
+                return mainAktivityViewModel.getZonesMLD().getValue().size();
+            }
         }
     }
 
@@ -50,7 +66,7 @@ public class GridAdapter extends BaseAdapter{
             TextView textView = (TextView) grid.findViewById(R.id.grid_item_text_view);
 
             //Get TagDTO
-            TagDTO tagDTO = mainAktivityViewModel.getZonesMLD().getValue().get(position);
+            TagDTO tagDTO = getTagDto(category,position);
 
             //Set text formatted
             textView.setText(tagDTO.getFormattedText());
@@ -72,5 +88,17 @@ public class GridAdapter extends BaseAdapter{
 
 
         return grid;
+    }
+
+    private TagDTO getTagDto(String category,int position){
+        TagDTO tagDTO;
+        if (category.equals("type")){
+            tagDTO = mainAktivityViewModel.getTypesMLD().getValue().get(position);
+        } else if (category.equals("mood")){
+            tagDTO = mainAktivityViewModel.getMoodsMLD().getValue().get(position);
+        } else{
+            tagDTO = mainAktivityViewModel.getZonesMLD().getValue().get(position);
+        }
+        return tagDTO;
     }
 }

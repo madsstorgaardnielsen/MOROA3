@@ -141,10 +141,6 @@ public class EventRepository {
         //Get database
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = null;
-
         //Default get the events sorted in chronological order - newest first
         String sortOrder = SQLiteContract.events.COLUMN_NAME_STARTDATE + " ASC";
         String selection;
@@ -195,7 +191,7 @@ public class EventRepository {
 
         Cursor cursor = db.query(
                 SQLiteContract.events.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
+                null,             // The array of columns to return (pass null to get all)
                 selection,              // The columns for the WHERE clause
                 selectionArgs,          // The values for the WHERE clause
                 null,           // don't group the rows

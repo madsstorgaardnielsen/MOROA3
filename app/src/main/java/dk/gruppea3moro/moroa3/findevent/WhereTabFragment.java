@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
         //MainAcitivityViewModel----------------------------------------------------------------
         mainAktivityViewModel = ((MainActivity)getActivity()).getMainAktivityViewModel();
         //Create adapter
-        GridAdapter gridAdapter = new GridAdapter(getContext(),mainAktivityViewModel);
+        GridAdapter gridAdapter = new GridAdapter(getContext(),mainAktivityViewModel,"zone");
         mainAktivityViewModel.getZonesMLD().observe(this, new Observer<List<TagDTO>>() {
             @Override
             public void onChanged(List<TagDTO> tagDTOs) {
