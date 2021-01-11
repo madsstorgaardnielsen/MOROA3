@@ -3,6 +3,7 @@ package dk.gruppea3moro.moroa3;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -22,11 +23,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public int width;
     public static int height;
+    MainAktivityViewModel mainAktivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mainAktivityViewModel = ViewModelProviders.of(this).get(MainAktivityViewModel.class);
+        mainAktivityViewModel.init();
 
         //Read database from google sheet in background thread
         EventRepository.get().refreshDbInBackground(this);
@@ -174,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AppState.get().saveToPM(getApplicationContext());
     }
 
-
-
+    public MainAktivityViewModel getMainAktivityViewModel() {
+        return mainAktivityViewModel;
+    }
 }

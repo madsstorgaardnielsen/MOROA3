@@ -13,9 +13,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import dk.gruppea3moro.moroa3.MainActivity;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
+import dk.gruppea3moro.moroa3.model.TagDTO;
 
 
 public class WhereTabFragment extends Fragment implements View.OnClickListener {
@@ -55,6 +57,11 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
         textView10.setOnClickListener(this);
         textView11.setOnClickListener(this);
         textView12.setOnClickListener(this);
+
+        for (TagDTO tag :((MainActivity)getActivity()).getMainAktivityViewModel().getZonesMLD().getValue()) {
+            System.out.println(tag.getText());
+        }
+
 
         findEventViewModel = ViewModelProviders.of(getParentFragment()).get(FindEventViewModel.class);
 

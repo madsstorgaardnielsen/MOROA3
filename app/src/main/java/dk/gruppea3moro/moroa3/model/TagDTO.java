@@ -45,7 +45,7 @@ public class TagDTO {
 
     public void setCategory(String category) {
         //TODO tilføj mere kompliceret genkendelse af kategorien.
-        String cat = category.toLowerCase();
+        String cat = category.toLowerCase().trim();
         switch (cat){
             case MOOD_CATEGORY:
                 this.category=MOOD_CATEGORY;
@@ -57,7 +57,19 @@ public class TagDTO {
                 this.category=ZONE_CATEGORY;
                 break;
             default:
-                System.out.println("ERROR - INCORRECT CATEGORY");
+                //TODO fjern det her
+                System.out.println("PROBLEM MED KATEOGRI AF TAGDTO setCategory()");
+                System.exit(0);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "TagDTO{" +
+                "category='" + category + '\'' +
+                ", id='" + id + '\'' +
+                ", text='" + text + '\'' +
+                ", formattedText='" + formattedText + '\'' +
+                '}';
     }
 }
