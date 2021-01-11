@@ -19,7 +19,9 @@
             <ImageView
                 android:id="@+id/eventImageShowEvent"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
                 android:src="@drawable/moro_logo" />
 
 
