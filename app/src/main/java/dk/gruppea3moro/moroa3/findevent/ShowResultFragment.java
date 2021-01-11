@@ -59,7 +59,7 @@ public class ShowResultFragment extends Fragment {
         return recyclerView;
     }
 
-    RecyclerView.Adapter adapter = new RecyclerView.Adapter() {
+    RecyclerView.Adapter<?> adapter = new RecyclerView.Adapter() {
         @Override
         public int getItemCount() {
             if (showResultViewModel.getResultEventsLD().getValue() ==null){

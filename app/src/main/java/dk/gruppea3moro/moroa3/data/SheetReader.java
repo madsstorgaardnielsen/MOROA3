@@ -15,6 +15,7 @@ import dk.gruppea3moro.moroa3.model.AddressDTO;
 import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
+import dk.gruppea3moro.moroa3.model.TagDTO;
 
 public class SheetReader implements EventLoader {
 
@@ -72,5 +73,9 @@ public class SheetReader implements EventLoader {
     public EventDTO getFeaturedEvent() throws IOException {
         //TODO fix this
         return getAllEvents().get(0);
+    }
+
+    public ArrayList<TagDTO> getAllTags(){
+        return null;
     }
 }
