@@ -141,7 +141,7 @@
                 android:layout_marginRight="60dp"
                 android:text="@string/send"
                 app:backgroundTint="@color/moroYellowButton"
-                android:layout_marginBottom="50dp"/>
+                android:layout_marginBottom="400dp"/>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

@@ -30,6 +30,8 @@
             android:id="@+id/rightNowButtonFP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:text="@string/lige_nu" />
 
@@ -37,6 +39,9 @@
             android:id="@+id/findEventButtonFP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_weight="1"
             android:text="@string/find_event" />
     </LinearLayout>
