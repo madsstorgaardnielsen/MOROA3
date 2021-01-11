@@ -2,15 +2,13 @@ package dk.gruppea3moro.moroa3.burgermenu;
 
 import android.os.Bundle;
 
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 
@@ -18,16 +16,35 @@ import dk.gruppea3moro.moroa3.R;
 
 
 public class TipUsFragment extends Fragment implements View.OnClickListener {
-    Button chooseDate, saveEvent;
+    Button datePicker, sendEventTip;
+    TextView titleTv, whereTv, descriptionTv, contactInfoTv, eventLinkTv;
 
     //TODO Knappen som skal gemme variablerne mangler at blive implementeret
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tip_os, container, false);
+        datePicker = root.findViewById(R.id.eventChooseDate);
+        sendEventTip = root.findViewById(R.id.eventSendButton);
+        titleTv = root.findViewById(R.id.eventTitle);
+        whereTv = root.findViewById(R.id.eventWhere);
+        descriptionTv = root.findViewById(R.id.eventDescription);
+        contactInfoTv = root.findViewById(R.id.eventContactInformation);
+        eventLinkTv = root.findViewById(R.id.eventLink);
 
-        chooseDate = root.findViewById(R.id.eventChooseDate);
-        chooseDate.setOnClickListener(this);
+        datePicker.setOnClickListener(this);
+        return root;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == datePicker) {
+            MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+            MaterialDatePicker<Long> picker = builder.build();
+            picker.show(getFragmentManager(), picker.toString());
+        }
+    }
+}
 
         /*
         TODO Skal muligvis bare slettes afhænig af hvad MORO gerne vil have af valg af dato metode
@@ -53,16 +70,3 @@ public class TipUsFragment extends Fragment implements View.OnClickListener {
             spinner.setAdapter(adapter);
         }
 */
-
-        return root;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v == chooseDate) {
-            MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
-            MaterialDatePicker<Long> picker = builder.build();
-            picker.show(getFragmentManager(), picker.toString());
-        }
-    }
-}
