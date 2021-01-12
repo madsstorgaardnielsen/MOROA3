@@ -36,7 +36,6 @@ public class FindEventFragment extends Fragment {
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
             @Override
             public void onChanged(SearchCriteria searchCriteria) {
-                System.out.println("TEST");
             }
         });
 
@@ -60,6 +59,7 @@ public class FindEventFragment extends Fragment {
                 }
                 System.out.println("position = " + position);
                 changeTabLayoutColor(position);
+                findEventViewModel.setViewPagerPosition(position);
             }
 
             @Override
@@ -68,6 +68,10 @@ public class FindEventFragment extends Fragment {
                 System.out.println("position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
             }
         });
+
+        int pos = findEventViewModel.getViewPagerPosition();
+        viewPager.setCurrentItem(findEventViewModel.getViewPagerPosition());
+
     }
 
     public void getTabText(TabLayout.Tab tab, int position) {
