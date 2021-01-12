@@ -84,4 +84,6 @@ sheet = https://docs.google.com/forms/u/0/d/e/1FAIpQLSdMpKKViQR4iGKqPoQX6EhUhZit
 hvis sheet skal ændres: https://docs.google.com/forms/d/1V_Np7J_I_upvCS_wy6x64ASIEBkE56AvHF9iRj-FevI/edit
 
 hvis enstries skal findes igen: https://docs.google.com/forms/d/e/1FAIpQLSdMpKKViQR4iGKqPoQX6EhUhZitLIacGGrMYGyKaHKJL9SJfw/viewform
+
+guide :https://blog.blundellapps.co.uk/tut-send-app-data-to-a-web-spreadsheet-google-sheets/
  */
