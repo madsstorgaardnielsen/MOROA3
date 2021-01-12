@@ -2,8 +2,6 @@ package dk.gruppea3moro.moroa3.burgermenu;
 
 import android.util.Log;
 
-import java.io.IOException;
-
 import dk.gruppea3moro.moroa3.model.EventTipDTO;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +22,7 @@ public class TipUsGSheetWriter {
             .baseUrl("https://docs.google.com/forms/d/e/")
             .build();
 
-    final tipUsSheetService postToSheet = retrofit.create(tipUsSheetService.class);
+    final ITipUsSheetService postToSheet = retrofit.create(ITipUsSheetService.class);
 
     public void postTip() {
         Call<Void> completeQuestionnaireCall = postToSheet
@@ -54,7 +52,7 @@ public class TipUsGSheetWriter {
 }
 
 //Interface bruges til at POST til sheet
-interface tipUsSheetService {
+interface ITipUsSheetService {
     //id til sheet
     @POST("1FAIpQLSdMpKKViQR4iGKqPoQX6EhUhZitLIacGGrMYGyKaHKJL9SJfw/formResponse")
     @FormUrlEncoded
