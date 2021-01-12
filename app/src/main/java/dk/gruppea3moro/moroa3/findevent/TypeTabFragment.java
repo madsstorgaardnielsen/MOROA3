@@ -1,5 +1,6 @@
 package dk.gruppea3moro.moroa3.findevent;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -33,9 +34,9 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.fragment_type_tab, container, false);
 
         //MainAcitivityViewModel----------------------------------------------------------------
-        mainActivityViewModel = ((MainActivity)getActivity()).getMainAktivityViewModel();
+        mainActivityViewModel = ((MainActivity)getActivity()).getMainActivityViewModel();
         //Create adapter
-        GridAdapter gridAdapter = new GridAdapter(getContext(), mainActivityViewModel,"type");
+        GridAdapter gridAdapter = new GridAdapter(getContext(), mainActivityViewModel,TagDTO.TYPE_CATEGORY);
         mainActivityViewModel.getTypesMLD().observe(this, new Observer<List<TagDTO>>() {
             @Override
             public void onChanged(List<TagDTO> tagDTOs) {
@@ -55,8 +56,8 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
                                     int position, long id) {
                 TextView textView =(TextView)((ViewGroup) view).getChildAt(0);
                 String type = textView.getHint().toString();
-                findEventViewModel.tapOnTag("type",type);
-                mainActivityViewModel.tapOnTag("type",type);
+                findEventViewModel.tapOnTag(TagDTO.TYPE_CATEGORY,type);
+                mainActivityViewModel.tapOnTag(TagDTO.TYPE_CATEGORY,type);
             }
         });
 

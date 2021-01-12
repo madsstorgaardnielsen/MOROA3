@@ -75,6 +75,7 @@ public class SearchCriteria {
         //Refine search by removing events not containing correct mood and type
         boolean match;
         if (searchCriteria.getMoods().size() > 0) {
+            ArrayList<EventDTO> eventsToRemove = new ArrayList<>();
             for (EventDTO event : eventDTOS) {
                 match = false;
                 for (String mood : event.getMoods()) {
@@ -84,9 +85,10 @@ public class SearchCriteria {
                     }
                 }
                 if (!match) {
-                    eventDTOS.remove(event);
+                    eventsToRemove.add(event);
                 }
             }
+            eventDTOS.removeAll(eventsToRemove);
         }
         if (searchCriteria.getTypes().size() > 0) {
             ArrayList<EventDTO> eventsToRemove = new ArrayList<>();

@@ -1,5 +1,6 @@
 package dk.gruppea3moro.moroa3.adapters;
 import android.content.Context;
+import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +25,13 @@ public class GridAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        if (category.equals("type")){
+        if (category.equals(TagDTO.TYPE_CATEGORY)){
             if (mainAktivityViewModel.getTypesMLD().getValue() ==null){
                 return 0;
             } else{
                 return mainAktivityViewModel.getTypesMLD().getValue().size();
             }
-        } else if (category.equals("mood")){
+        } else if (category.equals(TagDTO.MOOD_CATEGORY)){
             if (mainAktivityViewModel.getMoodsMLD().getValue() ==null){
                 return 0;
             } else{
@@ -99,12 +100,15 @@ public class GridAdapter extends BaseAdapter{
 
     private TagDTO getTagDto(String category,int position){
         TagDTO tagDTO;
-        if (category.equals("type")){
+        if (category.equals(TagDTO.TYPE_CATEGORY)){
             tagDTO = mainAktivityViewModel.getTypesMLD().getValue().get(position);
-        } else if (category.equals("mood")){
+        } else if (category.equals(TagDTO.MOOD_CATEGORY)){
             tagDTO = mainAktivityViewModel.getMoodsMLD().getValue().get(position);
-        } else{
+        } else if (category.equals(TagDTO.ZONE_CATEGORY)) {
             tagDTO = mainAktivityViewModel.getZonesMLD().getValue().get(position);
+        } else {
+            System.out.println("FEJL I METODEN getTagDto() i GridAdapter - ikke korrekt kategori af tag");
+            tagDTO = new TagDTO("","","","");
         }
         return tagDTO;
     }
