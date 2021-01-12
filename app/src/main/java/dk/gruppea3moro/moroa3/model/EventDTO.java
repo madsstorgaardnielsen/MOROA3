@@ -7,7 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class EventDTO implements Serializable {
-    String title, subtext, eventLink, imageLink, zone;
+    String title, subtext, eventLink, imageLink, zone, id;
+
+
     double price;
     DateTime start, end;
     AddressDTO addressDTO;
@@ -104,6 +106,14 @@ public class EventDTO implements Serializable {
         this.end = end;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "EventDTO{" +
@@ -112,6 +122,7 @@ public class EventDTO implements Serializable {
                 ", eventLink='" + eventLink + '\'' +
                 ", imageLink='" + imageLink + '\'' +
                 ", zone='" + zone + '\'' +
+                ", id='" + id + '\'' +
                 ", price=" + price +
                 ", start=" + start +
                 ", end=" + end +
@@ -120,5 +131,4 @@ public class EventDTO implements Serializable {
                 ", moods=" + moods +
                 '}';
     }
-
 }

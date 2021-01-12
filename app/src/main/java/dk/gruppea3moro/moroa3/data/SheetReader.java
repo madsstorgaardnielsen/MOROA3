@@ -59,6 +59,7 @@ public class SheetReader {
         event.setMoods(parseTags(fields[15]));
         event.setTypes(parseTags(fields[16]));
         event.setZone(fields[17]);
+        event.setId(fields[18]);
         return event;
     }
 
