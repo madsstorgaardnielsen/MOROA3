@@ -13,7 +13,6 @@ import retrofit2.http.POST;
 
 public class TipUsGSheetWriter {
     EventTipDTO eventTipDTO;
-
     public TipUsGSheetWriter(EventTipDTO eventTipDTO) {
         this.eventTipDTO = eventTipDTO;
     }
@@ -22,10 +21,10 @@ public class TipUsGSheetWriter {
             .baseUrl("https://docs.google.com/forms/d/e/")
             .build();
 
-    final QuestionsSpreadsheetWebService spreadsheetWebService = retrofit.create(QuestionsSpreadsheetWebService.class);
+    final tipUsSheetService postToSheet = retrofit.create(tipUsSheetService.class);
 
     public void postTip() {
-        Call<Void> completeQuestionnaireCall = spreadsheetWebService.completeQuestionnaire(
+        Call<Void> completeQuestionnaireCall = postToSheet.completeQuestionnaire(
                 eventTipDTO.getEventTitle()
                 , eventTipDTO.getEventDescription()
                 , eventTipDTO.getEventAddress()
@@ -40,19 +39,19 @@ public class TipUsGSheetWriter {
     private final Callback<Void> callCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            Log.d("", "Submitted. " + response);
+            Log.d("", "POST Submitted. " + response);
         }
 
         @Override
         public void onFailure(Call<Void> call, Throwable t) {
-            Log.e("", "Failed", t);
+            Log.e("", "POST Failed", t);
         }
     };
 }
 
 
 //Interface bruges til at POST til sheet
-interface QuestionsSpreadsheetWebService {
+interface tipUsSheetService {
     @POST("1FAIpQLSdMpKKViQR4iGKqPoQX6EhUhZitLIacGGrMYGyKaHKJL9SJfw/formResponse")
     @FormUrlEncoded
     Call<Void> completeQuestionnaire(

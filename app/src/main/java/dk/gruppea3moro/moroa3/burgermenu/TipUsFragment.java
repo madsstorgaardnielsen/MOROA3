@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -86,10 +87,24 @@ public class TipUsFragment extends Fragment implements TextWatcher {
             public void onClick(View v) {
                 writeTip = new TipUsGSheetWriter(eventTipDTO);
                 writeTip.postTip();
+                Toast.makeText(getActivity(), "Tippet er sendt!", Toast.LENGTH_LONG).show();
+                clearText();
+
+                //TODO fejlbesked hvis tippet ikke bliver gemt
             }
         });
 
         return root;
+    }
+
+    public void clearText() {
+        titleTv.setText("");
+        descriptionTv.setText("");
+        whereTv.setText("");
+        whenTv.setText("");
+        emailContactInfo.setText("");
+        eventLinkTv.setText("");
+        phoneContactInfo.setText("");
     }
 
     @Override
