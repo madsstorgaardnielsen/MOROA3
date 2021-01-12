@@ -33,7 +33,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             events.COLUMN_NAME_AREA + TEXT_TYPE + COMMA_SEP +
             events.COLUMN_NAME_STEMNINGTAGS + TEXT_TYPE + COMMA_SEP +
             events.COLUMN_NAME_TYPETAGS + TEXT_TYPE + COMMA_SEP +
-            events.COLUMN_NAME_ID + " STRING PRIMARY KEY," +
+            events.COLUMN_NAME_ID + TEXT_TYPE+ " STRING PRIMARY KEY," +
             " )";
 
 

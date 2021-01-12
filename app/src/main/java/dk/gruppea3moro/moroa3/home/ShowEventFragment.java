@@ -15,7 +15,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.EventDTO;
@@ -27,8 +30,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
     ShowEventViewModel showEventViewModel;
     AppCompatImageView saved_imageView;
     SharedPreferences sharedPreferences;
-    private int count = 0;
-
+    private boolean eventSaved;
 
 
     @Override
@@ -50,26 +52,23 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         saved_imageView.setOnClickListener(this);
 
 
-        if (sharedPreferences.getString("checked","").equals("unchecked")) {
-            System.out.println("UNCHECKED!!!!");
-            System.out.println(sharedPreferences.getString("checked", ""));
-            saved_imageView.setBackgroundResource(R.drawable.emptyheart);
-        } else if (sharedPreferences.getString("checked","").equals("checked")){
-            System.out.println("CHECKED!!!!");
-            System.out.println(sharedPreferences.getString("checked", ""));
-            saved_imageView.setBackgroundResource(R.drawable.filledheart);
-        } else{
-            System.out.println("Checked not set");
-            System.out.println(sharedPreferences.getString("checked", ""));
-            sharedPreferences.edit().putString("checked","unchecked").apply();
-        }
-
-
         //Setup ViewModel
         showEventViewModel = ViewModelProviders.of(this).get(ShowEventViewModel.class);
         showEventViewModel.init();
         showEventViewModel.getShownEvent();
 
+        checkIfEventIsSaved();
+
+        if (eventSaved == false) {
+            System.out.println("UNCHECKED!!!!");
+            saved_imageView.setBackgroundResource(R.drawable.emptyheart);
+        } else if (eventSaved == true) {
+            System.out.println("CHECKED!!!!");
+            saved_imageView.setBackgroundResource(R.drawable.filledheart);
+        } else {
+            System.out.println("Checked not set");
+            sharedPreferences.edit().putString("checked", "unchecked").apply();
+        }
         setupEventView();
         return root;
     }
@@ -106,26 +105,89 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         String eventTime = eventDTO.getStart().getSqlTimeFormat();
 
         if (v == saved_imageView) {
-            if (sharedPreferences.getString("checked","").equals("unchecked")) {
+            if (eventSaved == false) {
                 //TODO Tilføj til gemte events
-                sharedPreferences.edit().putString("title"+count, eventTitle).apply();
-                sharedPreferences.edit().putString("startDato"+count, eventDate).apply();
-                sharedPreferences.edit().putString("startTidspunkt"+count, eventTime).apply();
-                count += 1;
+                saveEvent();
                 saved_imageView.setBackgroundResource(R.drawable.filledheart);
-                sharedPreferences.edit().putString("checked","checked").apply();
                 System.out.println("NOW CHECKED!!!!!!");
-                System.out.println(sharedPreferences.getString("checked", ""));
                 saved_imageView.setTag("Filled");
             } else {
                 //TODO fjern fra gemte events
                 saved_imageView.setBackgroundResource(R.drawable.emptyheart);
-                sharedPreferences.edit().putString("checked","unchecked").apply();
+                try {
+                    removeEvent();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 System.out.println("NOW UNCHECKED!!!!!");
-                System.out.println(sharedPreferences.getString("checked", ""));
                 saved_imageView.setTag("Unfilled");
             }
         }
+    }
+
+    public void saveEvent() {
+        ArrayList<Integer> events = new ArrayList<>();
+        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+
+        Gson load = new Gson();
+        String jsonLoad = sharedPreferences.getString("saveEvent", null);
+
+        if (jsonLoad != null) {
+            events = load.fromJson(jsonLoad, ArrayList.class);
+        }
+        System.out.println("kkdwjakdjwa "+ eventDTO.getId());
+        System.out.println("jdwakdjwkajdkwjakdw "+ (Integer.parseInt(eventDTO.getId())));
+        events.add((Integer.parseInt(eventDTO.getId())));
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        Gson gsonInput = new Gson();
+        String json = gsonInput.toJson(events);
+        prefsEditor.putString("events", json);
+        prefsEditor.apply();
+
+    }
+
+    public void removeEvent() throws Exception {
+        ArrayList<Integer> events = new ArrayList<>();
+        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+
+        Gson load = new Gson();
+        String jsonLoad = sharedPreferences.getString("saveEvent", null);
+
+        if (jsonLoad != null) {
+            events = load.fromJson(jsonLoad, ArrayList.class);
+        } else if (jsonLoad == null) {
+            throw new Exception("No events saved, in preference manager. Preference manager is empty");
+        }
+
+        events.remove(Integer.valueOf(eventDTO.getId()));
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        Gson gsonInput = new Gson();
+        String json = gsonInput.toJson(events);
+        prefsEditor.putString("events", json);
+        prefsEditor.apply();
+    }
+
+    public boolean checkIfEventIsSaved() {
+        ArrayList<Integer> events = new ArrayList<>();
+        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+
+        Gson load = new Gson();
+        String jsonLoad = sharedPreferences.getString("saveEvent", null);
+        events = load.fromJson(jsonLoad, ArrayList.class);
+
+        if (jsonLoad == null ) {
+            eventSaved = false;
+            return false;
+        }
+        if (events.contains(Integer.valueOf(eventDTO.getId())) == true) {
+             eventSaved = true;
+            return true;
+
+        } else{
+             eventSaved = false;
+        return false;
+         }
+
     }
 
 }
