@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 
@@ -36,12 +37,12 @@ public class FindEventFragment extends Fragment {
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
             @Override
             public void onChanged(SearchCriteria searchCriteria) {
-                System.out.println("TEST");
             }
         });
 
         return root;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class FindEventFragment extends Fragment {
                 }
                 System.out.println("position = " + position);
                 changeTabLayoutColor(position);
+
             }
 
             @Override
@@ -68,6 +70,8 @@ public class FindEventFragment extends Fragment {
                 System.out.println("position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
             }
         });
+
+
     }
 
     public void getTabText(TabLayout.Tab tab, int position) {

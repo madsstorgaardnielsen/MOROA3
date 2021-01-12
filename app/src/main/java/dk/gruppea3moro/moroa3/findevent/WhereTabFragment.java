@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.gruppea3moro.moroa3.MainActivity;
-import dk.gruppea3moro.moroa3.MainAktivityViewModel;
+import dk.gruppea3moro.moroa3.MainActivityViewModel;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.adapters.GridAdapter;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
@@ -27,17 +27,17 @@ import dk.gruppea3moro.moroa3.model.TagDTO;
 public class WhereTabFragment extends Fragment implements View.OnClickListener {
     private FindEventViewModel findEventViewModel;
     private GridView gridView;
-    MainAktivityViewModel mainAktivityViewModel;
+    MainActivityViewModel mainActivityViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_where_tab, container, false);
 
         //MainAcitivityViewModel----------------------------------------------------------------
-        mainAktivityViewModel = ((MainActivity)getActivity()).getMainActivityViewModel();
+        mainActivityViewModel = ((MainActivity)getActivity()).getMainActivityViewModel();
         //Create adapter
-        GridAdapter gridAdapter = new GridAdapter(getContext(),mainAktivityViewModel,"zone");
-        mainAktivityViewModel.getZonesMLD().observe(this, new Observer<List<TagDTO>>() {
+        GridAdapter gridAdapter = new GridAdapter(getContext(), mainActivityViewModel,"zone");
+        mainActivityViewModel.getZonesMLD().observe(this, new Observer<List<TagDTO>>() {
             @Override
             public void onChanged(List<TagDTO> tagDTOs) {
                 gridAdapter.notifyDataSetChanged();
@@ -57,7 +57,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                 TextView textView =(TextView)((ViewGroup) view).getChildAt(0);
                 String zone = textView.getHint().toString();
                 findEventViewModel.tapOnTag("zone",zone);
-                mainAktivityViewModel.tapOnTag("zone",zone);
+                mainActivityViewModel.tapOnTag("zone",zone);
             }
         });
 
@@ -67,7 +67,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
             @Override
             public void onChanged(SearchCriteria searchCriteria) {
-                TextView[] textViews = new TextView[mainAktivityViewModel.getZonesMLD().getValue().size()];
+                TextView[] textViews = new TextView[mainActivityViewModel.getZonesMLD().getValue().size()];
 
                 for (int i = 0; i < gridView.getChildCount(); i++) {
                     ViewGroup gridItem = (ViewGroup) gridView.getChildAt(i);

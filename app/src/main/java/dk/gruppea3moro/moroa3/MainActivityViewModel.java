@@ -10,7 +10,7 @@ import java.util.List;
 import dk.gruppea3moro.moroa3.data.TagRepository;
 import dk.gruppea3moro.moroa3.model.TagDTO;
 
-public class MainAktivityViewModel extends ViewModel {
+public class MainActivityViewModel extends ViewModel {
     MutableLiveData<List<TagDTO>> moodsMLD;
     MutableLiveData<List<TagDTO>> typesMLD;
     MutableLiveData<List<TagDTO>> zonesMLD;
