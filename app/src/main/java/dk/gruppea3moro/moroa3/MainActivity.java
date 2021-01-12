@@ -23,15 +23,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public int width;
     public static int height;
-    MainAktivityViewModel mainAktivityViewModel;
+    MainActivityViewModel mainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainAktivityViewModel = ViewModelProviders.of(this).get(MainAktivityViewModel.class);
-        mainAktivityViewModel.init();
+        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        mainActivityViewModel.init();
 
         //Read database from google sheet in background thread
         EventRepository.get().refreshDbInBackground(this);
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AppState.get().saveToPM(getApplicationContext());
     }
 
-    public MainAktivityViewModel getMainActivityViewModel() {
-        return mainAktivityViewModel;
+    public MainActivityViewModel getMainActivityViewModel() {
+        return mainActivityViewModel;
     }
 }

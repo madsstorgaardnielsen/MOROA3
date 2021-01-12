@@ -16,7 +16,6 @@ import dk.gruppea3moro.moroa3.model.TagDTO;
 //TODO klassen mangler at tage høje for hvilken side man var inde på, når Fragmentet vises ved tryk på tilbageknappen
 public class FindEventViewModel extends AndroidViewModel {
     private MutableLiveData<SearchCriteria> searchCriteriaMLD;
-    private int viewPagerPosition;
     Application application;
 
 
@@ -32,7 +31,6 @@ public class FindEventViewModel extends AndroidViewModel {
         if (searchCriteriaMLD !=null){
             return;
         }
-        viewPagerPosition=0;
         searchCriteriaMLD = new MutableLiveData<>(new SearchCriteria());
     }
 
@@ -65,13 +63,6 @@ public class FindEventViewModel extends AndroidViewModel {
         EventRepository.get().setResultEvents(searchCriteriaMLD.getValue(),application);
     }
 
-    public int getViewPagerPosition() {
-        return viewPagerPosition;
-    }
-
-    public void setViewPagerPosition(int viewPagerPosition) {
-        this.viewPagerPosition = viewPagerPosition;
-    }
 
     @Override
     protected void onCleared() {

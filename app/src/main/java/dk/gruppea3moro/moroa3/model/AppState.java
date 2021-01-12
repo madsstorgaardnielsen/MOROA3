@@ -29,6 +29,7 @@ public class AppState //extends Application
     private Deque<Integer> integerDeque = new ArrayDeque<>(5);
     private EventDTO lastViewedEvent;
     private EventTipDTO eventTipDTO;
+    private int findEventVPposition;
 
     //STATIC METHODS--------------------------------------------------------------------------------
     public static AppState get() {
@@ -156,4 +157,11 @@ public class AppState //extends Application
         this.lastViewedEvent = lastViewedEvent;
     }
 
+    public int getFindEventVPposition() {
+        return findEventVPposition;
+    }
+
+    public void setFindEventVPposition(int findEventVPposition) {
+        this.findEventVPposition = findEventVPposition;
+    }
 }

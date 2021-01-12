@@ -1,6 +1,5 @@
 package dk.gruppea3moro.moroa3.findevent;
 
-import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.gruppea3moro.moroa3.MainActivity;
-import dk.gruppea3moro.moroa3.MainAktivityViewModel;
+import dk.gruppea3moro.moroa3.MainActivityViewModel;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.adapters.GridAdapter;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
@@ -26,7 +25,7 @@ import dk.gruppea3moro.moroa3.model.TagDTO;
 
 public class TypeTabFragment extends Fragment implements View.OnClickListener {
     FindEventViewModel findEventViewModel;
-    MainAktivityViewModel mainActivityViewModel;
+    MainActivityViewModel mainActivityViewModel;
     GridView gridView;
 
     @Override

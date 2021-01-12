@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
 
@@ -42,6 +43,7 @@ public class FindEventFragment extends Fragment {
         return root;
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         tabFragmentAdapter = new TabFragmentAdapter(this);
@@ -59,7 +61,7 @@ public class FindEventFragment extends Fragment {
                 }
                 System.out.println("position = " + position);
                 changeTabLayoutColor(position);
-                findEventViewModel.setViewPagerPosition(position);
+
             }
 
             @Override
@@ -69,8 +71,6 @@ public class FindEventFragment extends Fragment {
             }
         });
 
-        int pos = findEventViewModel.getViewPagerPosition();
-        viewPager.setCurrentItem(findEventViewModel.getViewPagerPosition());
 
     }
 
