@@ -25,6 +25,7 @@ public class TipUsFragment extends Fragment implements TextWatcher {
     Button sendEventTip;
     TextView titleTv, whereTv, descriptionTv, emailContactInfo, eventLinkTv, whenTv, phoneContactInfo;
     EventTipDTO eventTipDTO;
+    TipUsGSheetWriter writeTip;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,7 +84,8 @@ public class TipUsFragment extends Fragment implements TextWatcher {
         sendEventTip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Send tip til email eller googlesheet
+                writeTip = new TipUsGSheetWriter(eventTipDTO);
+                writeTip.postTip();
             }
         });
 
