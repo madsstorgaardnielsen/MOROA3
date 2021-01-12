@@ -65,11 +65,11 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
             @Override
             public void onChanged(SearchCriteria searchCriteria) {
-                int gridSize = mainActivityViewModel.getTypesMLD().getValue().size();
+                int gridSize = gridView.getChildCount();
                 TextView[] textViews = new TextView[gridSize];
                 //TODO her opstår der problemer, fordi gridView.getChildCount() kun er de views, der er oprettet, dvs. dem som kan ses på skærmen
                 //Mens vi er interesserede i at opdatere alle firkanterne - også dem uden for synsfeltet
-                if (gridView.getChildCount()==0){
+                if (gridSize==0){
                     return;
                 }
 

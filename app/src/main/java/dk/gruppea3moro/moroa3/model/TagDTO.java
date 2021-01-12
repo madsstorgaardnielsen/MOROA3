@@ -7,12 +7,15 @@ public class TagDTO {
     public static final String TYPE_CATEGORY = "type";
     public static final String ZONE_CATEGORY = "zone";
 
+    private boolean selected;
+
 
     public TagDTO(String category, String id, String text, String formattedText) {
         this.category = category.toLowerCase();
         this.id = id.toLowerCase();
         this.text = text;
         this.formattedText = formattedText;
+        this.selected = false;
     }
 
     public String getId() {
@@ -59,8 +62,16 @@ public class TagDTO {
             default:
                 //TODO fjern det her
                 System.out.println("PROBLEM MED KATEOGRI AF TAGDTO setCategory()");
-                System.exit(0);
+                //System.exit(0);
         }
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override

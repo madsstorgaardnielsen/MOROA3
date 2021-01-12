@@ -82,6 +82,12 @@ public class GridAdapter extends BaseAdapter{
                     textView.setBackgroundResource(R.drawable.blackborder);
                     break;
             }
+
+            if (tagDTO.isSelected()){
+                textView.setBackgroundResource(R.drawable.greenborder);
+            } else {
+                textView.setBackgroundResource(R.drawable.blackborder);
+            }
         } else {
             grid = (View) convertView;
         }
