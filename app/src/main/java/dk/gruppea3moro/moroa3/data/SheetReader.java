@@ -99,7 +99,7 @@ public class SheetReader {
     public TagDTO createTagDTO(String line){
         String[] fields = line.split("\t");
         TagDTO tagDTO = new TagDTO(fields[0],fields[1],fields[2],fields[3]);
-        tagDTO.setCategory(fields[0]);//TODO ikke så elegant
+        tagDTO.setCategory(fields[0]);
         return tagDTO;
     }
 

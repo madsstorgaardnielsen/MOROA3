@@ -18,7 +18,6 @@ import dk.gruppea3moro.moroa3.model.AppState;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
     TextView contact_TextView, about_TextView, tip_Textview;
-    Button readDbButton;//TODO remove this
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,9 +29,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         contact_TextView.setOnClickListener(this);
         about_TextView.setOnClickListener(this);
         tip_Textview.setOnClickListener(this);
-
-        readDbButton = root.findViewById(R.id.readDbButton);//TODO delete this
-        readDbButton.setOnClickListener(this);//TODO delete this
 
         return root;
     }
@@ -52,8 +48,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             AppState.get().pushToBackstackDequeTop(R.id.fragment_tip_us);
             TipUsFragment tipUsFragment = new TipUsFragment();
             ma.loadFragment(tipUsFragment);
-        } else if (v == readDbButton) {//TODO delete this
-            EventRepository.get().refreshDbInBackground(getContext());
         }
     }
 }

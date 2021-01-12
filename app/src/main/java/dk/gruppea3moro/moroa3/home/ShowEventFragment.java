@@ -20,7 +20,6 @@ import com.squareup.picasso.Picasso;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 
-//TODO hele klassen er ret rodet og trænger til en kærlig hånd
 public class ShowEventFragment extends Fragment implements View.OnClickListener {
     TextView title, subtext, price, startDay, startTime, address, eventLink;
     ImageView image;

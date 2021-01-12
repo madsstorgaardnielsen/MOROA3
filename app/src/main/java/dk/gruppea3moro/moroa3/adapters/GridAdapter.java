@@ -73,7 +73,7 @@ public class GridAdapter extends BaseAdapter{
         TagDTO tagDTO = getTagDto(category,position);
         //Set text formatted
         textView.setText(tagDTO.getFormattedText());
-        //Set hint to id of tag //TODO fix newline som er blevet overset
+        //Set hint to id of tag
         textView.setHint(tagDTO.getId());
         //Set border color according to category
         switch (tagDTO.getCategory()){

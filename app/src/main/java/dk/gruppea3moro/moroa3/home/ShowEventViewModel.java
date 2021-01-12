@@ -18,7 +18,6 @@ public class ShowEventViewModel extends ViewModel {
         if (shownEvent!=null){
             return;
         }
-        //TODO overvej om det bør være fra EventReposioty i stedet
         shownEvent = EventRepository.get().getLastViewedEventMLD();
 
     }

@@ -47,7 +47,6 @@ public class TagDTO {
     }
 
     public void setCategory(String category) {
-        //TODO tilføj mere kompliceret genkendelse af kategorien.
         String cat = category.toLowerCase().trim();
         switch (cat){
             case MOOD_CATEGORY:

@@ -10,8 +10,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/yellowborder"
         android:gravity="center"
-        android:text="@string/TYPE_MODE"
-        android:hint="@string/TYPE_MODE"
+        android:text="MODE"
+        android:hint="mode"
         android:textColor="#000000"
         android:textSize="21sp"
         android:textStyle="bold" />

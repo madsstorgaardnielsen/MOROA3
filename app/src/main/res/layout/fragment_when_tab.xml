@@ -9,8 +9,6 @@
     android:background="@color/moroSalmonRedBackground">
 
 
-    <!-- TODO: Update blank fragment layout -->
-
     <DatePicker
         android:id="@+id/when_datePicker"
         android:layout_width="wrap_content"
