@@ -14,7 +14,7 @@ public class TagDTO {
         this.category = category.toLowerCase();
         this.id = id.toLowerCase();
         this.text = text;
-        this.formattedText = formattedText;
+        this.formattedText = formatFormattedText(formattedText);
         this.selected = false;
     }
 
@@ -82,5 +82,13 @@ public class TagDTO {
                 ", text='" + text + '\'' +
                 ", formattedText='" + formattedText + '\'' +
                 '}';
+    }
+
+    private String formatFormattedText(String notFormattedText){
+        String result = notFormattedText;
+        if (notFormattedText.contains("\\n")){
+            result = notFormattedText.replace("\\n","\n");
+        }
+        return result;
     }
 }
