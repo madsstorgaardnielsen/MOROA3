@@ -2,6 +2,8 @@ package dk.gruppea3moro.moroa3.burgermenu;
 
 import android.util.Log;
 
+import java.io.IOException;
+
 import dk.gruppea3moro.moroa3.model.EventTipDTO;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,21 +19,23 @@ public class TipUsGSheetWriter {
         this.eventTipDTO = eventTipDTO;
     }
 
-    Retrofit retrofit = new Retrofit.Builder()
+    Retrofit retrofit = new Retrofit
+            .Builder()
             .baseUrl("https://docs.google.com/forms/d/e/")
             .build();
 
     final tipUsSheetService postToSheet = retrofit.create(tipUsSheetService.class);
 
     public void postTip() {
-        Call<Void> completeQuestionnaireCall = postToSheet.completeQuestionnaire(
-                eventTipDTO.getEventTitle()
-                , eventTipDTO.getEventDescription()
-                , eventTipDTO.getEventAddress()
-                , eventTipDTO.getEventDate()
-                , eventTipDTO.getContactEmail()
-                , eventTipDTO.getContactPhoneNumber()
-                , eventTipDTO.getEventLink());
+        Call<Void> completeQuestionnaireCall = postToSheet
+                .completeQuestionnaire(
+                        eventTipDTO.getEventTitle()
+                        , eventTipDTO.getEventDescription()
+                        , eventTipDTO.getEventAddress()
+                        , eventTipDTO.getEventDate()
+                        , eventTipDTO.getContactEmail()
+                        , eventTipDTO.getContactPhoneNumber()
+                        , eventTipDTO.getEventLink());
 
         completeQuestionnaireCall.enqueue(callCallback);
     }
@@ -49,12 +53,13 @@ public class TipUsGSheetWriter {
     };
 }
 
-
 //Interface bruges til at POST til sheet
 interface tipUsSheetService {
+    //id til sheet
     @POST("1FAIpQLSdMpKKViQR4iGKqPoQX6EhUhZitLIacGGrMYGyKaHKJL9SJfw/formResponse")
     @FormUrlEncoded
     Call<Void> completeQuestionnaire(
+            //entries til kolonnerne
             @Field("entry.227105424") String title,
             @Field("entry.1628213198") String description,
             @Field("entry.1967743796") String where,
