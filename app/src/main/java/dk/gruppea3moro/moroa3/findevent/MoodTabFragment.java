@@ -93,7 +93,7 @@ public class MoodTabFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v instanceof TextView){
             String mood = ((TextView) v).getHint().toString();
-            findEventViewModel.tapOnMood(mood);
+            findEventViewModel.tapOnTag("mood",mood);
         }
     }
 

@@ -55,7 +55,8 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
                                     int position, long id) {
                 TextView textView =(TextView)((ViewGroup) view).getChildAt(0);
                 String type = textView.getHint().toString();
-                findEventViewModel.tapOnType(type);
+                findEventViewModel.tapOnTag("type",type);
+                mainActivityViewModel.tapOnTag("type",type);
             }
         });
 
@@ -67,8 +68,7 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
             public void onChanged(SearchCriteria searchCriteria) {
                 int gridSize = gridView.getChildCount();
                 TextView[] textViews = new TextView[gridSize];
-                //TODO her opstår der problemer, fordi gridView.getChildCount() kun er de views, der er oprettet, dvs. dem som kan ses på skærmen
-                //Mens vi er interesserede i at opdatere alle firkanterne - også dem uden for synsfeltet
+
                 if (gridSize==0){
                     return;
                 }
@@ -108,9 +108,6 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v instanceof TextView){
-            String type = ((TextView) v).getHint().toString();
-            findEventViewModel.tapOnType(type);
-        }
+
     }
 }

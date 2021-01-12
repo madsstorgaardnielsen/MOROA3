@@ -57,11 +57,10 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                                     int position, long id) {
                 TextView textView =(TextView)((ViewGroup) view).getChildAt(0);
                 String zone = textView.getHint().toString();
-                findEventViewModel.tapOnZone(zone);
+                findEventViewModel.tapOnTag("zone",zone);
+                mainAktivityViewModel.tapOnTag("zone",zone);
             }
         });
-
-
 
         //FindEventViewModel----------------------------------------------------------------
         findEventViewModel = ViewModelProviders.of(getParentFragment()).get(FindEventViewModel.class);

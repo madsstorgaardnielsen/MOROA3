@@ -58,39 +58,40 @@ public class GridAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View grid;
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        //Init the Views
         if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             grid = inflater.inflate(R.layout.find_event_grid_item, null);
-            TextView textView = (TextView) grid.findViewById(R.id.grid_item_text_view);
-
-            //Get TagDTO
-            TagDTO tagDTO = getTagDto(category,position);
-
-            //Set text formatted
-            textView.setText(tagDTO.getFormattedText());
-            //Set hint to id of tag //TODO fix newline som er blevet overset
-            textView.setHint(tagDTO.getId());
-            //Set border color according to category
-            switch (tagDTO.getCategory()){
-                case TagDTO.MOOD_CATEGORY:
-                case TagDTO.TYPE_CATEGORY:
-                    textView.setBackgroundResource(R.drawable.yellowborder);
-                    break;
-                case TagDTO.ZONE_CATEGORY:
-                    textView.setBackgroundResource(R.drawable.blackborder);
-                    break;
-            }
-
-            if (tagDTO.isSelected()){
-                textView.setBackgroundResource(R.drawable.greenborder);
-            } else {
-                textView.setBackgroundResource(R.drawable.blackborder);
-            }
         } else {
             grid = (View) convertView;
         }
+
+        //Logic for drawing boxes
+        TextView textView = (TextView) grid.findViewById(R.id.grid_item_text_view);
+        //Get TagDTO
+        TagDTO tagDTO = getTagDto(category,position);
+        //Set text formatted
+        textView.setText(tagDTO.getFormattedText());
+        //Set hint to id of tag //TODO fix newline som er blevet overset
+        textView.setHint(tagDTO.getId());
+        //Set border color according to category
+        switch (tagDTO.getCategory()){
+            case TagDTO.MOOD_CATEGORY:
+            case TagDTO.TYPE_CATEGORY:
+                textView.setBackgroundResource(R.drawable.yellowborder);
+                break;
+            case TagDTO.ZONE_CATEGORY:
+                textView.setBackgroundResource(R.drawable.blackborder);
+                break;
+        }
+
+        if (tagDTO.isSelected()){
+            textView.setBackgroundResource(R.drawable.greenborder);
+        } else {
+            textView.setBackgroundResource(R.drawable.blackborder);
+        }
+
 
 
         return grid;
