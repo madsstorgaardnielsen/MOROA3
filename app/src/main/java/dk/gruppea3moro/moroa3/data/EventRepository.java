@@ -43,7 +43,10 @@ public class EventRepository {
 
     public ArrayList<EventDTO> getAllEvents() {
         try {
-            return sheetReader.getAllEvents();
+            ArrayList<EventDTO> allEvents = sheetReader.getAllEvents();
+            //Set the featured event
+            featuredEventMLD.postValue(allEvents.get(0));
+            return allEvents;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,26 +55,9 @@ public class EventRepository {
 
 
     public MutableLiveData<EventDTO> getFeaturedEvent() {
-        setFeaturedEvent();
         return featuredEventMLD;
     }
 
-    public void setFeaturedEvent(){
-        Executor bgThread = Executors.newSingleThreadExecutor();
-        Handler uiThread = new Handler();
-        bgThread.execute(() -> {
-            EventDTO featuredEvent = null;
-            try {
-                featuredEvent = sheetReader.getFeaturedEvent();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            EventDTO finalFeaturedEvent = featuredEvent;
-            uiThread.post(() -> {
-                featuredEventMLD.setValue(finalFeaturedEvent);
-            });
-        });
-    }
 
     public void setResultEvents(SearchCriteria sc, Context context){
         Executor bgThread = Executors.newSingleThreadExecutor();

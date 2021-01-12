@@ -69,12 +69,6 @@ public class SheetReader {
         return tags;
     }
 
-
-    public EventDTO getFeaturedEvent() throws IOException {
-        //TODO fix this
-        return getAllEvents().get(0);
-    }
-
     public ArrayList<TagDTO> getAllTags() throws IOException {
         //Result arraylist
         ArrayList<TagDTO> tags = new ArrayList<>();

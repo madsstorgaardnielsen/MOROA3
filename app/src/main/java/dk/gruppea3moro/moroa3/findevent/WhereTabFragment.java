@@ -98,7 +98,6 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                         textView.setBackgroundResource(R.drawable.greenborder);
                     } else {
                         textView.setBackgroundResource(R.drawable.blackborder);
-
                     }
                 }
             }
