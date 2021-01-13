@@ -6,8 +6,4 @@
     android:id="@+id/fragment_right_now"
     android:background="@color/moroBlueBackground"
     tools:context=".rightnow.RightNowFragment">
-
-
-
-
 </FrameLayout>
