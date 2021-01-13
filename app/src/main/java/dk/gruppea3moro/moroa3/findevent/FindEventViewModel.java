@@ -63,7 +63,6 @@ public class FindEventViewModel extends AndroidViewModel {
         EventRepository.get().setResultEvents(searchCriteriaMLD.getValue(),application);
     }
 
-
     @Override
     protected void onCleared() {
         super.onCleared();

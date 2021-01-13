@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         width = metrics.widthPixels;
         height = metrics.heightPixels;
-
     }
 
     //Use to change between fragments and set the bottom navigation bar at the same time.

@@ -52,14 +52,12 @@ public class FeaturedEventFragment extends Fragment {
 
         //Set text views
         title.setText(eventDTO.getTitle());
-        time.setText(eventDTO.getStart().getTimeFormat() + " - "+ eventDTO.getEnd().getTimeFormat());
+        time.setText(eventDTO.getStart().getTimeFormat() + " - " + eventDTO.getEnd().getTimeFormat());
         address.setText(eventDTO.getAddressDTO().toString());
         date.setText(eventDTO.getStart().getDanishDayFormat());
         description.setText(eventDTO.getSubtext());
 
         //Let Picasso handle the image
         Picasso.get().load(eventDTO.getImageLink()).placeholder(R.drawable.moro_logo).into(image);
-
     }
-
 }

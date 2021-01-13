@@ -33,9 +33,9 @@ public class SheetReader {
         String line = br.readLine();
         line = br.readLine();
         while (line != null) {
-            try{
+            try {
                 events.add(createEventDTO(line));
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("DATA: " + line);
                 e.printStackTrace();
             }
@@ -53,8 +53,8 @@ public class SheetReader {
         event.setPrice(Integer.parseInt(fields[2]));
         event.setEventLink(fields[3]);
         event.setImageLink(fields[4]);
-        event.setStart(new DateTime(fields[6],fields[5]));
-        event.setEnd(new DateTime(fields[8],fields[7]));
+        event.setStart(new DateTime(fields[6], fields[5]));
+        event.setEnd(new DateTime(fields[8], fields[7]));
         event.setAddressDTO(new AddressDTO(fields[9], fields[10], fields[11], fields[12], fields[13], fields[14]));
         event.setMoods(parseTags(fields[15]));
         event.setTypes(parseTags(fields[16]));
@@ -84,9 +84,9 @@ public class SheetReader {
         String line = br.readLine();
         line = br.readLine();
         while (line != null) {
-            try{
+            try {
                 tags.add(createTagDTO(line));
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("DATA: " + line);
                 e.printStackTrace();
             }
@@ -96,9 +96,9 @@ public class SheetReader {
         return tags;
     }
 
-    public TagDTO createTagDTO(String line){
+    public TagDTO createTagDTO(String line) {
         String[] fields = line.split("\t");
-        TagDTO tagDTO = new TagDTO(fields[0],fields[1],fields[2],fields[3]);
+        TagDTO tagDTO = new TagDTO(fields[0], fields[1], fields[2], fields[3]);
         tagDTO.setCategory(fields[0]);
         return tagDTO;
     }

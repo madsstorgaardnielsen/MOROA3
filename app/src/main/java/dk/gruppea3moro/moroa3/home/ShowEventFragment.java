@@ -28,8 +28,6 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
     SharedPreferences sharedPreferences;
     private int count = 0;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,21 +46,19 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
 
         saved_imageView.setOnClickListener(this);
 
-
-        if (sharedPreferences.getString("checked","").equals("unchecked")) {
+        if (sharedPreferences.getString("checked", "").equals("unchecked")) {
             System.out.println("UNCHECKED!!!!");
             System.out.println(sharedPreferences.getString("checked", ""));
             saved_imageView.setBackgroundResource(R.drawable.emptyheart);
-        } else if (sharedPreferences.getString("checked","").equals("checked")){
+        } else if (sharedPreferences.getString("checked", "").equals("checked")) {
             System.out.println("CHECKED!!!!");
             System.out.println(sharedPreferences.getString("checked", ""));
             saved_imageView.setBackgroundResource(R.drawable.filledheart);
-        } else{
+        } else {
             System.out.println("Checked not set");
             System.out.println(sharedPreferences.getString("checked", ""));
-            sharedPreferences.edit().putString("checked","unchecked").apply();
+            sharedPreferences.edit().putString("checked", "unchecked").apply();
         }
-
 
         //Setup ViewModel
         showEventViewModel = ViewModelProviders.of(this).get(ShowEventViewModel.class);
@@ -90,7 +86,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
 
         eventLink.setText("Læs mere: " + eventDTO.getEventLink());
         startDay.setText(eventDTO.getStart().getDanishDayFormat());
-        startTime.setText(eventDTO.getStart().getTimeFormat()+" - "+ eventDTO.getEnd().getTimeFormat());
+        startTime.setText(eventDTO.getStart().getTimeFormat() + " - " + eventDTO.getEnd().getTimeFormat());
         address.setText(eventDTO.getAddressDTO().toString());
 
         //Let Picasso handle the image
@@ -105,26 +101,25 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         String eventTime = eventDTO.getStart().getSqlTimeFormat();
 
         if (v == saved_imageView) {
-            if (sharedPreferences.getString("checked","").equals("unchecked")) {
+            if (sharedPreferences.getString("checked", "").equals("unchecked")) {
                 //TODO Tilføj til gemte events
-                sharedPreferences.edit().putString("title"+count, eventTitle).apply();
-                sharedPreferences.edit().putString("startDato"+count, eventDate).apply();
-                sharedPreferences.edit().putString("startTidspunkt"+count, eventTime).apply();
+                sharedPreferences.edit().putString("title" + count, eventTitle).apply();
+                sharedPreferences.edit().putString("startDato" + count, eventDate).apply();
+                sharedPreferences.edit().putString("startTidspunkt" + count, eventTime).apply();
                 count += 1;
                 saved_imageView.setBackgroundResource(R.drawable.filledheart);
-                sharedPreferences.edit().putString("checked","checked").apply();
+                sharedPreferences.edit().putString("checked", "checked").apply();
                 System.out.println("NOW CHECKED!!!!!!");
                 System.out.println(sharedPreferences.getString("checked", ""));
                 saved_imageView.setTag("Filled");
             } else {
                 //TODO fjern fra gemte events
                 saved_imageView.setBackgroundResource(R.drawable.emptyheart);
-                sharedPreferences.edit().putString("checked","unchecked").apply();
+                sharedPreferences.edit().putString("checked", "unchecked").apply();
                 System.out.println("NOW UNCHECKED!!!!!");
                 System.out.println(sharedPreferences.getString("checked", ""));
                 saved_imageView.setTag("Unfilled");
             }
         }
     }
-
 }

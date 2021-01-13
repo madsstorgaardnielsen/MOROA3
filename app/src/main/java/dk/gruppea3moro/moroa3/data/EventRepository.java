@@ -9,6 +9,7 @@ import android.os.Handler;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,6 @@ public class EventRepository {
     private final MutableLiveData<EventDTO> lastViewedEventMLD = new MutableLiveData<>();
     private final MutableLiveData<List<EventDTO>> resultEventsMLD = new MutableLiveData<>();
 
-
     public EventRepository() {
         sheetReader = new SheetReader();
     }
@@ -39,7 +39,6 @@ public class EventRepository {
         }
         return instance;
     }
-
 
     public ArrayList<EventDTO> getAllEvents() {
         try {
@@ -53,18 +52,16 @@ public class EventRepository {
         return null;
     }
 
-
     public MutableLiveData<EventDTO> getFeaturedEvent() {
         return featuredEventMLD;
     }
 
-
-    public void setResultEvents(SearchCriteria sc, Context context){
+    public void setResultEvents(SearchCriteria sc, Context context) {
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. EventRepository
-            List<EventDTO> eventDTOs = searchEvents(sc,context);
+            List<EventDTO> eventDTOs = searchEvents(sc, context);
 
             uiThread.post(() -> {
                 resultEventsMLD.setValue(eventDTOs);
@@ -72,7 +69,7 @@ public class EventRepository {
         });
     }
 
-    public MutableLiveData<List<EventDTO>> getResultEventsMLD(){
+    public MutableLiveData<List<EventDTO>> getResultEventsMLD() {
         return resultEventsMLD;
     }
 
@@ -116,7 +113,7 @@ public class EventRepository {
         System.out.println("done updating db");
     }
 
-    public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria,Context context) {
+    public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria, Context context) {
         //Result arraylist
         ArrayList<EventDTO> eventDTOS = new ArrayList<EventDTO>();
 
@@ -149,10 +146,10 @@ public class EventRepository {
 
         if (searchCriteria.getZones().size() > 0) {
             StringBuilder sb = new StringBuilder();
-            if (selection!= null){
+            if (selection != null) {
                 sb.append(" AND (");
             } else {
-                selection="";
+                selection = "";
                 sb.append("(");
             }
 
@@ -229,7 +226,7 @@ public class EventRepository {
         db.close();
 
         //Remove the events, that don't match either a mood or a type (if these are not null)
-        SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria,eventDTOS);
+        SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria, eventDTOS);
 
         return eventDTOS;
     }

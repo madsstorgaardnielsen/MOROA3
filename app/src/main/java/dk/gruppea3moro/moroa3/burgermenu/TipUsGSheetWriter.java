@@ -13,6 +13,7 @@ import retrofit2.http.POST;
 
 public class TipUsGSheetWriter {
     EventTipDTO eventTipDTO;
+
     public TipUsGSheetWriter(EventTipDTO eventTipDTO) {
         this.eventTipDTO = eventTipDTO;
     }

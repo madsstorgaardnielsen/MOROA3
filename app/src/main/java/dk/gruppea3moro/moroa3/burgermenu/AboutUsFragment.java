@@ -20,8 +20,9 @@ import dk.gruppea3moro.moroa3.model.AppState;
 
 
 public class AboutUsFragment extends Fragment {
-TextView tv;
-ContactUsFragment f;
+    TextView tv;
+    ContactUsFragment f;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_about_us, container, false);
@@ -58,11 +59,12 @@ ContactUsFragment f;
             }
         };
 
-        ss.setSpan(cs, (ss.length()-3),ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(cs, (ss.length() - 3), ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tv.setText(ss);
         tv.setMovementMethod(LinkMovementMethod.getInstance());
         return v;
     }
+
     public void loadFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()

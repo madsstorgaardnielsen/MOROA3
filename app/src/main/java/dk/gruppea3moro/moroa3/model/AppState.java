@@ -47,8 +47,6 @@ public class AppState //extends Application
         return eventTipDTO;
     }
 
-
-
     //Returns layout id of the fragment corresponding to the item selected in bottom navigation bar
     public static int getFragmentLayoutId(int bnItemId) {
         switch (bnItemId) {
@@ -144,7 +142,7 @@ public class AppState //extends Application
 
         long millis = System.currentTimeMillis();
         sc.setFromDate(DateTime.getDateFromTimeMillis(millis));
-        sc.setToDate(DateTime.getDateFromTimeMillis(millis+3600000));
+        sc.setToDate(DateTime.getDateFromTimeMillis(millis + 3600000));
 
         return sc;
     }

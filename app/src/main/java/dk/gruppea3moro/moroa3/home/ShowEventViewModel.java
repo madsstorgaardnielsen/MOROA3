@@ -11,15 +11,14 @@ public class ShowEventViewModel extends ViewModel {
 
     private MutableLiveData<EventDTO> shownEvent;
 
-    public LiveData<EventDTO> getShownEvent(){
+    public LiveData<EventDTO> getShownEvent() {
         return shownEvent;
     }
-    public void init(){
-        if (shownEvent!=null){
+
+    public void init() {
+        if (shownEvent != null) {
             return;
         }
         shownEvent = EventRepository.get().getLastViewedEventMLD();
-
     }
-
 }

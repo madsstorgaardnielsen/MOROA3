@@ -33,9 +33,9 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.fragment_type_tab, container, false);
 
         //MainAcitivityViewModel----------------------------------------------------------------
-        mainActivityViewModel = ((MainActivity)getActivity()).getMainActivityViewModel();
+        mainActivityViewModel = ((MainActivity) getActivity()).getMainActivityViewModel();
         //Create adapter
-        GridAdapter gridAdapter = new GridAdapter(getContext(), mainActivityViewModel,TagDTO.TYPE_CATEGORY);
+        GridAdapter gridAdapter = new GridAdapter(getContext(), mainActivityViewModel, TagDTO.TYPE_CATEGORY);
         mainActivityViewModel.getTypesMLD().observe(this, new Observer<List<TagDTO>>() {
             @Override
             public void onChanged(List<TagDTO> tagDTOs) {
@@ -44,7 +44,7 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
         });
 
         //Setup GridView
-        gridView=(GridView)root.findViewById(R.id.type_tab_grid_view);
+        gridView = (GridView) root.findViewById(R.id.type_tab_grid_view);
 
         //Setup adapter
         gridView.setAdapter(gridAdapter);
@@ -53,10 +53,10 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                TextView textView =(TextView)((ViewGroup) view).getChildAt(0);
+                TextView textView = (TextView) ((ViewGroup) view).getChildAt(0);
                 String type = textView.getHint().toString();
-                findEventViewModel.tapOnTag(TagDTO.TYPE_CATEGORY,type);
-                mainActivityViewModel.tapOnTag(TagDTO.TYPE_CATEGORY,type);
+                findEventViewModel.tapOnTag(TagDTO.TYPE_CATEGORY, type);
+                mainActivityViewModel.tapOnTag(TagDTO.TYPE_CATEGORY, type);
             }
         });
 
@@ -69,7 +69,7 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
                 int gridSize = gridView.getChildCount();
                 TextView[] textViews = new TextView[gridSize];
 
-                if (gridSize==0){
+                if (gridSize == 0) {
                     return;
                 }
 
@@ -85,7 +85,7 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
                 //Find all textViews that need to be green
                 for (TextView textView : textViews) {
                     typeTextView = textView.getHint().toString();
-                    for (String type:searchCriteria.getTypes()) {
+                    for (String type : searchCriteria.getTypes()) {
                         if (type.equals(typeTextView)) {
                             greenBoxes.add(type);
                         }
@@ -93,8 +93,8 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
                 }
 
                 //Make them green
-                for (TextView textView:textViews) {
-                    if (greenBoxes.contains(textView.getHint().toString())){
+                for (TextView textView : textViews) {
+                    if (greenBoxes.contains(textView.getHint().toString())) {
                         textView.setBackgroundResource(R.drawable.greenborder);
                     } else {
                         textView.setBackgroundResource(R.drawable.blackborder);

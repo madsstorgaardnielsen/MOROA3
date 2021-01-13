@@ -15,8 +15,8 @@ public class MainActivityViewModel extends ViewModel {
     MutableLiveData<List<TagDTO>> typesMLD;
     MutableLiveData<List<TagDTO>> zonesMLD;
 
-    public void init(){
-        if (moodsMLD ==null && typesMLD==null && zonesMLD==null){
+    public void init() {
+        if (moodsMLD == null && typesMLD == null && zonesMLD == null) {
             TagRepository.get().setAllTagDTOs();
             moodsMLD = TagRepository.get().getMoodsMLD();
             typesMLD = TagRepository.get().getTypesMLD();
@@ -36,9 +36,9 @@ public class MainActivityViewModel extends ViewModel {
         return zonesMLD;
     }
 
-    public void tapOnTag(String tagCategory, String tag){
+    public void tapOnTag(String tagCategory, String tag) {
         List<TagDTO> tags;
-        switch (tagCategory){
+        switch (tagCategory) {
             case TagDTO.TYPE_CATEGORY:
                 tags = typesMLD.getValue();
                 break;
@@ -49,7 +49,7 @@ public class MainActivityViewModel extends ViewModel {
                 tags = zonesMLD.getValue();
                 break;
             default:
-                tags=new ArrayList<>();
+                tags = new ArrayList<>();
         }
         for (TagDTO i : tags) {
             if (i.getId().equals(tag)) {

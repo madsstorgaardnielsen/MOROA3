@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 
-public class MyProfileListFragment extends Fragment  {
+public class MyProfileListFragment extends Fragment {
 
     private final View.OnClickListener mOnClickListener = new RVOnClickListener();
     private final View.OnLongClickListener mOnLongClickListener = new RVOnClickListener();
@@ -36,11 +37,7 @@ public class MyProfileListFragment extends Fragment  {
         removeSaved_imageView = root.findViewById(R.id.removeSaved_imageView);
         showevent_imageView_RV = root.findViewById(R.id.showevent_imageView_RV);
 
-
-
-
         recyclerView = new RecyclerView(getContext());
-
 
         //TODO nedenstående slettes og erstattes med gemte i stedet for at hente alle.
         // Er lavet så man kan se det virker
@@ -65,7 +62,6 @@ public class MyProfileListFragment extends Fragment  {
 
         // return inflater.inflate(R.layout.fragment_my_profile_list, container, false);
     }
-
 
     RecyclerView.Adapter adapter = new RecyclerView.Adapter() {
         @Override
@@ -119,8 +115,6 @@ public class MyProfileListFragment extends Fragment  {
         }
     };
 
-
-
     class RVOnClickListener implements View.OnClickListener, View.OnLongClickListener {
         @Override
         public void onClick(View view) {
@@ -163,6 +157,4 @@ public class MyProfileListFragment extends Fragment  {
             return false;
         }
     }
-
-
 }
