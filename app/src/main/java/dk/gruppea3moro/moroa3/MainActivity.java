@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!available && appInUse){
                     Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
                     mainActivityViewModel.setEventDTOs();
+                    mainActivityViewModel.setTagDTOs();
                     //Set Inuse false, so it doesnt call database more too much
                     appInUse = false;
                 }
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!available && appInUse){
                     Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
                     mainActivityViewModel.setTagDTOs();
+                    mainActivityViewModel.setEventDTOs();
                     //Set Inuse false, so it doesnt call database more too much
                     appInUse = false;
                 }
