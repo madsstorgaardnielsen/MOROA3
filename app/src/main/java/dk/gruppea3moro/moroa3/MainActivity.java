@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,7 +20,6 @@ import java.util.Deque;
 
 import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.AppState;
-import dk.gruppea3moro.moroa3.model.EventDTO;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     BottomNavigationView bottomNavigationView;
@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public int width;
     public static int height;
     MainActivityViewModel mainActivityViewModel;
+    private boolean appInUse = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +39,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainActivityViewModel.getEventsAvailable().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean available) {
-                if (!available){
+                if (!available && appInUse){
                     Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
                     mainActivityViewModel.setEventDTOs();
+                    //Set Inuse false, so it doesnt call database more too much
+                    appInUse = false;
                 }
             }
         });
         mainActivityViewModel.getTagsAvailable().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean available) {
-                if (!available){
+                if (!available && appInUse){
                     Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
                     mainActivityViewModel.setTagDTOs();
+                    //Set Inuse false, so it doesnt call database more too much
+                    appInUse = false;
                 }
             }
         });
@@ -203,5 +208,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public MainActivityViewModel getMainActivityViewModel() {
         return mainActivityViewModel;
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        appInUse=true;
     }
 }
