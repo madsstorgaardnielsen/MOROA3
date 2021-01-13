@@ -31,12 +31,11 @@
                 android:id="@+id/omOs_ImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:adjustViewBounds="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="20dp"
+                android:adjustViewBounds="true"
                 android:src="@drawable/morodam" />
-
 
             <TextView
                 android:id="@+id/textView3"
@@ -45,8 +44,11 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
-                android:text="@string/om_os_maintext"
-                android:layout_marginBottom="400dp"/>
+                android:textColorLink="@color/colorPrimary"
+                android:layout_marginBottom="400dp"
+                />
+
+
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
