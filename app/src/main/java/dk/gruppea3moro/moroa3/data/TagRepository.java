@@ -3,7 +3,6 @@ package dk.gruppea3moro.moroa3.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -25,7 +24,7 @@ public class TagRepository {
     private final MutableLiveData<List<TagDTO>> typesMLD = new MutableLiveData<>();
     private final MutableLiveData<List<TagDTO>> zonesMLD = new MutableLiveData<>();
     private final MutableLiveData<Boolean> couldRefresh = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> tagsAvalible = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> tagsAvalable = new MutableLiveData<>();
 
 
     private TagRepository(){
@@ -79,7 +78,7 @@ public class TagRepository {
         String json = gson.toJson(tagList);
         prefsEditor.putString("tagList", json);
         prefsEditor.apply();
-        tagsAvalible.postValue(true);
+        tagsAvalable.postValue(true);
     }
 
     private void readTagsLocally(Context context){
@@ -87,13 +86,12 @@ public class TagRepository {
         Gson gson = new Gson();
         String json = mPrefs.getString("tagList", "");
         if (json==""){
-            tagsAvalible.postValue(false);
+            tagsAvalable.postValue(false);
         } else {
-            tagsAvalible.postValue(true);
+            tagsAvalable.postValue(true);
             TagList tagList = gson.fromJson(json, TagList.class);
             sortTags(tagList.tags);
         }
-
     }
 
     private void sortTags(List<TagDTO> tagDTOs){
@@ -130,4 +128,11 @@ public class TagRepository {
         }
     }
 
+    public MutableLiveData<Boolean> getCouldRefresh() {
+        return couldRefresh;
+    }
+
+    public MutableLiveData<Boolean> getTagsAvalable() {
+        return tagsAvalable;
+    }
 }

@@ -50,6 +50,7 @@ Fang os på [kontakt os-siden]
 </string>
     <string name="TYPE">TYPE</string>
     <string name="Stemning">STEMNING</string>
+    <string name="msg_turn_network_on">Slå dit netværk til for at få den fulde oplevelse med MORO!</string>
 
 
 </resources>

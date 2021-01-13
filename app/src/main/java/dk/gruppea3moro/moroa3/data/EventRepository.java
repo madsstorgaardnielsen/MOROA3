@@ -28,6 +28,7 @@ public class EventRepository {
     private final MutableLiveData<EventDTO> lastViewedEventMLD = new MutableLiveData<>();
     private final MutableLiveData<List<EventDTO>> resultEventsMLD = new MutableLiveData<>();
     private final MutableLiveData<Boolean> couldRefresh = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> eventsAvailable = new MutableLiveData<>();
 
 
     public EventRepository() {
@@ -135,6 +136,9 @@ public class EventRepository {
         //Get database
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
+
+        setEventsAvailable(db);
+
         //Default get the events sorted in chronological order - newest first
         String sortOrder = SQLiteContract.events.COLUMN_NAME_STARTDATE + " ASC";
         String selection;
@@ -240,6 +244,9 @@ public class EventRepository {
         //Remove the events, that don't match either a mood or a type (if these are not null)
         SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria,eventDTOS);
 
+        //Set eventsAvaiable
+        eventsAvailable.postValue(true);
+
         return eventDTOS;
     }
 
@@ -276,5 +283,26 @@ public class EventRepository {
 
     public void setLastViewedEventMLD(EventDTO lastViewedEventMLD) {
         this.lastViewedEventMLD.setValue(lastViewedEventMLD);
+    }
+
+    public boolean setEventsAvailable(SQLiteDatabase db){
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + SQLiteContract.events.TABLE_NAME, null);
+        Boolean rowExists;
+
+        if (mCursor.moveToFirst()) {
+            rowExists = true;
+        } else {
+            rowExists = false;
+        }
+        eventsAvailable.postValue(rowExists);
+        return rowExists;
+    }
+
+    public MutableLiveData<Boolean> getCouldRefresh() {
+        return couldRefresh;
+    }
+
+    public MutableLiveData<Boolean> getEventsAvailable() {
+        return eventsAvailable;
     }
 }
