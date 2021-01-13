@@ -3,13 +3,16 @@ package dk.gruppea3moro.moroa3;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public int width;
     public static int height;
     MainActivityViewModel mainActivityViewModel;
+    private boolean appInUse = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init();
+        mainActivityViewModel.getEventsAvailable().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean available) {
+                if (!available && appInUse){
+                    Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
+                    mainActivityViewModel.setEventDTOs();
+                    //Set Inuse false, so it doesnt call database more too much
+                    appInUse = false;
+                }
+            }
+        });
+        mainActivityViewModel.getTagsAvailable().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean available) {
+                if (!available && appInUse){
+                    Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
+                    mainActivityViewModel.setTagDTOs();
+                    //Set Inuse false, so it doesnt call database more too much
+                    appInUse = false;
+                }
+            }
+        });
+
 
         //Read database from google sheet in background thread
         EventRepository.get().refreshDbInBackground(this);
@@ -180,5 +207,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public MainActivityViewModel getMainActivityViewModel() {
         return mainActivityViewModel;
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        appInUse=true;
     }
 }

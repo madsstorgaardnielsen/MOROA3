@@ -9,7 +9,6 @@ import android.os.Handler;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +27,13 @@ public class EventRepository {
     private final MutableLiveData<EventDTO> featuredEventMLD = new MutableLiveData<>();
     private final MutableLiveData<EventDTO> lastViewedEventMLD = new MutableLiveData<>();
     private final MutableLiveData<List<EventDTO>> resultEventsMLD = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> couldRefresh = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> eventsAvailable = new MutableLiveData<>();
+
 
     public EventRepository() {
         sheetReader = new SheetReader();
+        couldRefresh.setValue(true);
     }
 
     public static EventRepository get() {
@@ -40,28 +43,26 @@ public class EventRepository {
         return instance;
     }
 
-    public ArrayList<EventDTO> getAllEvents() {
-        try {
-            ArrayList<EventDTO> allEvents = sheetReader.getAllEvents();
-            //Set the featured event
-            featuredEventMLD.postValue(allEvents.get(0));
-            return allEvents;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+
+    public ArrayList<EventDTO> getAllEvents() throws IOException {
+        ArrayList<EventDTO> allEvents = sheetReader.getAllEvents();
+        //Set the featured event
+        featuredEventMLD.postValue(allEvents.get(0));
+        return allEvents;
     }
+
 
     public MutableLiveData<EventDTO> getFeaturedEvent() {
         return featuredEventMLD;
     }
 
-    public void setResultEvents(SearchCriteria sc, Context context) {
+
+    public void setResultEvents(SearchCriteria sc, Context context){
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. EventRepository
-            List<EventDTO> eventDTOs = searchEvents(sc, context);
+            List<EventDTO> eventDTOs = searchEvents(sc,context);
 
             uiThread.post(() -> {
                 resultEventsMLD.setValue(eventDTOs);
@@ -69,11 +70,11 @@ public class EventRepository {
         });
     }
 
-    public MutableLiveData<List<EventDTO>> getResultEventsMLD() {
+    public MutableLiveData<List<EventDTO>> getResultEventsMLD(){
         return resultEventsMLD;
     }
 
-    public void feedDatabase(Context context) {
+    public void feedDatabase(Context context) throws IOException {
         //Get dbhelper
         SQLiteHelper dbHelper = new SQLiteHelper(context);
 
@@ -86,7 +87,19 @@ public class EventRepository {
         //For formatting arraylists to json
         Gson gson = new Gson();
 
-        ArrayList<EventDTO> allEvents = getAllEvents();//Reads the entire google sheet
+        //Read all events from google sheet
+        ArrayList<EventDTO> allEvents = getAllEvents();
+
+
+        //TODO brug UPDATE i stedet for DELETE og INSERT
+        if (allEvents!=null){ //If it succeded - safe to delete from SQLite-database
+            try {
+                EventRepository.get().deleteAllFromDatabase(context);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         for (EventDTO event : allEvents) {
             values.put(SQLiteContract.events.COLUMN_NAME_TITLE, event.getTitle());
             values.put(SQLiteContract.events.COLUMN_NAME_SUBTEXT, event.getSubtext());
@@ -113,7 +126,7 @@ public class EventRepository {
         System.out.println("done updating db");
     }
 
-    public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria, Context context) {
+    public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria,Context context) {
         //Result arraylist
         ArrayList<EventDTO> eventDTOS = new ArrayList<EventDTO>();
 
@@ -122,6 +135,9 @@ public class EventRepository {
 
         //Get database
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+
+        setEventsAvailable(db);
 
         //Default get the events sorted in chronological order - newest first
         String sortOrder = SQLiteContract.events.COLUMN_NAME_STARTDATE + " ASC";
@@ -146,10 +162,10 @@ public class EventRepository {
 
         if (searchCriteria.getZones().size() > 0) {
             StringBuilder sb = new StringBuilder();
-            if (selection != null) {
+            if (selection!= null){
                 sb.append(" AND (");
             } else {
-                selection = "";
+                selection="";
                 sb.append("(");
             }
 
@@ -226,7 +242,10 @@ public class EventRepository {
         db.close();
 
         //Remove the events, that don't match either a mood or a type (if these are not null)
-        SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria, eventDTOS);
+        SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria,eventDTOS);
+
+        //Set eventsAvaiable
+        eventsAvailable.postValue(true);
 
         return eventDTOS;
     }
@@ -245,15 +264,17 @@ public class EventRepository {
 
     public void refreshDbInBackground(Context context) {
         Executor bgThread = Executors.newSingleThreadExecutor();
-        Handler uiThread = new Handler();
-        try {
-            EventRepository.get().deleteAllFromDatabase(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         bgThread.execute(() -> {
-            EventRepository.get().feedDatabase(context);
+            try {
+                EventRepository.get().feedDatabase(context);
+                couldRefresh.postValue(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+                couldRefresh.postValue(false);
+            }
         });
+
     }
 
     public MutableLiveData<EventDTO> getLastViewedEventMLD() {
@@ -262,5 +283,26 @@ public class EventRepository {
 
     public void setLastViewedEventMLD(EventDTO lastViewedEventMLD) {
         this.lastViewedEventMLD.setValue(lastViewedEventMLD);
+    }
+
+    public boolean setEventsAvailable(SQLiteDatabase db){
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + SQLiteContract.events.TABLE_NAME, null);
+        Boolean rowExists;
+
+        if (mCursor.moveToFirst()) {
+            rowExists = true;
+        } else {
+            rowExists = false;
+        }
+        eventsAvailable.postValue(rowExists);
+        return rowExists;
+    }
+
+    public MutableLiveData<Boolean> getCouldRefresh() {
+        return couldRefresh;
+    }
+
+    public MutableLiveData<Boolean> getEventsAvailable() {
+        return eventsAvailable;
     }
 }
