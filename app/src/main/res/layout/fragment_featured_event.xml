@@ -39,7 +39,6 @@
             style="@style/DeckerSubtextTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:textSize="20dp"
             tools:text="Lav din egen potte med patter Lav din egen potte med patter Lav din egen potte med patter" />
 
