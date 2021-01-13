@@ -30,6 +30,18 @@
             android:textSize="35dp"
             tools:text="POTTER MED PATTER" />
 
+        <TextView
+            android:id="@+id/descriptionTVShowEvent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            style="@style/DeckerSubtextTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="20dp"
+            tools:text="Lav din egen potte med patter Lav din egen potte med patter Lav din egen potte med patter" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,22 +51,37 @@
             android:layout_marginRight="20dp">
 
             <TextView
-                android:id="@+id/featuredEventTimeTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:textSize="16dp"
-                tools:text="13:30" />
-
-            <TextView
                 android:id="@+id/featuredEventAddressTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=""
+                android:textAlignment="textStart"
                 android:textSize="16dp"
                 tools:text="Kgs. Nytorv 1" />
+
+            <TextView
+                android:id="@+id/featuredEventDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textAlignment="center"
+                android:textSize="16dp"
+                tools:text="DATO" />
+
+            <TextView
+                android:id="@+id/featuredEventTimeTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textAlignment="textEnd"
+                android:textSize="16dp"
+
+                tools:text="13:30" />
+
+
         </LinearLayout>
 
 

@@ -3,7 +3,6 @@ package dk.gruppea3moro.moroa3.home;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -19,7 +18,7 @@ import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 
 public class FeaturedEventFragment extends Fragment {
-    TextView title, startTime, address;
+    TextView title, time, address, date, description;
     ImageView image;
     private FeaturedEventViewModel featuredEventViewModel;
 
@@ -28,10 +27,11 @@ public class FeaturedEventFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_featured_event, container, false);
         title = root.findViewById(R.id.featuredEventTitleTV);
 
-        startTime = root.findViewById(R.id.featuredEventTimeTV);
+        time = root.findViewById(R.id.featuredEventTimeTV);
         address = root.findViewById(R.id.featuredEventAddressTV);
+        date = root.findViewById(R.id.featuredEventDate);
         image = root.findViewById(R.id.featuredEventImageView);
-
+        description = root.findViewById(R.id.descriptionTVShowEvent);
         featuredEventViewModel = ViewModelProviders.of(this).get(FeaturedEventViewModel.class);
 
         featuredEventViewModel.init();
@@ -52,11 +52,13 @@ public class FeaturedEventFragment extends Fragment {
 
         //Set text views
         title.setText(eventDTO.getTitle());
-        startTime.setText(eventDTO.getStart().getTimeFormat());
+        time.setText(eventDTO.getStart().getTimeFormat() + " - "+ eventDTO.getEnd().getTimeFormat());
         address.setText(eventDTO.getAddressDTO().toString());
+        date.setText(eventDTO.getStart().getDanishDayFormat());
+        description.setText(eventDTO.getSubtext());
 
         //Let Picasso handle the image
-        Picasso.get().load(eventDTO.getImageLink()).into(image);
+        Picasso.get().load(eventDTO.getImageLink()).placeholder(R.drawable.moro_logo).into(image);
 
     }
 

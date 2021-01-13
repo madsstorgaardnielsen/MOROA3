@@ -40,7 +40,7 @@ public class ShowResultFragment extends Fragment {
         recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
+        setBackgroundColor();
         //Get search criteria - either from "Right Now" or form parent fragment "Find Event"
         SearchCriteria sc = getSearchCriteria();
 
@@ -139,5 +139,14 @@ public class ShowResultFragment extends Fragment {
             sc = AppState.getRightNowSearchCriteria();
         }
         return sc;
+    }
+
+    //TODO fix
+    private void setBackgroundColor() {
+        if (getParentFragment() instanceof FindEventFragment){
+            recyclerView.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
+        } else {
+            recyclerView.setBackgroundColor(getResources().getColor(R.color.moroBlueBackground));
+        }
     }
 }

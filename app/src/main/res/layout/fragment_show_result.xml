@@ -5,7 +5,6 @@
     android:id="@+id/fragment_show_result"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/moroGreenBackground"
     tools:context=".home.ShowEventFragment">
 
     <TextView

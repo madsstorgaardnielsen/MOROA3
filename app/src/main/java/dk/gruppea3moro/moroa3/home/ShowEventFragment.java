@@ -89,12 +89,12 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         }
 
         eventLink.setText("Læs mere: " + eventDTO.getEventLink());
-        startDay.setText("Dato: " + eventDTO.getStart().getDanishDayFormat());
-        startTime.setText("Start: " + eventDTO.getStart().getTimeFormat());
+        startDay.setText(eventDTO.getStart().getDanishDayFormat());
+        startTime.setText(eventDTO.getStart().getTimeFormat()+" - "+ eventDTO.getEnd().getTimeFormat());
         address.setText(eventDTO.getAddressDTO().toString());
 
         //Let Picasso handle the image
-        Picasso.get().load(eventDTO.getImageLink()).into(image);
+        Picasso.get().load(eventDTO.getImageLink()).placeholder(R.drawable.moro_logo).into(image);
     }
 
     @Override
