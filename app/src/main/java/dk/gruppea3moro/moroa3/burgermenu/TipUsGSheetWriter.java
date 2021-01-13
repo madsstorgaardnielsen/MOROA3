@@ -78,7 +78,7 @@ email = entry.518533699
 tlf = entry.1064937375
 link = entry.117298309
 
-sheet = https://docs.google.com/forms/u/0/d/e/1FAIpQLSdMpKKViQR4iGKqPoQX6EhUhZitLIacGGrMYGyKaHKJL9SJfw/formResponse
+sheet = https://docs.google.com/spreadsheets/d/11HmeUXV7liH51ZoCYOIxqoduhgk0IdTMAM42tSJosQ4/edit#gid=800839117
 
 hvis sheet skal ændres: https://docs.google.com/forms/d/1V_Np7J_I_upvCS_wy6x64ASIEBkE56AvHF9iRj-FevI/edit
 
