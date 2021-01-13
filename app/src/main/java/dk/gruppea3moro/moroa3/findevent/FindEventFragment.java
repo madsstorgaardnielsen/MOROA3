@@ -20,7 +20,6 @@ import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
-
 public class FindEventFragment extends Fragment {
     TabFragmentAdapter tabFragmentAdapter;
     ViewPager2 viewPager;
@@ -39,10 +38,8 @@ public class FindEventFragment extends Fragment {
             public void onChanged(SearchCriteria searchCriteria) {
             }
         });
-
         return root;
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -61,7 +58,6 @@ public class FindEventFragment extends Fragment {
                 }
                 System.out.println("position = " + position);
                 changeTabLayoutColor(position);
-
             }
 
             @Override
@@ -70,8 +66,6 @@ public class FindEventFragment extends Fragment {
                 System.out.println("position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
             }
         });
-
-
     }
 
     public void getTabText(TabLayout.Tab tab, int position) {
@@ -107,7 +101,6 @@ public class FindEventFragment extends Fragment {
             case 3:
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
                 break;
-
         }
     }
 
@@ -146,6 +139,4 @@ class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapte
     public int getItemCount() {
         return 4;
     }
-
-
 }
