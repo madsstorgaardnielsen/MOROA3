@@ -27,10 +27,12 @@ public class EventRepository {
     private final MutableLiveData<EventDTO> featuredEventMLD = new MutableLiveData<>();
     private final MutableLiveData<EventDTO> lastViewedEventMLD = new MutableLiveData<>();
     private final MutableLiveData<List<EventDTO>> resultEventsMLD = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> couldRefresh = new MutableLiveData<>();
 
 
     public EventRepository() {
         sheetReader = new SheetReader();
+        couldRefresh.setValue(true);
     }
 
     public static EventRepository get() {
@@ -41,16 +43,11 @@ public class EventRepository {
     }
 
 
-    public ArrayList<EventDTO> getAllEvents() {
-        try {
-            ArrayList<EventDTO> allEvents = sheetReader.getAllEvents();
-            //Set the featured event
-            featuredEventMLD.postValue(allEvents.get(0));
-            return allEvents;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public ArrayList<EventDTO> getAllEvents() throws IOException {
+        ArrayList<EventDTO> allEvents = sheetReader.getAllEvents();
+        //Set the featured event
+        featuredEventMLD.postValue(allEvents.get(0));
+        return allEvents;
     }
 
 
@@ -76,7 +73,7 @@ public class EventRepository {
         return resultEventsMLD;
     }
 
-    public void feedDatabase(Context context) {
+    public void feedDatabase(Context context) throws IOException {
         //Get dbhelper
         SQLiteHelper dbHelper = new SQLiteHelper(context);
 
@@ -89,7 +86,19 @@ public class EventRepository {
         //For formatting arraylists to json
         Gson gson = new Gson();
 
-        ArrayList<EventDTO> allEvents = getAllEvents();//Reads the entire google sheet
+        //Read all events from google sheet
+        ArrayList<EventDTO> allEvents = getAllEvents();
+
+
+        //TODO brug UPDATE i stedet for DELETE og INSERT
+        if (allEvents!=null){ //If it succeded - safe to delete from SQLite-database
+            try {
+                EventRepository.get().deleteAllFromDatabase(context);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         for (EventDTO event : allEvents) {
             values.put(SQLiteContract.events.COLUMN_NAME_TITLE, event.getTitle());
             values.put(SQLiteContract.events.COLUMN_NAME_SUBTEXT, event.getSubtext());
@@ -248,15 +257,17 @@ public class EventRepository {
 
     public void refreshDbInBackground(Context context) {
         Executor bgThread = Executors.newSingleThreadExecutor();
-        Handler uiThread = new Handler();
-        try {
-            EventRepository.get().deleteAllFromDatabase(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         bgThread.execute(() -> {
-            EventRepository.get().feedDatabase(context);
+            try {
+                EventRepository.get().feedDatabase(context);
+                couldRefresh.postValue(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+                couldRefresh.postValue(false);
+            }
         });
+
     }
 
     public MutableLiveData<EventDTO> getLastViewedEventMLD() {
