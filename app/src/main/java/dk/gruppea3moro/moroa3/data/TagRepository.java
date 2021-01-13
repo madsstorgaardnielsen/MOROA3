@@ -25,6 +25,7 @@ public class TagRepository {
     private final MutableLiveData<List<TagDTO>> typesMLD = new MutableLiveData<>();
     private final MutableLiveData<List<TagDTO>> zonesMLD = new MutableLiveData<>();
     private final MutableLiveData<Boolean> couldRefresh = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> tagsAvalible = new MutableLiveData<>();
 
 
     private TagRepository(){
@@ -52,7 +53,7 @@ public class TagRepository {
             } catch (IOException e) {
                 e.printStackTrace();
                 readTagsLocally(context);
-                couldRefresh.postValue(true);
+                couldRefresh.postValue(false);
             }
         });
     }
@@ -78,14 +79,21 @@ public class TagRepository {
         String json = gson.toJson(tagList);
         prefsEditor.putString("tagList", json);
         prefsEditor.apply();
+        tagsAvalible.postValue(true);
     }
 
     private void readTagsLocally(Context context){
         SharedPreferences mPrefs = context.getSharedPreferences("tagList",MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString("tagList", "");
-        TagList tagList = gson.fromJson(json, TagList.class);
-        sortTags(tagList.tags);
+        if (json==""){
+            tagsAvalible.postValue(false);
+        } else {
+            tagsAvalible.postValue(true);
+            TagList tagList = gson.fromJson(json, TagList.class);
+            sortTags(tagList.tags);
+        }
+
     }
 
     private void sortTags(List<TagDTO> tagDTOs){
