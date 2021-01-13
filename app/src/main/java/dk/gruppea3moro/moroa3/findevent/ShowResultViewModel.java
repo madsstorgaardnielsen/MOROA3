@@ -19,29 +19,28 @@ import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
-public class ShowResultViewModel  extends AndroidViewModel {
+public class ShowResultViewModel extends AndroidViewModel {
     private MutableLiveData<List<EventDTO>> resultEventsMLD;
     private Application application;
 
     public ShowResultViewModel(@NonNull Application application) {
         super(application);
-        this.application=application;
+        this.application = application;
     }
 
-    public void init(SearchCriteria sc){
-        if (resultEventsMLD !=null){
+    public void init(SearchCriteria sc) {
+        if (resultEventsMLD != null) {
             return;
         }
         setResultEvents(sc);
         resultEventsMLD = EventRepository.get().getResultEventsMLD();
     }
 
-    public void setResultEvents(SearchCriteria searchCriteria){
-        EventRepository.get().setResultEvents(searchCriteria,application);
+    public void setResultEvents(SearchCriteria searchCriteria) {
+        EventRepository.get().setResultEvents(searchCriteria, application);
     }
 
-    public LiveData<List<EventDTO>> getResultEventsLD(){
+    public LiveData<List<EventDTO>> getResultEventsLD() {
         return resultEventsMLD;
     }
-
 }

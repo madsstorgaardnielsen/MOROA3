@@ -40,7 +40,7 @@ public class ShowResultFragment extends Fragment {
         recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
+        setBackgroundColor();
         //Get search criteria - either from "Right Now" or form parent fragment "Find Event"
         SearchCriteria sc = getSearchCriteria();
 
@@ -62,9 +62,9 @@ public class ShowResultFragment extends Fragment {
     RecyclerView.Adapter<?> adapter = new RecyclerView.Adapter() {
         @Override
         public int getItemCount() {
-            if (showResultViewModel.getResultEventsLD().getValue() ==null){
+            if (showResultViewModel.getResultEventsLD().getValue() == null) {
                 return 0;
-            } else{
+            } else {
                 return showResultViewModel.getResultEventsLD().getValue().size();
             }
         }
@@ -129,15 +129,24 @@ public class ShowResultFragment extends Fragment {
     }
 
     //Get the correct search criteria - either it is "right now" or in "find event"-fragment
-    public SearchCriteria getSearchCriteria(){
+    public SearchCriteria getSearchCriteria() {
         SearchCriteria sc;
         //Check if parentFragment is FindEventFragment
-        if (getParentFragment() instanceof FindEventFragment){
-            sc = ((FindEventFragment)(getParentFragment())).getSearchCriteria();
+        if (getParentFragment() instanceof FindEventFragment) {
+            sc = ((FindEventFragment) (getParentFragment())).getSearchCriteria();
         } else {
             //If not - it is right now fragment
             sc = AppState.getRightNowSearchCriteria();
         }
         return sc;
+    }
+
+    //TODO fix
+    private void setBackgroundColor() {
+        if (getParentFragment() instanceof FindEventFragment) {
+            recyclerView.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
+        } else {
+            recyclerView.setBackgroundColor(getResources().getColor(R.color.moroBlueBackground));
+        }
     }
 }

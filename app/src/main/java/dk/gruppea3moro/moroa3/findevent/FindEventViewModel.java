@@ -5,14 +5,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
+import dk.gruppea3moro.moroa3.model.TagDTO;
+
 //TODO klassen mangler at tage høje for hvilken side man var inde på, når Fragmentet vises ved tryk på tilbageknappen
 public class FindEventViewModel extends AndroidViewModel {
     private MutableLiveData<SearchCriteria> searchCriteriaMLD;
     Application application;
+
 
     public FindEventViewModel(@NonNull Application application) {
         super(application);
@@ -29,40 +34,37 @@ public class FindEventViewModel extends AndroidViewModel {
         searchCriteriaMLD = new MutableLiveData<>(new SearchCriteria());
     }
 
-    public void tapOnZone(String zone){
+    public void tapOnTag(String category,String tagId){
         SearchCriteria sc = searchCriteriaMLD.getValue();
-        List<String> selectedZones = sc.getZones();
-        if (selectedZones.contains(zone)){
-            selectedZones.remove(zone);
-        } else {
-            selectedZones.add(zone);
+        List<String> selectedTags;
+        switch (category){
+            case TagDTO.TYPE_CATEGORY:
+                selectedTags= sc.getTypes();
+                break;
+            case TagDTO.MOOD_CATEGORY:
+                selectedTags= sc.getMoods();
+                break;
+            case TagDTO.ZONE_CATEGORY:
+                selectedTags= sc.getZones();
+                break;
+            default:
+                selectedTags=new ArrayList<>();
         }
-        searchCriteriaMLD.setValue(sc);
-    }
 
-    public void tapOnMood(String mood){
-        SearchCriteria sc = searchCriteriaMLD.getValue();
-        List<String> selectedMoods = sc.getMoods();
-        if (selectedMoods.contains(mood)){
-            selectedMoods.remove(mood);
+        if (selectedTags.contains(tagId)){
+            selectedTags.remove(tagId);
         } else {
-            selectedMoods.add(mood);
-        }
-        searchCriteriaMLD.setValue(sc);
-    }
-
-    public void tapOnType(String type){
-        SearchCriteria sc = searchCriteriaMLD.getValue();
-        List<String> selectedTypes = sc.getTypes();
-        if (selectedTypes.contains(type)){
-            selectedTypes.remove(type);
-        } else {
-            selectedTypes.add(type);
+            selectedTags.add(tagId);
         }
         searchCriteriaMLD.setValue(sc);
     }
 
     public void setResultEvents(){
         EventRepository.get().setResultEvents(searchCriteriaMLD.getValue(),application);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
     }
 }

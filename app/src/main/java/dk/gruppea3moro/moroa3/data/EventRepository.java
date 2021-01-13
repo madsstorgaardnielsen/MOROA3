@@ -9,6 +9,7 @@ import android.os.Handler;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,6 @@ public class EventRepository {
     private final MutableLiveData<EventDTO> lastViewedEventMLD = new MutableLiveData<>();
     private final MutableLiveData<List<EventDTO>> resultEventsMLD = new MutableLiveData<>();
 
-
     public EventRepository() {
         sheetReader = new SheetReader();
     }
@@ -40,45 +40,28 @@ public class EventRepository {
         return instance;
     }
 
-
     public ArrayList<EventDTO> getAllEvents() {
         try {
-            return sheetReader.getAllEvents();
+            ArrayList<EventDTO> allEvents = sheetReader.getAllEvents();
+            //Set the featured event
+            featuredEventMLD.postValue(allEvents.get(0));
+            return allEvents;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-
     public MutableLiveData<EventDTO> getFeaturedEvent() {
-        setFeaturedEvent();
         return featuredEventMLD;
     }
 
-    public void setFeaturedEvent(){
-        Executor bgThread = Executors.newSingleThreadExecutor();
-        Handler uiThread = new Handler();
-        bgThread.execute(() -> {
-            EventDTO featuredEvent = null;
-            try {
-                featuredEvent = sheetReader.getFeaturedEvent();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            EventDTO finalFeaturedEvent = featuredEvent;
-            uiThread.post(() -> {
-                featuredEventMLD.setValue(finalFeaturedEvent);
-            });
-        });
-    }
-
-    public void setResultEvents(SearchCriteria sc, Context context){
+    public void setResultEvents(SearchCriteria sc, Context context) {
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. EventRepository
-            List<EventDTO> eventDTOs = searchEvents(sc,context);
+            List<EventDTO> eventDTOs = searchEvents(sc, context);
 
             uiThread.post(() -> {
                 resultEventsMLD.setValue(eventDTOs);
@@ -86,7 +69,7 @@ public class EventRepository {
         });
     }
 
-    public MutableLiveData<List<EventDTO>> getResultEventsMLD(){
+    public MutableLiveData<List<EventDTO>> getResultEventsMLD() {
         return resultEventsMLD;
     }
 
@@ -130,8 +113,7 @@ public class EventRepository {
         System.out.println("done updating db");
     }
 
-    public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria,Context context) {
-
+    public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria, Context context) {
         //Result arraylist
         ArrayList<EventDTO> eventDTOS = new ArrayList<EventDTO>();
 
@@ -140,10 +122,6 @@ public class EventRepository {
 
         //Get database
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = null;
 
         //Default get the events sorted in chronological order - newest first
         String sortOrder = SQLiteContract.events.COLUMN_NAME_STARTDATE + " ASC";
@@ -168,10 +146,10 @@ public class EventRepository {
 
         if (searchCriteria.getZones().size() > 0) {
             StringBuilder sb = new StringBuilder();
-            if (selection!= null){
+            if (selection != null) {
                 sb.append(" AND (");
             } else {
-                selection="";
+                selection = "";
                 sb.append("(");
             }
 
@@ -195,7 +173,7 @@ public class EventRepository {
 
         Cursor cursor = db.query(
                 SQLiteContract.events.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
+                null,             // The array of columns to return (pass null to get all)
                 selection,              // The columns for the WHERE clause
                 selectionArgs,          // The values for the WHERE clause
                 null,           // don't group the rows
@@ -248,7 +226,7 @@ public class EventRepository {
         db.close();
 
         //Remove the events, that don't match either a mood or a type (if these are not null)
-        SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria,eventDTOS);
+        SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria, eventDTOS);
 
         return eventDTOS;
     }

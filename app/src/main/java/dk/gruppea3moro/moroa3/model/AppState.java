@@ -29,6 +29,7 @@ public class AppState //extends Application
     private Deque<Integer> integerDeque = new ArrayDeque<>(5);
     private EventDTO lastViewedEvent;
     private EventTipDTO eventTipDTO;
+    private int findEventVPposition;
 
     //STATIC METHODS--------------------------------------------------------------------------------
     public static AppState get() {
@@ -45,8 +46,6 @@ public class AppState //extends Application
     public EventTipDTO getEventTipDTO() {
         return eventTipDTO;
     }
-
-
 
     //Returns layout id of the fragment corresponding to the item selected in bottom navigation bar
     public static int getFragmentLayoutId(int bnItemId) {
@@ -143,7 +142,7 @@ public class AppState //extends Application
 
         long millis = System.currentTimeMillis();
         sc.setFromDate(DateTime.getDateFromTimeMillis(millis));
-        sc.setToDate(DateTime.getDateFromTimeMillis(millis+3600000));
+        sc.setToDate(DateTime.getDateFromTimeMillis(millis + 3600000));
 
         return sc;
     }
@@ -156,4 +155,11 @@ public class AppState //extends Application
         this.lastViewedEvent = lastViewedEvent;
     }
 
+    public int getFindEventVPposition() {
+        return findEventVPposition;
+    }
+
+    public void setFindEventVPposition(int findEventVPposition) {
+        this.findEventVPposition = findEventVPposition;
+    }
 }

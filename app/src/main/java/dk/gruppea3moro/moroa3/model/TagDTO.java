@@ -7,12 +7,14 @@ public class TagDTO {
     public static final String TYPE_CATEGORY = "type";
     public static final String ZONE_CATEGORY = "zone";
 
+    private boolean selected;
 
     public TagDTO(String category, String id, String text, String formattedText) {
         this.category = category.toLowerCase();
         this.id = id.toLowerCase();
         this.text = text;
-        this.formattedText = formattedText;
+        this.formattedText = formatFormattedText(formattedText);
+        this.selected = false;
     }
 
     public String getId() {
@@ -44,23 +46,30 @@ public class TagDTO {
     }
 
     public void setCategory(String category) {
-        //TODO tilføj mere kompliceret genkendelse af kategorien.
         String cat = category.toLowerCase().trim();
-        switch (cat){
+        switch (cat) {
             case MOOD_CATEGORY:
-                this.category=MOOD_CATEGORY;
+                this.category = MOOD_CATEGORY;
                 break;
             case TYPE_CATEGORY:
-                this.category=TYPE_CATEGORY;
+                this.category = TYPE_CATEGORY;
                 break;
             case ZONE_CATEGORY:
-                this.category=ZONE_CATEGORY;
+                this.category = ZONE_CATEGORY;
                 break;
             default:
                 //TODO fjern det her
                 System.out.println("PROBLEM MED KATEOGRI AF TAGDTO setCategory()");
-                System.exit(0);
+                //System.exit(0);
         }
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override
@@ -71,5 +80,13 @@ public class TagDTO {
                 ", text='" + text + '\'' +
                 ", formattedText='" + formattedText + '\'' +
                 '}';
+    }
+
+    private String formatFormattedText(String notFormattedText) {
+        String result = notFormattedText;
+        if (notFormattedText.contains("\\n")) {
+            result = notFormattedText.replace("\\n", "\n");
+        }
+        return result;
     }
 }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -25,6 +26,7 @@ public class TipUsFragment extends Fragment implements TextWatcher {
     Button sendEventTip;
     TextView titleTv, whereTv, descriptionTv, emailContactInfo, eventLinkTv, whenTv, phoneContactInfo;
     EventTipDTO eventTipDTO;
+    TipUsGSheetWriter writeTip;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,11 +85,26 @@ public class TipUsFragment extends Fragment implements TextWatcher {
         sendEventTip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Send tip til email eller googlesheet
+                writeTip = new TipUsGSheetWriter(eventTipDTO);
+                writeTip.postTip();
+                Toast.makeText(getActivity(), "Tippet er sendt!", Toast.LENGTH_LONG).show();
+                clearText();
+
+                //TODO fejlbesked hvis tippet ikke bliver gemt
             }
         });
 
         return root;
+    }
+
+    public void clearText() {
+        titleTv.setText("");
+        descriptionTv.setText("");
+        whereTv.setText("");
+        whenTv.setText("");
+        emailContactInfo.setText("");
+        eventLinkTv.setText("");
+        phoneContactInfo.setText("");
     }
 
     @Override
