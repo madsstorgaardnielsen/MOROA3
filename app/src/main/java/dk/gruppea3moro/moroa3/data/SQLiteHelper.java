@@ -17,6 +17,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " +
             events.TABLE_NAME + " (" +
+            events.COLUMN_NAME_ID + " STRING PRIMARY KEY," +
             events.COLUMN_NAME_TITLE + TEXT_TYPE +
             events.COLUMN_NAME_SUBTEXT + TEXT_TYPE + COMMA_SEP +
             events.COLUMN_NAME_PRICE + TEXT_TYPE + COMMA_SEP +
@@ -33,7 +34,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             events.COLUMN_NAME_AREA + TEXT_TYPE + COMMA_SEP +
             events.COLUMN_NAME_STEMNINGTAGS + TEXT_TYPE + COMMA_SEP +
             events.COLUMN_NAME_TYPETAGS + TEXT_TYPE + COMMA_SEP +
-            events.COLUMN_NAME_ID + TEXT_TYPE+ " STRING PRIMARY KEY," +
             " )";
 
 
