@@ -14,7 +14,7 @@
 
     <item
         android:id="@+id/bn_find_event"
-        android:icon="@drawable/bn_find_event"
+        android:icon="@drawable/bn_moro_find_event"
         android:title="Find event" />
 
     <item
