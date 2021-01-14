@@ -1,7 +1,7 @@
 package dk.gruppea3moro.moroa3.model;
 
 public class EventTipDTO {
-    String eventTitle, eventDescription, contactEmail, contactPhoneNumber,eventLink, eventAddress, eventDate;
+    String eventTitle, eventDescription, contactEmail, contactPhoneNumber, eventLink, eventAddress, eventDate;
 
     @Override
     public String toString() {

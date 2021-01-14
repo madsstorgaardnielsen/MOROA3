@@ -35,9 +35,9 @@ public class WhenTabFragment extends Fragment implements DatePicker.OnDateChange
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         //Set fromDate and toDate to the same day, but the first and last minute respectively
-        DateTime fromDate = new DateTime(""+dayOfMonth,""+monthOfYear,""+year,"00","00");
-        DateTime toDate =new DateTime(""+dayOfMonth,""+monthOfYear,""+year,"23","59");
-        SearchCriteria sc = ((FindEventFragment)(getParentFragment())).getSearchCriteria();
+        DateTime fromDate = new DateTime("" + dayOfMonth, "" + monthOfYear, "" + year, "00", "00");
+        DateTime toDate = new DateTime("" + dayOfMonth, "" + monthOfYear, "" + year, "23", "59");
+        SearchCriteria sc = ((FindEventFragment) (getParentFragment())).getSearchCriteria();
         sc.setFromDate(fromDate);
         sc.setToDate(toDate);
     }

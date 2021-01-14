@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.gruppea3moro.moroa3.MainActivity;
-import dk.gruppea3moro.moroa3.MainAktivityViewModel;
+import dk.gruppea3moro.moroa3.MainActivityViewModel;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.adapters.GridAdapter;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
@@ -26,7 +26,7 @@ import dk.gruppea3moro.moroa3.model.TagDTO;
 
 public class MoodTabFragment extends Fragment implements View.OnClickListener {
     FindEventViewModel findEventViewModel;
-    MainAktivityViewModel mainActivityViewModel;
+    MainActivityViewModel mainActivityViewModel;
     GridView gridView;
 
     @Override
@@ -110,5 +110,4 @@ public class MoodTabFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
     }
-
 }

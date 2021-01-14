@@ -1,47 +1,46 @@
 package dk.gruppea3moro.moroa3.adapters;
+
 import android.content.Context;
-import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import dk.gruppea3moro.moroa3.MainAktivityViewModel;
+import dk.gruppea3moro.moroa3.MainActivityViewModel;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.TagDTO;
 
-public class GridAdapter extends BaseAdapter{
+public class GridAdapter extends BaseAdapter {
     private Context mContext;
-    private MainAktivityViewModel mainAktivityViewModel;
+    private MainActivityViewModel mainActivityViewModel;
     private String category;//MUST BE EITHER "zone", "mood" or "type"
 
-
-    public GridAdapter(Context mContext, MainAktivityViewModel mainAktivityViewModel, String category) {
-        this.mContext=mContext;
-        this.mainAktivityViewModel=mainAktivityViewModel;
-        this.category=category.toLowerCase().trim();
+    public GridAdapter(Context mContext, MainActivityViewModel mainActivityViewModel, String category) {
+        this.mContext = mContext;
+        this.mainActivityViewModel = mainActivityViewModel;
+        this.category = category.toLowerCase().trim();
     }
 
     @Override
     public int getCount() {
-        if (category.equals(TagDTO.TYPE_CATEGORY)){
-            if (mainAktivityViewModel.getTypesMLD().getValue() ==null){
+        if (category.equals(TagDTO.TYPE_CATEGORY)) {
+            if (mainActivityViewModel.getTypesMLD().getValue() == null) {
                 return 0;
-            } else{
-                return mainAktivityViewModel.getTypesMLD().getValue().size();
+            } else {
+                return mainActivityViewModel.getTypesMLD().getValue().size();
             }
-        } else if (category.equals(TagDTO.MOOD_CATEGORY)){
-            if (mainAktivityViewModel.getMoodsMLD().getValue() ==null){
+        } else if (category.equals(TagDTO.MOOD_CATEGORY)) {
+            if (mainActivityViewModel.getMoodsMLD().getValue() == null) {
                 return 0;
-            } else{
-                return mainAktivityViewModel.getMoodsMLD().getValue().size();
+            } else {
+                return mainActivityViewModel.getMoodsMLD().getValue().size();
             }
-        } else{
-            if (mainAktivityViewModel.getZonesMLD().getValue() ==null){
+        } else {
+            if (mainActivityViewModel.getZonesMLD().getValue() == null) {
                 return 0;
-            } else{
-                return mainAktivityViewModel.getZonesMLD().getValue().size();
+            } else {
+                return mainActivityViewModel.getZonesMLD().getValue().size();
             }
         }
     }
@@ -71,13 +70,13 @@ public class GridAdapter extends BaseAdapter{
         //Logic for drawing boxes
         TextView textView = (TextView) grid.findViewById(R.id.grid_item_text_view);
         //Get TagDTO
-        TagDTO tagDTO = getTagDto(category,position);
+        TagDTO tagDTO = getTagDto(category, position);
         //Set text formatted
         textView.setText(tagDTO.getFormattedText());
-        //Set hint to id of tag //TODO fix newline som er blevet overset
+        //Set hint to id of tag
         textView.setHint(tagDTO.getId());
         //Set border color according to category
-        switch (tagDTO.getCategory()){
+        switch (tagDTO.getCategory()) {
             case TagDTO.MOOD_CATEGORY:
             case TagDTO.TYPE_CATEGORY:
                 textView.setBackgroundResource(R.drawable.yellowborder);
@@ -87,28 +86,25 @@ public class GridAdapter extends BaseAdapter{
                 break;
         }
 
-        if (tagDTO.isSelected()){
+        if (tagDTO.isSelected()) {
             textView.setBackgroundResource(R.drawable.greenborder);
         } else {
             textView.setBackgroundResource(R.drawable.blackborder);
         }
-
-
-
         return grid;
     }
 
-    private TagDTO getTagDto(String category,int position){
+    private TagDTO getTagDto(String category, int position) {
         TagDTO tagDTO;
-        if (category.equals(TagDTO.TYPE_CATEGORY)){
-            tagDTO = mainAktivityViewModel.getTypesMLD().getValue().get(position);
-        } else if (category.equals(TagDTO.MOOD_CATEGORY)){
-            tagDTO = mainAktivityViewModel.getMoodsMLD().getValue().get(position);
+        if (category.equals(TagDTO.TYPE_CATEGORY)) {
+            tagDTO = mainActivityViewModel.getTypesMLD().getValue().get(position);
+        } else if (category.equals(TagDTO.MOOD_CATEGORY)) {
+            tagDTO = mainActivityViewModel.getMoodsMLD().getValue().get(position);
         } else if (category.equals(TagDTO.ZONE_CATEGORY)) {
-            tagDTO = mainAktivityViewModel.getZonesMLD().getValue().get(position);
+            tagDTO = mainActivityViewModel.getZonesMLD().getValue().get(position);
         } else {
             System.out.println("FEJL I METODEN getTagDto() i GridAdapter - ikke korrekt kategori af tag");
-            tagDTO = new TagDTO("","","","");
+            tagDTO = new TagDTO("", "", "", "");
         }
         return tagDTO;
     }

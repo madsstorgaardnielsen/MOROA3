@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import dk.gruppea3moro.moroa3.MainActivity;
 import dk.gruppea3moro.moroa3.R;
@@ -16,7 +17,7 @@ import dk.gruppea3moro.moroa3.model.AppState;
 
 public class FrontpageFragment extends Fragment implements View.OnClickListener {
 
-    Button rightNowButton, findEventButton;
+    TextView rightNowButton, findEventButton;
     FrameLayout featuredEventFL;
 
     @Override
@@ -73,7 +74,7 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
         //Make fragment transaction
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.mainFL, new FeaturedEventFragment())
+                .replace(R.id.mainFL, new ShowEventFragment())
                 .commit();
     }
 }

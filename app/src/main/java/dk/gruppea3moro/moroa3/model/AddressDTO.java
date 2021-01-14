@@ -89,6 +89,5 @@ public class AddressDTO implements Serializable {
         }
         result += "\n" + zipCode + " " + area;
         return result;
-
     }
 }

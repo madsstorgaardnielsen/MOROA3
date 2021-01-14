@@ -18,6 +18,7 @@ public class FindEventViewModel extends AndroidViewModel {
     private MutableLiveData<SearchCriteria> searchCriteriaMLD;
     Application application;
 
+
     public FindEventViewModel(@NonNull Application application) {
         super(application);
         this.application=application;
@@ -60,5 +61,10 @@ public class FindEventViewModel extends AndroidViewModel {
 
     public void setResultEvents(){
         EventRepository.get().setResultEvents(searchCriteriaMLD.getValue(),application);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
     }
 }

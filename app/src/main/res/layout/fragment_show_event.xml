@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_show_event"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/moroBlueBackground">
 
 
     <ScrollView
@@ -21,17 +22,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/moro_logo" />
 
 
-            <LinearLayout
+<!--            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <Space
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
@@ -39,32 +44,45 @@
                     android:id="@+id/saved_imageView"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_gravity="center|right"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/emptyheart"
                     android:tag="Unfilled" />
-            </LinearLayout>
+            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/titleTVShowEvent"
                         style="@style/AntonRegHeadingTextViewStyle"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="TextView"
                         android:textSize="35dp"
-                        tools:text="POTTER MED PATTER" />
+                        tools:text="POTTER MED PATTER"
+                        android:layout_weight="6"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                    <ImageView
+                        android:id="@+id/saved_imageView"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/emptyheart"
+                        android:tag="Unfilled"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        />
 
 
                 </LinearLayout>
@@ -131,7 +149,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:autoLink="web" />
+                    android:autoLink="web"
+                    android:layout_marginBottom="200dp"/>
             </LinearLayout>
 
 

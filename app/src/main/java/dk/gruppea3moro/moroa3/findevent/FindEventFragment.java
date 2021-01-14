@@ -17,8 +17,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
-
 
 public class FindEventFragment extends Fragment {
     TabFragmentAdapter tabFragmentAdapter;
@@ -36,10 +36,8 @@ public class FindEventFragment extends Fragment {
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
             @Override
             public void onChanged(SearchCriteria searchCriteria) {
-                System.out.println("TEST");
             }
         });
-
         return root;
     }
 
@@ -103,7 +101,6 @@ public class FindEventFragment extends Fragment {
             case 3:
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
                 break;
-
         }
     }
 
@@ -142,6 +139,4 @@ class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapte
     public int getItemCount() {
         return 4;
     }
-
-
 }

@@ -36,7 +36,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             events.COLUMN_NAME_TYPETAGS + TEXT_TYPE + COMMA_SEP +
             " )";
 
-
     private static final String SQL_DELETE_ALL_ENTRIES = "DROP TABLE IF EXISTS " + events.TABLE_NAME;
 
     public SQLiteHelper(Context context) {
@@ -58,6 +57,4 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_ALL_ENTRIES);
         onCreate(db);
     }
-
-
 }

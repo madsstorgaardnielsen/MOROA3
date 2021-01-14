@@ -9,7 +9,6 @@ public class TagDTO {
 
     private boolean selected;
 
-
     public TagDTO(String category, String id, String text, String formattedText) {
         this.category = category.toLowerCase();
         this.id = id.toLowerCase();
@@ -47,17 +46,16 @@ public class TagDTO {
     }
 
     public void setCategory(String category) {
-        //TODO tilføj mere kompliceret genkendelse af kategorien.
         String cat = category.toLowerCase().trim();
-        switch (cat){
+        switch (cat) {
             case MOOD_CATEGORY:
-                this.category=MOOD_CATEGORY;
+                this.category = MOOD_CATEGORY;
                 break;
             case TYPE_CATEGORY:
-                this.category=TYPE_CATEGORY;
+                this.category = TYPE_CATEGORY;
                 break;
             case ZONE_CATEGORY:
-                this.category=ZONE_CATEGORY;
+                this.category = ZONE_CATEGORY;
                 break;
             default:
                 //TODO fjern det her
@@ -84,10 +82,10 @@ public class TagDTO {
                 '}';
     }
 
-    private String formatFormattedText(String notFormattedText){
+    private String formatFormattedText(String notFormattedText) {
         String result = notFormattedText;
-        if (notFormattedText.contains("\\n")){
-            result = notFormattedText.replace("\\n","\n");
+        if (notFormattedText.contains("\\n")) {
+            result = notFormattedText.replace("\\n", "\n");
         }
         return result;
     }

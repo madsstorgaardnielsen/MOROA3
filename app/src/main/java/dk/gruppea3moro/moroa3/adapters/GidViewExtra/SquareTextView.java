@@ -24,5 +24,4 @@ public class SquareTextView extends androidx.appcompat.widget.AppCompatTextView 
         int max = Math.max(getMeasuredWidth(), getMeasuredHeight());
         setMeasuredDimension(max, max);
     }
-
 }

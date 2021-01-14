@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_frontpage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_frontpage"
     android:background="@color/moroPinkBackground"
     tools:context=".home.FrontpageFragment">
 
@@ -22,28 +22,124 @@
             android:id="@+id/featuredEventFrontpageFL"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="15"
+            android:layout_weight="15" />
 
-            />
 
-        <Button
-            android:id="@+id/rightNowButtonFP"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:text="@string/lige_nu" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/findEventButtonFP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            android:text="@string/find_event" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/rightNowButtonFP"
+                    android:layout_width="235dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    android:background="@color/moroButtonRed"
+                    android:text="@string/lige_nu"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhiteText"
+                    android:textSize="30sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/border_textView"
+                        android:layout_width="235dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="48dp"
+                        android:background="@drawable/blackborder"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30sp"
+                        android:layout_marginRight="15dp"
+                        android:clickable="false"
+                        />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/findEventButtonFP"
+                    android:layout_width="235dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    android:background="@color/moroButtonRed"
+                    android:text="@string/find_event"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhiteText"
+                    android:textSize="30sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:clickable="false"
+                        android:id="@+id/border2_textView"
+                        android:layout_width="235dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="48dp"
+                        android:background="@drawable/blackborder"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30sp"
+                        android:layout_marginRight="15dp"
+                        />
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+        </LinearLayout>
     </LinearLayout>
+    <!--
 
+
+
+            <TextView
+                android:id="@+id/findEventButtonFP"
+                android:layout_width="235dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:background="@color/moroButtonRed"
+                android:text="@string/find_event"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhiteText"
+                android:textSize="30sp" />
+
+
+        <TextView
+            android:id="@+id/border_textView"
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/blackborder"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tipus_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.426"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tipus_textView"
+            app:layout_constraintVertical_bias="0.0" />
+    -->
 </FrameLayout>
