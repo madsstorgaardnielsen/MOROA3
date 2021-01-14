@@ -75,23 +75,36 @@ public class GridAdapter extends BaseAdapter {
         textView.setText(tagDTO.getFormattedText());
         //Set hint to id of tag
         textView.setHint(tagDTO.getId());
+
         //Set border color according to category
+        formatTextView(textView, tagDTO);
+        return grid;
+    }
+
+    public void formatTextView(TextView textView, TagDTO tagDTO) {
         switch (tagDTO.getCategory()) {
             case TagDTO.MOOD_CATEGORY:
             case TagDTO.TYPE_CATEGORY:
                 textView.setBackgroundResource(R.drawable.yellowborder);
                 break;
             case TagDTO.ZONE_CATEGORY:
-                textView.setBackgroundResource(R.drawable.blackborder);
+                textView.setBackgroundResource(R.drawable.redborder);
                 break;
         }
 
-        if (tagDTO.isSelected()) {
-            textView.setBackgroundResource(R.drawable.greenborder);
-        } else {
-            textView.setBackgroundResource(R.drawable.blackborder);
+        if (tagDTO.isSelected()) { //If selected
+            if (category.equals(TagDTO.ZONE_CATEGORY)){
+                textView.setBackgroundResource(R.drawable.thickredborder);
+            } else {
+                textView.setBackgroundResource(R.drawable.yellowborder);
+            }
+        } else { //If not seleceted
+            if (category.equals(TagDTO.ZONE_CATEGORY)){
+                textView.setBackgroundResource(R.drawable.redborder);
+            } else {
+                textView.setBackgroundResource(R.drawable.yellowborder);
+            }
         }
-        return grid;
     }
 
     private TagDTO getTagDto(String category, int position) {
@@ -108,4 +121,5 @@ public class GridAdapter extends BaseAdapter {
         }
         return tagDTO;
     }
+
 }

@@ -96,9 +96,9 @@ public class MoodTabFragment extends Fragment implements View.OnClickListener {
                 //Make them green
                 for (TextView textView:textViews) {
                     if (greenBoxes.contains(textView.getHint().toString())){
-                        textView.setBackgroundResource(R.drawable.greenborder);
+                        textView.setBackgroundResource(R.drawable.thickyellowborder);
                     } else {
-                        textView.setBackgroundResource(R.drawable.blackborder);
+                        textView.setBackgroundResource(R.drawable.yellowborder);
                     }
                 }
             }

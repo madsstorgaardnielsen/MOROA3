@@ -99,9 +99,9 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                         break;
                     }
                     if (greenBoxes.contains(textView.getHint().toString())) {
-                        textView.setBackgroundResource(R.drawable.greenborder);
+                        textView.setBackgroundResource(R.drawable.thickredborder);
                     } else {
-                        textView.setBackgroundResource(R.drawable.blackborder);
+                        textView.setBackgroundResource(R.drawable.redborder);
                     }
                 }
             }
