@@ -46,8 +46,6 @@ public class FindEventFragment extends Fragment {
         tabFragmentAdapter = new TabFragmentAdapter(this);
         viewPager = view.findViewById(R.id.viewPager);
         viewPager.setAdapter(tabFragmentAdapter);
-        viewPager.notify();
-
 
         TabLayout tabLayout = view.findViewById(R.id.findEventTabLayout);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> getTabText(tab, position)).attach();
