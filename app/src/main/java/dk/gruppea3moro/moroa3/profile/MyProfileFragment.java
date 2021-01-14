@@ -22,6 +22,16 @@ public class MyProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_my_profile, container, false);
     }
 
+
+
+
+
+
+
+
+
+
+
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.MyProfil_change, fragment); // give your fragment container id in first parameter

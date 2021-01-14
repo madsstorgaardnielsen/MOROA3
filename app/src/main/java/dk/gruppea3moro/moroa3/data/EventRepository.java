@@ -2,9 +2,11 @@ package dk.gruppea3moro.moroa3.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import dk.gruppea3moro.moroa3.home.ShowEventViewModel;
 import dk.gruppea3moro.moroa3.model.AddressDTO;
 import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
@@ -29,6 +32,7 @@ public class EventRepository {
     private final MutableLiveData<List<EventDTO>> resultEventsMLD = new MutableLiveData<>();
     private final MutableLiveData<Boolean> couldRefresh = new MutableLiveData<>();
     private final MutableLiveData<Boolean> eventsAvailable = new MutableLiveData<>();
+
 
 
     public EventRepository() {
@@ -64,11 +68,37 @@ public class EventRepository {
             //Gets event from searchCriteria via. EventRepository
             List<EventDTO> eventDTOs = searchEvents(sc,context);
 
-            uiThread.post(() -> {
-                resultEventsMLD.setValue(eventDTOs);
-            });
+            uiThread.post(() -> resultEventsMLD.setValue(eventDTOs));
         });
     }
+
+    public void setSavedEvents(Context context) {
+
+        Executor bgThread = Executors.newSingleThreadExecutor();
+        Handler uiThread = new Handler();
+        bgThread.execute(() -> {
+            //Gets event from searchCriteria via. EventRepository
+            List<EventDTO> eventDTOs = savedEvents(context);
+
+            uiThread.post(() -> resultEventsMLD.setValue(eventDTOs));
+        });
+
+    }
+
+    private List<EventDTO> savedEvents(Context context) {
+        ShowEventViewModel showEventViewModel = new ShowEventViewModel();
+        SharedPreferences sharedPreferences;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        ArrayList<Integer> events = new ArrayList<>();
+        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+
+        Gson load = new Gson();
+        String jsonLoad = sharedPreferences.getString("saveEvent", null);
+        events = load.fromJson(jsonLoad, ArrayList.class);
+        return null;
+
+    }
+
 
     public MutableLiveData<List<EventDTO>> getResultEventsMLD(){
         return resultEventsMLD;
@@ -129,7 +159,7 @@ public class EventRepository {
 
     public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria,Context context) {
         //Result arraylist
-        ArrayList<EventDTO> eventDTOS = new ArrayList<EventDTO>();
+        ArrayList<EventDTO> eventDTOS = new ArrayList<>();
 
         //Create SQLiteHelper object
         SQLiteHelper dbHelper = new SQLiteHelper(context);
@@ -143,7 +173,7 @@ public class EventRepository {
         //Default get the events sorted in chronological order - newest first
         String sortOrder = SQLiteContract.events.COLUMN_NAME_STARTDATE + " ASC";
         String selection;
-        ArrayList<String> selArgsArrayList = new ArrayList<String>();
+        ArrayList<String> selArgsArrayList = new ArrayList<>();
         String[] selectionArgs = null;
 
         //Format startDate and endDate the way SQL reads it
@@ -242,6 +272,7 @@ public class EventRepository {
             }
         }
         db.close();
+        cursor.close();
 
         //Remove the events, that don't match either a mood or a type (if these are not null)
         SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria,eventDTOS);
@@ -289,14 +320,11 @@ public class EventRepository {
 
     public boolean setEventsAvailable(SQLiteDatabase db){
         Cursor mCursor = db.rawQuery("SELECT * FROM " + SQLiteContract.events.TABLE_NAME, null);
-        Boolean rowExists;
+        boolean rowExists;
 
-        if (mCursor.moveToFirst()) {
-            rowExists = true;
-        } else {
-            rowExists = false;
-        }
+        rowExists = mCursor.moveToFirst();
         eventsAvailable.postValue(rowExists);
+        mCursor.close();
         return rowExists;
     }
 
