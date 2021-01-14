@@ -6,18 +6,17 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import dk.gruppea3moro.moroa3.home.ShowEventViewModel;
 import dk.gruppea3moro.moroa3.model.AddressDTO;
 import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
@@ -32,7 +31,6 @@ public class EventRepository {
     private final MutableLiveData<List<EventDTO>> resultEventsMLD = new MutableLiveData<>();
     private final MutableLiveData<Boolean> couldRefresh = new MutableLiveData<>();
     private final MutableLiveData<Boolean> eventsAvailable = new MutableLiveData<>();
-
 
 
     public EventRepository() {
@@ -61,12 +59,12 @@ public class EventRepository {
     }
 
 
-    public void setResultEvents(SearchCriteria sc, Context context){
+    public void setResultEvents(SearchCriteria sc, Context context) {
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. EventRepository
-            List<EventDTO> eventDTOs = searchEvents(sc,context);
+            List<EventDTO> eventDTOs = searchEvents(sc, context);
 
             uiThread.post(() -> resultEventsMLD.setValue(eventDTOs));
         });
@@ -78,29 +76,78 @@ public class EventRepository {
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
             //Gets event from searchCriteria via. EventRepository
-            List<EventDTO> eventDTOs = savedEvents(context);
+            List<EventDTO> eventDTOs = readSavedEvents(context);
 
             uiThread.post(() -> resultEventsMLD.setValue(eventDTOs));
         });
 
     }
 
-    private List<EventDTO> savedEvents(Context context) {
-        ShowEventViewModel showEventViewModel = new ShowEventViewModel();
+    private List<EventDTO> readSavedEvents(Context context) {
         SharedPreferences sharedPreferences;
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        ArrayList<Integer> events = new ArrayList<>();
-        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+        sharedPreferences = context.getSharedPreferences("saveEvent", Context.MODE_PRIVATE);
+        ArrayList<Integer> eventIds = new ArrayList<>();
 
         Gson load = new Gson();
         String jsonLoad = sharedPreferences.getString("saveEvent", null);
-        events = load.fromJson(jsonLoad, ArrayList.class);
-        return null;
+        eventIds = load.fromJson(jsonLoad, ArrayList.class);
+
+        //Result arraylist
+        ArrayList<EventDTO> eventDTOS = new ArrayList<>();
+
+        //Create SQLiteHelper object
+        SQLiteHelper dbHelper = new SQLiteHelper(context);
+
+        //Get database
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        setEventsAvailable(db);
+
+        String sortOrder = SQLiteContract.events.COLUMN_NAME_STARTDATE + " DESC";
+        String selection;
+        StringBuilder sb = new StringBuilder();
+
+        String[] selectionArgs = new String[eventIds.size()];
+
+        for (int i = 0; i < eventIds.size(); i++)
+            selectionArgs[i] = String.valueOf(eventIds.get(i));
+
+        sb.append(SQLiteContract.events.COLUMN_NAME_ID + " IN  (");
+        for (int i = 0; i < eventIds.size(); i++) {
+
+            if (i != eventIds.size() - 1) {
+                sb.append("?,");
+            } else {
+                sb.append("?");
+            }
+        }
+        sb.append(")");
+
+        selection = sb.toString();
+
+        Cursor cursor = db.query(
+                SQLiteContract.events.TABLE_NAME,   // The table to query
+                null,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,           // don't group the rows
+                null,             // don't filter by row groups
+                sortOrder               // The sort order
+        );
+
+        //read results into eventDTO
+        readSQLCursor(eventDTOS, cursor);
+        db.close();
+
+        eventsAvailable.postValue(true);
+
+
+        return eventDTOS;
 
     }
 
 
-    public MutableLiveData<List<EventDTO>> getResultEventsMLD(){
+    public MutableLiveData<List<EventDTO>> getResultEventsMLD() {
         return resultEventsMLD;
     }
 
@@ -122,7 +169,7 @@ public class EventRepository {
 
 
         //TODO brug UPDATE i stedet for DELETE og INSERT
-        if (allEvents!=null){ //If it succeded - safe to delete from SQLite-database
+        if (allEvents != null) { //If it succeded - safe to delete from SQLite-database
             try {
                 EventRepository.get().deleteAllFromDatabase(context);
             } catch (Exception e) {
@@ -157,7 +204,7 @@ public class EventRepository {
         System.out.println("done updating db");
     }
 
-    public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria,Context context) {
+    public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria, Context context) {
         //Result arraylist
         ArrayList<EventDTO> eventDTOS = new ArrayList<>();
 
@@ -193,10 +240,10 @@ public class EventRepository {
 
         if (searchCriteria.getZones().size() > 0) {
             StringBuilder sb = new StringBuilder();
-            if (selection!= null){
+            if (selection != null) {
                 sb.append(" AND (");
             } else {
-                selection="";
+                selection = "";
                 sb.append("(");
             }
 
@@ -229,8 +276,23 @@ public class EventRepository {
         );
 
         //Gson for decoding ArrayLists
-        Gson gson = new Gson();
 
+
+        readSQLCursor(eventDTOS, cursor);
+        db.close();
+
+
+        //Remove the events, that don't match either a mood or a type (if these are not null)
+        SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria, eventDTOS);
+
+        //Set eventsAvaiable
+        eventsAvailable.postValue(true);
+
+        return eventDTOS;
+    }
+
+    private void readSQLCursor(ArrayList<EventDTO> eventDTOS, Cursor cursor) {
+        Gson gson = new Gson();
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 EventDTO eventDTO = new EventDTO();
@@ -271,16 +333,7 @@ public class EventRepository {
                 cursor.moveToNext();
             }
         }
-        db.close();
         cursor.close();
-
-        //Remove the events, that don't match either a mood or a type (if these are not null)
-        SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria,eventDTOS);
-
-        //Set eventsAvaiable
-        eventsAvailable.postValue(true);
-
-        return eventDTOS;
     }
 
 
@@ -318,7 +371,7 @@ public class EventRepository {
         this.lastViewedEventMLD.setValue(lastViewedEventMLD);
     }
 
-    public boolean setEventsAvailable(SQLiteDatabase db){
+    public boolean setEventsAvailable(SQLiteDatabase db) {
         Cursor mCursor = db.rawQuery("SELECT * FROM " + SQLiteContract.events.TABLE_NAME, null);
         boolean rowExists;
 
