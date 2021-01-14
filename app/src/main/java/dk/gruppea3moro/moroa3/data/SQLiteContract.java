@@ -27,6 +27,7 @@ public final class SQLiteContract {
         public static final String COLUMN_NAME_AREA = "area";
         public static final String COLUMN_NAME_STEMNINGTAGS = "stemningtags";
         public static final String COLUMN_NAME_TYPETAGS = "typetags";
+        public static final String COLUMN_NAME_ID = "id";
 
     }
 }
