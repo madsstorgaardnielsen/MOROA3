@@ -82,21 +82,11 @@ public class GridAdapter extends BaseAdapter {
     }
 
     public void formatTextView(TextView textView, TagDTO tagDTO) {
-        switch (tagDTO.getCategory()) {
-            case TagDTO.MOOD_CATEGORY:
-            case TagDTO.TYPE_CATEGORY:
-                textView.setBackgroundResource(R.drawable.yellowborder);
-                break;
-            case TagDTO.ZONE_CATEGORY:
-                textView.setBackgroundResource(R.drawable.redborder);
-                break;
-        }
-
         if (tagDTO.isSelected()) { //If selected
             if (category.equals(TagDTO.ZONE_CATEGORY)){
                 textView.setBackgroundResource(R.drawable.thickredborder);
             } else {
-                textView.setBackgroundResource(R.drawable.yellowborder);
+                textView.setBackgroundResource(R.drawable.thickyellowborder);
             }
         } else { //If not seleceted
             if (category.equals(TagDTO.ZONE_CATEGORY)){

@@ -98,9 +98,9 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                     if (textView == null) {
                         break;
                     }
-                    if (greenBoxes.contains(textView.getHint().toString())) {
+                    if (greenBoxes.contains(textView.getHint().toString())) { //If selected
                         textView.setBackgroundResource(R.drawable.thickredborder);
-                    } else {
+                    } else { //If not selected
                         textView.setBackgroundResource(R.drawable.redborder);
                     }
                 }
