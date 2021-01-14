@@ -41,6 +41,13 @@ public class FindEventFragment extends Fragment {
         return root;
     }
 
+/*    @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }*/
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         tabFragmentAdapter = new TabFragmentAdapter(this);
@@ -53,6 +60,8 @@ public class FindEventFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+               //System.out.println("onpageSELECTED->>>>"+AppState.get().getFindEventVPposition());
+                AppState.get().setFindEventVPposition(position);
                 if (position == 3) {
                     findEventViewModel.setResultEvents();
                 }
@@ -66,6 +75,11 @@ public class FindEventFragment extends Fragment {
                 System.out.println("position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
             }
         });
+
+        //System.out.println("oncreateVIEW ->>>"+AppState.get().getFindEventVPposition());
+       // viewPager.setCurrentItem(AppState.get().getFindEventVPposition());
+        tabFragmentAdapter.createFragment(AppState.get().getFindEventVPposition());
+        viewPager.setCurrentItem(AppState.get().getFindEventVPposition());
     }
 
     public void getTabText(TabLayout.Tab tab, int position) {
@@ -85,6 +99,12 @@ public class FindEventFragment extends Fragment {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AppState.get().setSearchCriteria(findEventViewModel.getSearchCriteriaLD().getValue());
     }
 
     public void changeTabLayoutColor(int position) {
@@ -110,6 +130,7 @@ public class FindEventFragment extends Fragment {
 }
 
 class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapter {
+
     public TabFragmentAdapter(Fragment fragment) {
         super(fragment);
     }
@@ -135,8 +156,12 @@ class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapte
         return fragment;
     }
 
+
+
     @Override
     public int getItemCount() {
         return 4;
     }
+
+
 }

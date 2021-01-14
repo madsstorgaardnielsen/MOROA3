@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
     }
-
+    
     @Override
     public void onStart() {
         //Read AppState from PreferenceManager - it may be empty or it may be saved from when app was in use
@@ -204,6 +204,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //If mainactivity is stopped - the app is no longer in RAM
         //The state is saved to PreferenceManager
+        AppState.get().saveToPM(getApplicationContext());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppState.get().setKilled(true);
         AppState.get().saveToPM(getApplicationContext());
     }
 

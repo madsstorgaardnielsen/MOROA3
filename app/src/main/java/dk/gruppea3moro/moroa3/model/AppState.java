@@ -30,6 +30,8 @@ public class AppState //extends Application
     private EventDTO lastViewedEvent;
     private EventTipDTO eventTipDTO;
     private int findEventVPposition;
+    private SearchCriteria searchCriteria;
+    private boolean isKilled = true;
 
     //STATIC METHODS--------------------------------------------------------------------------------
     public static AppState get() {
@@ -37,6 +39,22 @@ public class AppState //extends Application
             instance = new AppState();
         }
         return instance;
+    }
+
+    public boolean isIsKilled() {
+        return isKilled;
+    }
+
+    public void setKilled(boolean killed) {
+        isKilled = killed;
+    }
+
+    public SearchCriteria getSearchCriteria() {
+        return searchCriteria;
+    }
+
+    public void setSearchCriteria(SearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
     }
 
     public void setTip(EventTipDTO eventTipDTO) {
