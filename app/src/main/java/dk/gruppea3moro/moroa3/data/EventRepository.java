@@ -118,6 +118,7 @@ public class EventRepository {
             //TODO her ville det nok være bedst at gemme typer og stemning i separate tabeller
             values.put(SQLiteContract.events.COLUMN_NAME_TYPETAGS, gson.toJson(event.getTypes()));
             values.put(SQLiteContract.events.COLUMN_NAME_STEMNINGTAGS, gson.toJson(event.getMoods()));
+            values.put(SQLiteContract.events.COLUMN_NAME_ID, event.getId());
 
             // Insert the new row, returning the primary key value of the new row
             db.insert(SQLiteContract.events.TABLE_NAME, null, values);
@@ -210,6 +211,7 @@ public class EventRepository {
                 eventDTO.setImageLink(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_IMAGELINK)));
                 eventDTO.setZone(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ZONE)));
                 eventDTO.setPrice(Double.parseDouble(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_PRICE))));
+                eventDTO.setId((cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ID))));
 
                 //Set the date related fields
                 String startDateString = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_STARTDATE));

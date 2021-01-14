@@ -136,7 +136,6 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
             events = load.fromJson(jsonLoad, ArrayList.class);
         }
         System.out.println("kkdwjakdjwa "+ eventDTO.getId());
-        System.out.println("jdwakdjwkajdkwjakdw "+ (Integer.parseInt(eventDTO.getId())));
         events.add((Integer.parseInt(eventDTO.getId())));
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
         Gson gsonInput = new Gson();
