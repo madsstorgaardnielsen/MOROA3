@@ -150,6 +150,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.right_entering,R.anim.left_exit)
+                .replace(R.id.mainFL, fragment)
+                .commit();
+    }
+
+    public void loadFragmentLeft(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.left_entering,R.anim.right_exit)
                 .replace(R.id.mainFL, fragment)
                 .commit();
     }
