@@ -1,6 +1,7 @@
 package dk.gruppea3moro.moroa3.home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.EventDTO;
+import dk.gruppea3moro.moroa3.profile.EventIdList;
 
 //TODO hele klassen er ret rodet og trænger til en kærlig hånd
 public class ShowEventFragment extends Fragment implements View.OnClickListener {
@@ -36,7 +38,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences = getContext().getSharedPreferences("saveEvent", Context.MODE_PRIVATE);
         View root = inflater.inflate(R.layout.fragment_show_event, container, false);
         title = root.findViewById(R.id.titleTVShowEvent);
         subtext = root.findViewById(R.id.descriptionTVShowEvent);
@@ -125,64 +127,64 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
     }
 
     public void saveEvent() {
-        ArrayList<Integer> events = new ArrayList<>();
+        ArrayList<String> eventIds = new ArrayList<>();
         EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
 
         Gson load = new Gson();
-        String jsonLoad = sharedPreferences.getString("saveEvent", null);
+        String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
 
         if (jsonLoad != null) {
-            events = load.fromJson(jsonLoad, ArrayList.class);
+            eventIds = load.fromJson(jsonLoad, EventIdList.class).eventIds;
         }
-        events.add((Integer.parseInt(eventDTO.getId())));
+        eventIds.add(eventDTO.getId());
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
         Gson gsonInput = new Gson();
-        String json = gsonInput.toJson(events);
-        prefsEditor.putString("saveEvent", json);
+        String json = gsonInput.toJson(new EventIdList(eventIds));
+        prefsEditor.putString(EventIdList.SAVEDLIST, json);
         prefsEditor.apply();
         eventSaved = true;
 
     }
 
     public void removeEvent() throws Exception {
-        ArrayList<Double> events = new ArrayList<>();
+        ArrayList<String> events;
         EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
 
         Gson load = new Gson();
-        String jsonLoad = sharedPreferences.getString("saveEvent", null);
+        String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
 
         if (jsonLoad != null) {
-            events = load.fromJson(jsonLoad, ArrayList.class);
+            events = load.fromJson(jsonLoad,EventIdList.class).eventIds;
+            events.remove(eventDTO.getId());
+            SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+            String json = load.toJson(new EventIdList(events));
+            prefsEditor.putString(EventIdList.SAVEDLIST, json);
+            prefsEditor.apply();
+            eventSaved = false;
         } else if (jsonLoad == null) {
             eventSaved = false;
             throw new Exception("No events saved, in preference manager. Preference manager is empty");
         }
-
-        events.remove(Double.valueOf(eventDTO.getId()));
-        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
-        Gson gsonInput = new Gson();
-        String json = gsonInput.toJson(events);
-        prefsEditor.putString("saveEvent", json);
-        prefsEditor.apply();
-        eventSaved = false;
     }
 
     public boolean checkIfEventIsSaved() {
-        ArrayList<Double> events;
+        ArrayList<String> events;
         EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
 
         Gson load = new Gson();
-        String jsonLoad = sharedPreferences.getString("saveEvent", null);
-        events = load.fromJson(jsonLoad, ArrayList.class);
+        String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
 
         if (jsonLoad == null) {
             eventSaved = false;
             return false;
         }
-        if (events.contains(Double.valueOf(eventDTO.getId()))) {
+
+        //If it wasn't null - continue
+        events = load.fromJson(jsonLoad, EventIdList.class).eventIds;
+
+        if (events.contains(eventDTO.getId())) {
             eventSaved = true;
             return true;
-
         } else {
             eventSaved = false;
             return false;

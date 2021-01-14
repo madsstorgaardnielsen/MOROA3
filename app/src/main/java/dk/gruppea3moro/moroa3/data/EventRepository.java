@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 
@@ -21,6 +22,7 @@ import dk.gruppea3moro.moroa3.model.AddressDTO;
 import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
+import dk.gruppea3moro.moroa3.profile.EventIdList;
 
 public class EventRepository {
 
@@ -86,11 +88,15 @@ public class EventRepository {
     private List<EventDTO> readSavedEvents(Context context) {
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getSharedPreferences("saveEvent", Context.MODE_PRIVATE);
-        ArrayList<Integer> eventIds = new ArrayList<>();
 
         Gson load = new Gson();
-        String jsonLoad = sharedPreferences.getString("saveEvent", null);
-        eventIds = load.fromJson(jsonLoad, ArrayList.class);
+        String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
+        ArrayList<String> eventIds = new ArrayList<>();
+        if (jsonLoad!=null) {
+            eventIds = load.fromJson(jsonLoad, EventIdList.class).eventIds;
+        } else {
+            return new ArrayList<>();
+        }
 
         //Result arraylist
         ArrayList<EventDTO> eventDTOS = new ArrayList<>();

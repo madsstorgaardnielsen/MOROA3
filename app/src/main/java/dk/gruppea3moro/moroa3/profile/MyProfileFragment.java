@@ -11,24 +11,20 @@ import android.view.ViewGroup;
 
 import dk.gruppea3moro.moroa3.MyProfileListFragment;
 import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.findevent.ShowResultFragment;
 
 public class MyProfileFragment extends Fragment {
 
-    MyProfileListFragment myProfileListFragment = new MyProfileListFragment();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        replaceFragment(myProfileListFragment);
+
+        ShowResultFragment showResultFragment = new ShowResultFragment();
+        replaceFragment(showResultFragment);
+        showResultFragment.setSavedEvents(true);
         return inflater.inflate(R.layout.fragment_my_profile, container, false);
+
     }
-
-
-
-
-
-
-
-
 
 
 

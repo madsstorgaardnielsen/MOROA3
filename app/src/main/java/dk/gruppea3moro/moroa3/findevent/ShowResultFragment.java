@@ -32,6 +32,7 @@ public class ShowResultFragment extends Fragment {
 
     RecyclerView recyclerView;
     ShowResultViewModel showResultViewModel;
+    private boolean savedEvents = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class ShowResultFragment extends Fragment {
 
         //Set ViewModel
         showResultViewModel = ViewModelProviders.of(this).get(ShowResultViewModel.class);
-        showResultViewModel.init(sc);
+        showResultViewModel.init(sc,savedEvents);
         showResultViewModel.getResultEventsLD().observe(this, new Observer<List<EventDTO>>() {
             @Override
             public void onChanged(List<EventDTO> eventDTOS) {
@@ -148,5 +149,9 @@ public class ShowResultFragment extends Fragment {
         } else {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.moroBlueBackground));
         }
+    }
+
+    public void setSavedEvents(boolean savedEvents) {
+        this.savedEvents = savedEvents;
     }
 }
