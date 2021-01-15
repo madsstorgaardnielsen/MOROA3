@@ -1,11 +1,12 @@
 package dk.gruppea3moro.moroa3.model;
 
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateTime {
+public class DateTime implements Serializable {
     String day, month, year, hour,minute;
 
     public DateTime() {
