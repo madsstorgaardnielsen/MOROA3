@@ -1,5 +1,6 @@
 package dk.gruppea3moro.moroa3.findevent;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,7 +43,7 @@ public class ShowResultFragment extends Fragment {
         recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        setBackgroundColor();
+        setBackgroundColor(savedEvents);
         //Get search criteria - either from "Right Now" or form parent fragment "Find Event"
         SearchCriteria sc = getSearchCriteria();
 
@@ -96,6 +97,7 @@ public class ShowResultFragment extends Fragment {
             TextView areaTV = vh.itemView.findViewById(R.id.area_textView_RV);
             TextView dateTV = vh.itemView.findViewById(R.id.date_textView_RV);
             TextView timeTV = vh.itemView.findViewById(R.id.time_textView_RV);
+            TextView colorBox = vh.itemView.findViewById(R.id.colorBox_TextView_RV);
             ImageView imageView = vh.itemView.findViewById(R.id.showevent_imageView_RV);
 
             //Get current event
@@ -112,6 +114,19 @@ public class ShowResultFragment extends Fragment {
             Picasso.get().load(currentEvent.getImageLink())
                     .placeholder(R.drawable.moro_logo)
                     .into(imageView);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                //Set color
+                if (getParentFragment() instanceof FindEventFragment){
+                    colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkGreenBackground));
+                } else if (savedEvents){
+                    colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkGreenBackground));
+                } else {
+                    colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkBlueBackground));
+
+                }
+            }
+
         }
     };
 
@@ -151,8 +166,10 @@ public class ShowResultFragment extends Fragment {
     }
 
     //TODO fix
-    private void setBackgroundColor() {
-        if (getParentFragment() instanceof FindEventFragment) {
+    private void setBackgroundColor(boolean savedEvents) {
+        if (savedEvents){
+            recyclerView.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
+        } else if (getParentFragment() instanceof FindEventFragment) {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
         } else {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.moroBlueBackground));

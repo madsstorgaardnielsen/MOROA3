@@ -2,7 +2,9 @@ package dk.gruppea3moro.moroa3.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         saved_imageView = root.findViewById(R.id.saved_imageView);
 
         saved_imageView.setOnClickListener(this);
+        address.setOnClickListener(this);
 
 
         //Setup ViewModel
@@ -101,6 +104,19 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+        //Åbner link til google maps når der trykkes på en addresse
+        if (v == address) {
+            EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+            String mapsAddress = eventDTO.getAddressDTO().getAddress();
+
+            System.out.println(mapsAddress);
+
+            String formattedMapsStr = mapsAddress.replaceAll(" ","+").replaceAll("\n","+");
+            String maps = "https://www.google.com/maps/place/"+formattedMapsStr;
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+            browserIntent.setData(Uri.parse(maps));
+            getActivity().startActivity(browserIntent);
+        }
 
         if (v == saved_imageView) {
             if (!eventSaved) {
