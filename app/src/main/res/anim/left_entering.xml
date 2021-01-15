@@ -6,3 +6,9 @@
         android:fromYDelta="0%" android:toYDelta="0%"
         android:duration="@android:integer/config_mediumAnimTime"/>
 </set>
+
+<!--duration kan sættes til:
+config_shortAnimTime
+config_mediumAnimTime
+config_longAnimTime
+-->

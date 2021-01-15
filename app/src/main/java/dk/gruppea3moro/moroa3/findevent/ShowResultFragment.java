@@ -124,7 +124,8 @@ public class ShowResultFragment extends Fragment {
             b.putSerializable("event", event);
             f.setArguments(b);
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
-            ((MainActivity) getActivity()).loadFragment(f);
+            //((MainActivity) getActivity()).loadFragment(f);
+            ((MainActivity) getActivity()).loadFragmentRightEntering(f);
 
         }
     }

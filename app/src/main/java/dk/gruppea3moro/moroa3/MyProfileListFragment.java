@@ -122,6 +122,7 @@ public class MyProfileListFragment extends Fragment {
             b.putSerializable("event", event);
             f.setArguments(b);
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
+            //((MainActivity) getActivity()).loadFragmentRightEntering(f);
             ((MainActivity) getActivity()).loadFragment(f);
         }
 
