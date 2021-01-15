@@ -15,7 +15,6 @@ import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 import dk.gruppea3moro.moroa3.model.TagDTO;
 
-//TODO klassen mangler at tage høje for hvilken side man var inde på, når Fragmentet vises ved tryk på tilbageknappen
 public class FindEventViewModel extends AndroidViewModel {
     private MutableLiveData<SearchCriteria> searchCriteriaMLD;
     Application application;
