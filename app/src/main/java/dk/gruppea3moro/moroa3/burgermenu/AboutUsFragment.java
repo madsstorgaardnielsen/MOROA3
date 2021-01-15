@@ -30,6 +30,7 @@ public class AboutUsFragment extends Fragment {
         tv = v.findViewById(R.id.textView3);
         udviklere_textView = v.findViewById(R.id.udviklere_textView);
 
+        //String must be made programatically to be formatted properly, atleast for the time being
         String clickableString = "Vi er MORO.\n" +
                 "\n" +
                 "Otte unge kvinder, der er fyldt med passion, gåpåmod og skabertrang! Vi kommer fra vidt forskellige steder i landet og har vidt forskellige baggrunde, men er gået sammen om et fælles projekt - et projekt vi kalder MORO.\n" +

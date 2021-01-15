@@ -24,7 +24,7 @@ public class SheetReader {
 
         //URL
         String url = "https://docs.google.com/spreadsheets/d/" + EVENT_SHEET_ID + "/export?format=tsv&id=" + EVENT_SHEET_ID;
-        System.out.println(url);
+        //System.out.println(url);
 
         //Reader
         BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
@@ -36,7 +36,7 @@ public class SheetReader {
             try {
                 events.add(createEventDTO(line));
             } catch (Exception e) {
-                System.out.println("DATA: " + line);
+                //System.out.println("DATA: " + line);
                 e.printStackTrace();
             }
             line = br.readLine();
@@ -76,7 +76,7 @@ public class SheetReader {
 
         //URL
         String url = "https://docs.google.com/spreadsheets/d/" + TAG_SHEET_ID + "/export?format=tsv&id=" + TAG_SHEET_ID;
-        System.out.println(url);
+        //System.out.println(url);
 
         //Reader
         BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
@@ -88,7 +88,7 @@ public class SheetReader {
             try {
                 tags.add(createTagDTO(line));
             } catch (Exception e) {
-                System.out.println("DATA: " + line);
+                //System.out.println("DATA: " + line);
                 e.printStackTrace();
             }
             line = br.readLine();

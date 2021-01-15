@@ -40,17 +40,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             AppState.get().pushToBackstackDequeTop(R.id.fragment_contact_us);
             ContactUsFragment contactUsFragment = new ContactUsFragment();
             ma.loadFragmentRightEntering(contactUsFragment);
-            //ma.loadFragment(contactUsFragment);
         } else if (v == about_TextView) {
             AppState.get().pushToBackstackDequeTop(R.id.fragment_about_us);
             AboutUsFragment aboutUsFragment = new AboutUsFragment();
             ma.loadFragmentRightEntering(aboutUsFragment);
-            //ma.loadFragment(aboutUsFragment);
         } else if (v == tip_Textview) {
             AppState.get().pushToBackstackDequeTop(R.id.fragment_tip_us);
             TipUsFragment tipUsFragment = new TipUsFragment();
             ma.loadFragmentRightEntering(tipUsFragment);
-            //ma.loadFragment(tipUsFragment);
         }
     }
 }

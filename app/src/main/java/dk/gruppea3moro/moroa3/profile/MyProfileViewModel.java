@@ -23,5 +23,4 @@ public class MyProfileViewModel {
     public void setLastViewedEvent() {
         EventRepository.get().setLastViewedEventMLD(featuredEvent.getValue());
     }
-
 }

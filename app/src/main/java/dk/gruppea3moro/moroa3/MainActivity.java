@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int chosenFragmentPosition = getFragmentBotNavPosition(id);
 
 
-                        System.out.println("NUVÆRENDE -> " + getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId()));
-                        System.out.println("VALGT -> " + getFragmentBotNavPosition(id));
+                        //System.out.println("NUVÆRENDE -> " + getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId()));
+                        //System.out.println("VALGT -> " + getFragmentBotNavPosition(id));
                         //avoid loading the fragment youre already on when pressing it agian
                         if (bottomNavigationView.getSelectedItemId() == id) {
                             return true;

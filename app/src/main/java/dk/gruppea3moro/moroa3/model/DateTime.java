@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateTime implements Serializable {
-    String day, month, year, hour,minute;
+    String day, month, year, hour, minute;
 
     public DateTime() {
     }
@@ -20,21 +20,22 @@ public class DateTime implements Serializable {
         this.minute = minute;
     }
 
-    public DateTime(String sqlDateTime){
+    public DateTime(String sqlDateTime) {
         //SQL DateTime format: "YYYY/MM/DD hh:mm:ss"
-        this.year = sqlDateTime.substring(0,4);
-        this.month = sqlDateTime.substring(5,7);
-        this.day = sqlDateTime.substring(8,10);
-        this.hour = sqlDateTime.substring(11,13);
-        this.minute = sqlDateTime.substring(14,16);
+        this.year = sqlDateTime.substring(0, 4);
+        this.month = sqlDateTime.substring(5, 7);
+        this.day = sqlDateTime.substring(8, 10);
+        this.hour = sqlDateTime.substring(11, 13);
+        this.minute = sqlDateTime.substring(14, 16);
     }
 
     public DateTime(String danishDate, String time) {
-        this.day = danishDate.substring(0,2);
-        this.month = danishDate.substring(3,5);
-        this.year = danishDate.substring(6,10);;
-        this.hour = time.substring(0,2);
-        this.minute = time.substring(3,5);
+        this.day = danishDate.substring(0, 2);
+        this.month = danishDate.substring(3, 5);
+        this.year = danishDate.substring(6, 10);
+        ;
+        this.hour = time.substring(0, 2);
+        this.minute = time.substring(3, 5);
     }
 
     public String getDay() {
@@ -81,29 +82,29 @@ public class DateTime implements Serializable {
         if (day.length() == 1) {
             day = "0" + day;
         }
-        if (month.length() == 1){
+        if (month.length() == 1) {
             month = "0" + month;
         }
-        if (year.length() == 2){
+        if (year.length() == 2) {
             year = "20" + year;
         }
-        if (hour.length() ==1){
+        if (hour.length() == 1) {
             hour = "0" + hour;
         }
-        if (minute.length() ==1){
+        if (minute.length() == 1) {
             hour = "0" + hour;
         }
 
-        try{
-            if (day.length() != 2){
+        try {
+            if (day.length() != 2) {
                 throw new DateTimeException("Day String must have lenth 2");
-            } else if (month.length() != 2){
+            } else if (month.length() != 2) {
                 throw new DateTimeException("Month String must have lenth 2");
-            } else if (year.length() != 4){
+            } else if (year.length() != 4) {
                 throw new DateTimeException("Year String must have lenth 2");
-            } else if (hour.length() != 2){
+            } else if (hour.length() != 2) {
                 throw new DateTimeException("Hour String must have lenth 2");
-            } else if (minute.length() != 2){
+            } else if (minute.length() != 2) {
                 throw new DateTimeException("Minute String must have lenth 2");
             }
         } catch (DateTimeException e) {
@@ -111,48 +112,47 @@ public class DateTime implements Serializable {
         }
     }
 
-    public String getSqlDateTimeFormat(){
+    public String getSqlDateTimeFormat() {
         return getSqlDateFormat() + " " + getSqlTimeFormat();
     }
 
-    public String getDanishDateTimeFormat(){
+    public String getDanishDateTimeFormat() {
         adjustStrings();
         return day + "/" + month + "/" + year + " " + hour + ":" + minute;
     }
 
-    public String getDanishDayFormat(){
+    public String getDanishDayFormat() {
         adjustStrings();
         return day + "/" + month + "/" + year;
     }
 
-    public String getTimeFormat(){
+    public String getTimeFormat() {
         adjustStrings();
         return hour + ":" + minute;
     }
 
 
-    class DateTimeException extends Exception{
-        public DateTimeException(String message){
+    class DateTimeException extends Exception {
+        public DateTimeException(String message) {
             super(message);
         }
     }
 
-    public static DateTime getDateFromTimeMillis(long timeMillis){
+    public static DateTime getDateFromTimeMillis(long timeMillis) {
         Date date = new Date(timeMillis);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String sqlDate  = formatter.format(date);
+        String sqlDate = formatter.format(date);
         return new DateTime(sqlDate);
     }
 
-
-    public String getSqlDateFormat(){
+    public String getSqlDateFormat() {
         adjustStrings();
         return year + "/" + month + "/" + day;
     }
 
-    public String getSqlTimeFormat(){
+    public String getSqlTimeFormat() {
         adjustStrings();
-        return  hour + ":" + minute +":00";
+        return hour + ":" + minute + ":00";
     }
 
     public int getDayInt(){

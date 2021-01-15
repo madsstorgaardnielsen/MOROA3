@@ -102,11 +102,9 @@ public class SearchCriteria {
                 }
                 if (!match) {
                     eventsToRemove.add(event);
-                    //eventDTOS.remove(event);
                 }
             }
             eventDTOS.removeAll(eventsToRemove);
         }
     }
-
 }
