@@ -21,7 +21,6 @@ public class MyProfileFragment extends Fragment {
         replaceFragment(showResultFragment);
         showResultFragment.setSavedEvents(true);
         return inflater.inflate(R.layout.fragment_my_profile, container, false);
-
     }
 
     public void replaceFragment(Fragment fragment) {

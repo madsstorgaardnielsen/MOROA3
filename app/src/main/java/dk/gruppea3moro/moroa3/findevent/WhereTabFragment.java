@@ -76,9 +76,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
 
                 //Update all search criteria related to Zones
                 String zoneTextView;
-
                 ArrayList<String> greenBoxes = new ArrayList<>();
-
 
                 //Find all textViews that need to be green
                 for (TextView textView : textViews) {

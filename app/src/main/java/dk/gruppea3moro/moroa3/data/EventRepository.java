@@ -82,7 +82,6 @@ public class EventRepository {
 
             uiThread.post(() -> resultEventsMLD.setValue(eventDTOs));
         });
-
     }
 
     private List<EventDTO> readSavedEvents(Context context) {
@@ -147,11 +146,9 @@ public class EventRepository {
 
         eventsAvailable.postValue(true);
 
-
         return eventDTOS;
 
     }
-
 
     public MutableLiveData<List<EventDTO>> getResultEventsMLD() {
         return resultEventsMLD;
@@ -220,7 +217,6 @@ public class EventRepository {
         //Get database
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-
         setEventsAvailable(db);
 
         //Default get the events sorted in chronological order - newest first
@@ -282,8 +278,6 @@ public class EventRepository {
         );
 
         //Gson for decoding ArrayLists
-
-
         readSQLCursor(eventDTOS, cursor);
         db.close();
 
@@ -316,7 +310,6 @@ public class EventRepository {
                 String endDateString = cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ENDDATE));
                 eventDTO.setStart(new DateTime(startDateString));
                 eventDTO.setEnd(new DateTime(endDateString));
-
 
                 //Address
                 eventDTO.setAddressDTO(new AddressDTO(cursor.getString(cursor.getColumnIndex(SQLiteContract.events.COLUMN_NAME_ADDRESSNAME)),
@@ -352,7 +345,6 @@ public class EventRepository {
 
         db.execSQL("DELETE FROM " + SQLiteContract.events.TABLE_NAME);
     }
-
 
     public void refreshDbInBackground(Context context) {
         Executor bgThread = Executors.newSingleThreadExecutor();

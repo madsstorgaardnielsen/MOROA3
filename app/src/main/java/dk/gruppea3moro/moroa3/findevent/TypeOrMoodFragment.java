@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import dk.gruppea3moro.moroa3.MainActivity;
 import dk.gruppea3moro.moroa3.R;
-
 
 public class TypeOrMoodFragment extends Fragment implements View.OnClickListener {
 

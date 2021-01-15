@@ -163,7 +163,6 @@ public class AppState //extends Application
         //load fragment
     }
 
-
     public static SearchCriteria getRightNowSearchCriteria() {
         SearchCriteria sc = new SearchCriteria();
 

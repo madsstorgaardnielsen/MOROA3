@@ -43,20 +43,7 @@ public class MyProfileListFragment extends Fragment {
         showevent_imageView_RV = root.findViewById(R.id.showevent_imageView_RV);
 
         recyclerView = new RecyclerView(getContext());
-
-        //TODO nedenstående slettes og erstattes med gemte i stedet for at hente alle.
-        // Er lavet så man kan se det virker
-
-
-
-
-
-
-
-        //return recyclerview
         return recyclerView;
-
-        // return inflater.inflate(R.layout.fragment_my_profile_list, container, false);
     }
 
     RecyclerView.Adapter adapter = new RecyclerView.Adapter() {
@@ -70,7 +57,6 @@ public class MyProfileListFragment extends Fragment {
             System.out.println("onCreateViewHolder ");
             View itemView = getLayoutInflater().inflate(R.layout.fragment_my_profile_list, parent, false);
             showevent_imageView_RV = itemView.findViewById(R.id.showevent_imageView_RV);
-
 
             //Set OnClickListener to inner class RVOnClickListener
             itemView.setOnLongClickListener(mOnLongClickListener);

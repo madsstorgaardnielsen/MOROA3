@@ -36,7 +36,6 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
     SharedPreferences sharedPreferences;
     private boolean eventSaved;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
