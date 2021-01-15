@@ -79,7 +79,7 @@ public class ShowResultFragment extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            System.out.println("onCreateViewHolder ");
+            //System.out.println("onCreateViewHolder ");
             View itemView = getLayoutInflater().inflate(R.layout.showevent_recyclerview, parent, false);
 
             //Set OnClickListener to inner class RVOnClickListener
@@ -91,7 +91,7 @@ public class ShowResultFragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
             //Get views
-            System.out.println("onBindViewHolder " + position);
+            //System.out.println("onBindViewHolder " + position);
             TextView titleTV = vh.itemView.findViewById(R.id.title_textView_RV);
             TextView areaTV = vh.itemView.findViewById(R.id.area_textView_RV);
             TextView dateTV = vh.itemView.findViewById(R.id.date_textView_RV);
@@ -100,7 +100,7 @@ public class ShowResultFragment extends Fragment {
 
             //Get current event
             EventDTO currentEvent = showResultViewModel.getResultEventsLD().getValue().get(position);
-            System.out.println(currentEvent);
+            //System.out.println(currentEvent);
 
             //Set views from current event data
             titleTV.setText(currentEvent.getTitle());
@@ -131,7 +131,8 @@ public class ShowResultFragment extends Fragment {
             b.putSerializable("event", event);
             f.setArguments(b);
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
-            ((MainActivity) getActivity()).loadFragment(f);
+            //((MainActivity) getActivity()).loadFragment(f);
+            ((MainActivity) getActivity()).loadFragmentRightEntering(f);
 
         }
     }
