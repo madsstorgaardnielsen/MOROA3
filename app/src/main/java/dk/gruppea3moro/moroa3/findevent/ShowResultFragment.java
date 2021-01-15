@@ -116,7 +116,6 @@ public class ShowResultFragment extends Fragment {
                     colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkGreenBackground));
                 } else {
                     colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkBlueBackground));
-
                 }
             }
 

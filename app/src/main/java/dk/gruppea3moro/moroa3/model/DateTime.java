@@ -144,6 +144,7 @@ public class DateTime implements Serializable {
         return new DateTime(sqlDate);
     }
 
+
     public String getSqlDateFormat(){
         adjustStrings();
         return year + "/" + month + "/" + day;
@@ -152,5 +153,17 @@ public class DateTime implements Serializable {
     public String getSqlTimeFormat(){
         adjustStrings();
         return  hour + ":" + minute +":00";
+    }
+
+    public int getDayInt(){
+        return Integer.parseInt(day);
+    }
+
+    public int getMonthInt(){
+        return Integer.parseInt(month);
+    }
+
+    public int getYearInt(){
+        return Integer.parseInt(year);
     }
 }

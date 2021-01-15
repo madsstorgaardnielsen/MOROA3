@@ -12,6 +12,7 @@ import java.util.List;
 
 import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.AppState;
+import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 import dk.gruppea3moro.moroa3.model.TagDTO;
 
@@ -19,6 +20,7 @@ import dk.gruppea3moro.moroa3.model.TagDTO;
 public class FindEventViewModel extends AndroidViewModel {
     private MutableLiveData<SearchCriteria> searchCriteriaMLD;
     Application application;
+
 
 
     public FindEventViewModel(@NonNull Application application) {
@@ -73,5 +75,12 @@ public class FindEventViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
+    }
+
+    public void setSCFromDate(DateTime dateTime){
+        searchCriteriaMLD.getValue().setFromDate(dateTime);
+    }
+    public void setSCToDate(DateTime dateTime){
+        searchCriteriaMLD.getValue().setToDate(dateTime);
     }
 }
