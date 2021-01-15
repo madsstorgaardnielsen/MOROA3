@@ -1,6 +1,7 @@
 package dk.gruppea3moro.moroa3.findevent;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,11 @@ public class ShowResultFragment extends Fragment {
         @Override
         public int getItemCount() {
             if (showResultViewModel.getResultEventsLD().getValue() == null) {
+
+                Toast toast = Toast.makeText(getActivity(),getString(R.string.no_event_found), Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP,0,0);
+                toast.show();
+
                 return 0;
             } else {
                 return showResultViewModel.getResultEventsLD().getValue().size();

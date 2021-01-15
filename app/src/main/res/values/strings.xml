@@ -51,6 +51,6 @@ Fang os på [kontakt os-siden]
     <string name="TYPE">TYPE</string>
     <string name="Stemning">STEMNING</string>
     <string name="msg_turn_network_on">Slå dit netværk til for at få den fulde oplevelse med MORO!</string>
-
+    <string name="no_event_found">Ingen events fundet</string>
 
 </resources>
