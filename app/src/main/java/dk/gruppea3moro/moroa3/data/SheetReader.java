@@ -47,19 +47,29 @@ public class SheetReader {
 
     public EventDTO createEventDTO(String line) {
         EventDTO event = new EventDTO();
-        String[] fields = line.split("\t");
+        String[] fields = line.split("\t",-1);
+        int[] mandatoryIndexes = {0,1,3,4,5,6,17,18};
+        for (int i = 0; i < mandatoryIndexes.length; i++) {
+            if (fields[mandatoryIndexes[i]].equals("")){
+                throw new NullPointerException("Mandatory field in event is empty" + fields);
+            }
+        }
+
+        //Set mandatory fields - might throw exception, and event will be dropped
         event.setTitle(fields[0]);
         event.setSubtext(fields[1]);
-        event.setPrice(Integer.parseInt(fields[2]));
         event.setEventLink(fields[3]);
         event.setImageLink(fields[4]);
         event.setStart(new DateTime(fields[6], fields[5]));
+        event.setZone(fields[17]);
+        event.setId(fields[18]);
+
+        //Non-mandatory events - if empty string it is no problem
+        event.setPrice(Integer.parseInt(fields[2]));
         event.setEnd(new DateTime(fields[8], fields[7]));
         event.setAddressDTO(new AddressDTO(fields[9], fields[10], fields[11], fields[12], fields[13], fields[14]));
         event.setMoods(parseTags(fields[15]));
         event.setTypes(parseTags(fields[16]));
-        event.setZone(fields[17]);
-        event.setId(fields[18]);
         return event;
     }
 
