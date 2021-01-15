@@ -77,6 +77,17 @@ public class AddressDTO implements Serializable {
         this.addressName = addressName;
     }
 
+    //used for the google maps call, doesnt work when address name is also in the string.
+    public String getAddress() {
+        String result = "";
+        result += streetName + " " + streetNumber;
+        if (additionalText != null) {
+            result += " " + additionalText;
+        }
+        result += "\n" + zipCode + " " + area;
+        return result;
+    }
+
     @Override
     public String toString() {
         String result = "";

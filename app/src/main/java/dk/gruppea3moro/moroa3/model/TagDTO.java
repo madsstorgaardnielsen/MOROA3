@@ -58,9 +58,7 @@ public class TagDTO {
                 this.category = ZONE_CATEGORY;
                 break;
             default:
-                //TODO fjern det her
-                System.out.println("PROBLEM MED KATEOGRI AF TAGDTO setCategory()");
-                //System.exit(0);
+                break;
         }
     }
 

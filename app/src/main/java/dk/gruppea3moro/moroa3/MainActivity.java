@@ -3,6 +3,7 @@ package dk.gruppea3moro.moroa3;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public int width;
     public static int height;
     MainActivityViewModel mainActivityViewModel;
+    private boolean appInUse = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init();
+        mainActivityViewModel.getEventsAvailable().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean available) {
+                if (!available && appInUse) {
+                    Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
+                    mainActivityViewModel.setEventDTOs();
+                    mainActivityViewModel.setTagDTOs();
+                    //Set Inuse false, so it doesnt call database more too much
+                    appInUse = false;
+                }
+            }
+        });
+        mainActivityViewModel.getTagsAvailable().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean available) {
+                if (!available && appInUse) {
+                    Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
+                    mainActivityViewModel.setTagDTOs();
+                    mainActivityViewModel.setEventDTOs();
+                    //Set Inuse false, so it doesnt call database more too much
+                    appInUse = false;
+                }
+            }
+        });
+
 
         //Read database from google sheet in background thread
         EventRepository.get().refreshDbInBackground(this);
@@ -51,12 +79,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //Get selected item id
                         int id = item.getItemId();
                         int fragmentId = AppState.getFragmentLayoutId(id);
+                        int currectFragmentPosition = getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId());
+                        int chosenFragmentPosition = getFragmentBotNavPosition(id);
 
+
+                        //System.out.println("NUVÆRENDE -> " + getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId()));
+                        //System.out.println("VALGT -> " + getFragmentBotNavPosition(id));
+                        //avoid loading the fragment youre already on when pressing it agian
+                        if (bottomNavigationView.getSelectedItemId() == id) {
+                            return true;
+                        }
                         //Push fragment id to backstack deque
                         AppState.get().pushToBackstackDequeTop(fragmentId);
 
                         //load fragment
-                        loadFragment(AppState.getFragmentFromLayoutId(fragmentId));
+                        if (currectFragmentPosition < chosenFragmentPosition) {
+                            AppState.get().setBotNavSelectGreater(true);
+                            loadFragmentRightEntering(AppState.getFragmentFromLayoutId(fragmentId));
+                        } else {
+                            AppState.get().setBotNavSelectGreater(false);
+                            loadFragmentLeftEntering(AppState.getFragmentFromLayoutId(fragmentId));
+                        }
+                        //loadFragment(AppState.getFragmentFromLayoutId(fragmentId));
                         return true;
                     }
                 }
@@ -81,6 +125,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         width = metrics.widthPixels;
         height = metrics.heightPixels;
+    }
+
+    private int getFragmentBotNavPosition(int fragmentId) {
+        if (fragmentId == 2131296346) {
+            return 1;
+        }
+        if (fragmentId == 2131296349) {
+            return 2;
+        }
+        if (fragmentId == 2131296345) {
+            return 3;
+        }
+        if (fragmentId == 2131296348) {
+            return 4;
+        }
+        if (fragmentId == 2131296347) {
+            return 5;
+        } else
+            return 0;
+    }
+
+    public void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainFL, fragment)
+                .commit();
+    }
+
+    public void loadFragmentRightEntering(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.right_entering, R.anim.left_exit)
+                .replace(R.id.mainFL, fragment)
+                .commit();
+    }
+
+    public void loadFragmentLeftEntering(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.left_entering, R.anim.right_exit)
+                .replace(R.id.mainFL, fragment)
+                .commit();
+    }
+
+    public void onBackPressed() {
+        //Get integerDeqye from AppState
+        Deque<Integer> integerDeque = AppState.get().getIntegerDeque();
+
+        //Pop to previous fragment
+        integerDeque.pop();
+
+        if (!integerDeque.isEmpty()) {
+            //When deque is not empty
+            //load fragment
+            int id = integerDeque.peek();
+            setBottonNavSelection(id);
+
+            //To ensure the proper animation direction when back is pressed.
+            boolean b = AppState.get().isBotNavSelectGreater();
+            if (b) {
+                loadFragmentLeftEntering(AppState.getFragmentFromLayoutId(id));
+            } else {
+                loadFragmentRightEntering(AppState.getFragmentFromLayoutId(id));
+            }
+
+            //loadFragment(AppState.getFragmentFromLayoutId(id));
+        } else {
+            //When deque list is empty
+            //Finish activity
+            finish();
+        }
     }
 
     //Use to change between fragments and set the bottom navigation bar at the same time.
@@ -118,33 +233,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void loadFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.mainFL, fragment)
-                .commit();
-    }
-
-    public void onBackPressed() {
-        //Get integerDeqye from AppState
-        Deque<Integer> integerDeque = AppState.get().getIntegerDeque();
-
-        //Pop to previous fragment
-        integerDeque.pop();
-
-        if (!integerDeque.isEmpty()) {
-            //When deque is not empty
-            //load fragment
-            int id = integerDeque.peek();
-            setBottonNavSelection(id);
-            loadFragment(AppState.getFragmentFromLayoutId(id));
-        } else {
-            //When deque list is empty
-            //Finish activity
-            finish();
-        }
-    }
-
     @Override
     public void onClick(View v) {
 
@@ -178,7 +266,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AppState.get().saveToPM(getApplicationContext());
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppState.get().setKilled(true);
+        AppState.get().saveToPM(getApplicationContext());
+    }
+
     public MainActivityViewModel getMainActivityViewModel() {
         return mainActivityViewModel;
     }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        appInUse = true;
+    }
 }
+
+       /* lad vær med at slet dem indtil videre :D
+
+       21 31 29 63 46 homepage
+
+        2131296349 lige nu
+
+        2131296345 finde event
+
+        2131296348 gemte events
+
+         menu*/

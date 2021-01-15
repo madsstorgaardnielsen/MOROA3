@@ -46,6 +46,7 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         MainActivity ma = ((MainActivity) getActivity());
+        AppState.get().setBotNavSelectGreater(true);
         if (v == findEventButton) {
             //Put the selected fragment to top of backstack-deque.
             AppState.get().pushToBackstackDequeTop(R.id.fragment_find_event);
@@ -53,15 +54,15 @@ public class FrontpageFragment extends Fragment implements View.OnClickListener 
             ma.setBottonNavSelection(R.id.fragment_find_event);
             //Get fragment object and load
             Fragment f = AppState.getFragmentFromLayoutId(R.id.fragment_find_event);
-            ((MainActivity) getActivity()).loadFragment(f);
+            ((MainActivity) getActivity()).loadFragmentRightEntering(f);
         } else if (v == rightNowButton) {
             //Put the selected fragment to top of backstack-deque.
             AppState.get().pushToBackstackDequeTop(R.id.fragment_right_now);
             //Set selection on bottom navigation bar
             ma.setBottonNavSelection(R.id.fragment_right_now);
             //Get fragment object and load
-            Fragment f = AppState.get().getFragmentFromLayoutId(R.id.fragment_right_now);
-            ((MainActivity) getActivity()).loadFragment(f);
+            Fragment f = AppState.getFragmentFromLayoutId(R.id.fragment_right_now);
+            ((MainActivity) getActivity()).loadFragmentRightEntering(f);
         } else if (v == featuredEventFL) {
             openFeaturedEventFragment();
         }

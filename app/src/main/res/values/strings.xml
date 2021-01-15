@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MOROA3</string>
+    <string name="app_name">A3 MORO</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="hjem">hjem</string>
@@ -47,9 +47,17 @@ Vi ønsker at udbrede brugen af kulturlivet blandt unge og inspirere unge til at
 Vi elsker at få oplevelser sammen om kulturen, og det ønsker vi at udbrede. Med MORO skal vi opleve kulturen sammen og at styrke diversiteten i kulturen.
 
 Fang os på [kontakt os-siden]
+
+        Udviklere af appen:
+        Peter Revsbech - s183760
+        Christian Kyed - s184210
+        Mads Storgaard-Nielsen - s180076
+        Sebastian Bjerre - s163526
+
 </string>
     <string name="TYPE">TYPE</string>
     <string name="Stemning">STEMNING</string>
-
+    <string name="msg_turn_network_on">Slå dit netværk til for at få den fulde oplevelse med MORO!</string>
+    <string name="no_event_found">Ingen events fundet</string>
 
 </resources>

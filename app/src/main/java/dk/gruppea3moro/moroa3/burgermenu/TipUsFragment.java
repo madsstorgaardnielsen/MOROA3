@@ -89,8 +89,6 @@ public class TipUsFragment extends Fragment implements TextWatcher {
                 writeTip.postTip();
                 Toast.makeText(getActivity(), "Tippet er sendt!", Toast.LENGTH_LONG).show();
                 clearText();
-
-                //TODO fejlbesked hvis tippet ikke bliver gemt
             }
         });
 

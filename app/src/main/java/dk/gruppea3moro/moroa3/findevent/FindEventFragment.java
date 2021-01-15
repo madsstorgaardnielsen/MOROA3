@@ -48,24 +48,25 @@ public class FindEventFragment extends Fragment {
         viewPager.setAdapter(tabFragmentAdapter);
 
         TabLayout tabLayout = view.findViewById(R.id.findEventTabLayout);
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> getTabText(tab, position)).attach();
+        new TabLayoutMediator(tabLayout, viewPager, this::getTabText).attach();
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                AppState.get().setFindEventVPposition(position);
                 if (position == 3) {
                     findEventViewModel.setResultEvents();
+
                 }
-                System.out.println("position = " + position);
                 changeTabLayoutColor(position);
             }
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                System.out.println("position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
             }
         });
+
     }
 
     public void getTabText(TabLayout.Tab tab, int position) {
@@ -87,6 +88,12 @@ public class FindEventFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AppState.get().setSearchCriteria(findEventViewModel.getSearchCriteriaLD().getValue());
+    }
+
     public void changeTabLayoutColor(int position) {
         switch (position) {
             case 0:
@@ -104,12 +111,13 @@ public class FindEventFragment extends Fragment {
         }
     }
 
-    public SearchCriteria getSearchCriteria(){
+    public SearchCriteria getSearchCriteria() {
         return findEventViewModel.getSearchCriteriaLD().getValue();
     }
 }
 
 class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapter {
+
     public TabFragmentAdapter(Fragment fragment) {
         super(fragment);
     }
@@ -117,6 +125,7 @@ class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapte
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+
         Fragment fragment = null;
         switch (position) {
             case 0:

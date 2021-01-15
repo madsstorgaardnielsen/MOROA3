@@ -1,11 +1,12 @@
 package dk.gruppea3moro.moroa3.home;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,25 +15,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.EventDTO;
+import dk.gruppea3moro.moroa3.profile.EventIdList;
 
+//TODO hele klassen er ret rodet og trænger til en kærlig hånd
 public class ShowEventFragment extends Fragment implements View.OnClickListener {
     TextView title, subtext, price, startDay, startTime, address, eventLink;
     ImageView image;
     ShowEventViewModel showEventViewModel;
     AppCompatImageView saved_imageView;
     SharedPreferences sharedPreferences;
-    private int count = 0;
+    private boolean eventSaved;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences = getContext().getSharedPreferences("saveEvent", Context.MODE_PRIVATE);
         View root = inflater.inflate(R.layout.fragment_show_event, container, false);
         title = root.findViewById(R.id.titleTVShowEvent);
         subtext = root.findViewById(R.id.descriptionTVShowEvent);
@@ -45,33 +53,29 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         saved_imageView = root.findViewById(R.id.saved_imageView);
 
         saved_imageView.setOnClickListener(this);
-
-        if (sharedPreferences.getString("checked", "").equals("unchecked")) {
-            System.out.println("UNCHECKED!!!!");
-            System.out.println(sharedPreferences.getString("checked", ""));
-            saved_imageView.setBackgroundResource(R.drawable.emptyheart);
-        } else if (sharedPreferences.getString("checked", "").equals("checked")) {
-            System.out.println("CHECKED!!!!");
-            System.out.println(sharedPreferences.getString("checked", ""));
-            saved_imageView.setBackgroundResource(R.drawable.filledheart);
-        } else {
-            System.out.println("Checked not set");
-            System.out.println(sharedPreferences.getString("checked", ""));
-            sharedPreferences.edit().putString("checked", "unchecked").apply();
-        }
+        address.setOnClickListener(this);
 
         //Setup ViewModel
         showEventViewModel = ViewModelProviders.of(this).get(ShowEventViewModel.class);
         showEventViewModel.init();
         showEventViewModel.getShownEvent();
 
+        checkIfEventIsSaved();
+
+        if (!eventSaved) {
+            saved_imageView.setBackgroundResource(R.drawable.emptyheart);
+        } else if (eventSaved) {
+            saved_imageView.setBackgroundResource(R.drawable.filledheart);
+        } else {
+            sharedPreferences.edit().putString("checked", "unchecked").apply();
+        }
         setupEventView();
         return root;
     }
 
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     public void setupEventView() {
         //Get last viewed event from ViewModel
-        System.out.println(showEventViewModel.getShownEvent().getValue().toString());
         EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
 
         //Set text views
@@ -86,40 +90,111 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
 
         eventLink.setText("Læs mere: " + eventDTO.getEventLink());
         startDay.setText(eventDTO.getStart().getDanishDayFormat());
-        startTime.setText(eventDTO.getStart().getTimeFormat() + " - " + eventDTO.getEnd().getTimeFormat());
+        startTime.setText(eventDTO.getStart().getTimeFormat()+" - "+eventDTO.getEnd().getTimeFormat());
         address.setText(eventDTO.getAddressDTO().toString());
+        address.setPaintFlags(address.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
 
         //Let Picasso handle the image
-        Picasso.get().load(eventDTO.getImageLink()).placeholder(R.drawable.moro_logo).into(image);
+        Picasso.get().load(eventDTO.getImageLink()).into(image);
     }
 
     @Override
     public void onClick(View v) {
-        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
-        String eventTitle = eventDTO.getTitle();
-        String eventDate = eventDTO.getStart().getSqlDateFormat();
-        String eventTime = eventDTO.getStart().getSqlTimeFormat();
+        //Åbner link til google maps når der trykkes på en addresse
+        if (v == address) {
+            EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+            String mapsAddress = eventDTO.getAddressDTO().getAddress();
+
+            String formattedMapsStr = mapsAddress.replaceAll(" ","+").replaceAll("\n","+");
+            String maps = "https://www.google.com/maps/place/"+formattedMapsStr;
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+            browserIntent.setData(Uri.parse(maps));
+            getActivity().startActivity(browserIntent);
+        }
 
         if (v == saved_imageView) {
-            if (sharedPreferences.getString("checked", "").equals("unchecked")) {
+            if (!eventSaved) {
                 //TODO Tilføj til gemte events
-                sharedPreferences.edit().putString("title" + count, eventTitle).apply();
-                sharedPreferences.edit().putString("startDato" + count, eventDate).apply();
-                sharedPreferences.edit().putString("startTidspunkt" + count, eventTime).apply();
-                count += 1;
+                saveEvent();
                 saved_imageView.setBackgroundResource(R.drawable.filledheart);
-                sharedPreferences.edit().putString("checked", "checked").apply();
-                System.out.println("NOW CHECKED!!!!!!");
-                System.out.println(sharedPreferences.getString("checked", ""));
                 saved_imageView.setTag("Filled");
-            } else {
+            } else if (eventSaved){
                 //TODO fjern fra gemte events
                 saved_imageView.setBackgroundResource(R.drawable.emptyheart);
-                sharedPreferences.edit().putString("checked", "unchecked").apply();
-                System.out.println("NOW UNCHECKED!!!!!");
-                System.out.println(sharedPreferences.getString("checked", ""));
+                try {
+                    removeEvent();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 saved_imageView.setTag("Unfilled");
-            }
+            } /*else{
+                //System.out.println("NOT CHECKED OR UNCHECKED");
+            }*/
+        }
+    }
+
+    public void saveEvent() {
+        ArrayList<String> eventIds = new ArrayList<>();
+        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+
+        Gson load = new Gson();
+        String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
+
+        if (jsonLoad != null) {
+            eventIds = load.fromJson(jsonLoad, EventIdList.class).eventIds;
+        }
+        eventIds.add(eventDTO.getId());
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        Gson gsonInput = new Gson();
+        String json = gsonInput.toJson(new EventIdList(eventIds));
+        prefsEditor.putString(EventIdList.SAVEDLIST, json);
+        prefsEditor.apply();
+        eventSaved = true;
+
+    }
+
+    public void removeEvent() throws Exception {
+        ArrayList<String> events;
+        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+
+        Gson load = new Gson();
+        String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
+
+        if (jsonLoad != null) {
+            events = load.fromJson(jsonLoad,EventIdList.class).eventIds;
+            events.remove(eventDTO.getId());
+            SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+            String json = load.toJson(new EventIdList(events));
+            prefsEditor.putString(EventIdList.SAVEDLIST, json);
+            prefsEditor.apply();
+            eventSaved = false;
+        } else if (jsonLoad == null) {
+            eventSaved = false;
+            throw new Exception("No events saved, in preference manager. Preference manager is empty");
+        }
+    }
+
+    public boolean checkIfEventIsSaved() {
+        ArrayList<String> events;
+        EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+
+        Gson load = new Gson();
+        String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
+
+        if (jsonLoad == null) {
+            eventSaved = false;
+            return false;
+        }
+
+        //If it wasn't null - continue
+        events = load.fromJson(jsonLoad, EventIdList.class).eventIds;
+
+        if (events.contains(eventDTO.getId())) {
+            eventSaved = true;
+            return true;
+        } else {
+            eventSaved = false;
+            return false;
         }
     }
 }

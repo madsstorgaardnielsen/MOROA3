@@ -28,11 +28,15 @@ public class ShowResultViewModel extends AndroidViewModel {
         this.application = application;
     }
 
-    public void init(SearchCriteria sc) {
+    public void init(SearchCriteria sc, boolean savedEvents) {
         if (resultEventsMLD != null) {
             return;
         }
-        setResultEvents(sc);
+        if (savedEvents){ //If it was "My profile"
+            setResultToSavedEvents();
+        } else{ //If it was "Right now" or "Find event"
+            setResultEvents(sc);
+        }
         resultEventsMLD = EventRepository.get().getResultEventsMLD();
     }
 
@@ -42,5 +46,9 @@ public class ShowResultViewModel extends AndroidViewModel {
 
     public LiveData<List<EventDTO>> getResultEventsLD() {
         return resultEventsMLD;
+    }
+
+    public void setResultToSavedEvents() {
+        EventRepository.get().setSavedEvents(application);
     }
 }

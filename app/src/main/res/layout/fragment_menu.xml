@@ -13,17 +13,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/tip_textView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
-            android:layout_weight="1"
             android:onClick="onClick"
             android:text="@string/tip_os"
-            android:textSize="24sp" />
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/om_textView"
@@ -35,19 +45,29 @@
             android:gravity="center"
             android:onClick="onClick"
             android:text="@string/om_os"
-            android:textSize="24sp" />
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/kontakt_textView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:layout_weight="1"
             android:gravity="center"
             android:onClick="onClick"
             android:text="@string/kontakt_os"
-            android:textSize="24sp" />
+            android:textSize="36sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 </FrameLayout>

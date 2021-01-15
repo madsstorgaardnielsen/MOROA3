@@ -15,6 +15,7 @@
     <color name="moroGreenBackground">#D7E9CF</color>
     <color name="moroDarkGreenBackground">#0C3832</color>
     <color name="moroBlueBackground">#D4E2F2</color>
+    <color name="moroDarkBlueBackground">#1F3A7D</color>
     <color name="moroButtonRed">#991917</color>
 
     <color name="light_font">#FBFBFB</color>

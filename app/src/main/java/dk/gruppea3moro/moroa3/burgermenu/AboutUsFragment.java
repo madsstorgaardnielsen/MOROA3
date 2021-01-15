@@ -20,7 +20,7 @@ import dk.gruppea3moro.moroa3.model.AppState;
 
 
 public class AboutUsFragment extends Fragment {
-    TextView tv;
+    TextView tv, udviklere_textView;
     ContactUsFragment f;
 
     @Override
@@ -28,7 +28,9 @@ public class AboutUsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_about_us, container, false);
 
         tv = v.findViewById(R.id.textView3);
+        udviklere_textView = v.findViewById(R.id.udviklere_textView);
 
+        //String must be made programatically to be formatted properly, atleast for the time being
         String clickableString = "Vi er MORO.\n" +
                 "\n" +
                 "Otte unge kvinder, der er fyldt med passion, gåpåmod og skabertrang! Vi kommer fra vidt forskellige steder i landet og har vidt forskellige baggrunde, men er gået sammen om et fælles projekt - et projekt vi kalder MORO.\n" +
@@ -49,6 +51,11 @@ public class AboutUsFragment extends Fragment {
                 "Vi elsker at få oplevelser sammen om kulturen, og det ønsker vi at udbrede. Med MORO skal vi opleve kulturen sammen og at styrke diversiteten i kulturen.\n" +
                 "\n" +
                 "Fang os her";
+        String udviklere = "Udviklere af appen:\n" +
+                "        Peter Revsbech - s183760\n" +
+                "        Christian Kyed - s184210\n" +
+                "        Mads Storgaard-Nielsen - s180076\n" +
+                "        Sebastian Bjerre - s163526";
 
         SpannableString ss = new SpannableString(clickableString);
         ClickableSpan cs = new ClickableSpan() {
@@ -60,7 +67,9 @@ public class AboutUsFragment extends Fragment {
         };
 
         ss.setSpan(cs, (ss.length() - 3), ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         tv.setText(ss);
+        udviklere_textView.setText(udviklere);
         tv.setMovementMethod(LinkMovementMethod.getInstance());
         return v;
     }

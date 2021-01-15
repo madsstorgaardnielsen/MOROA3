@@ -94,10 +94,10 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
 
                 //Make them green
                 for (TextView textView : textViews) {
-                    if (greenBoxes.contains(textView.getHint().toString())) {
-                        textView.setBackgroundResource(R.drawable.greenborder);
-                    } else {
-                        textView.setBackgroundResource(R.drawable.blackborder);
+                    if (greenBoxes.contains(textView.getHint().toString())) { //If selected
+                        textView.setBackgroundResource(R.drawable.thickyellowborder);
+                    } else {//If not selected
+                        textView.setBackgroundResource(R.drawable.yellowborder);
                     }
                 }
             }

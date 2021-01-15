@@ -2,13 +2,16 @@ package dk.gruppea3moro.moroa3;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +26,7 @@ public class MyProfileListFragment extends Fragment {
 
     private final View.OnClickListener mOnClickListener = new RVOnClickListener();
     private final View.OnLongClickListener mOnLongClickListener = new RVOnClickListener();
+    SharedPreferences sharedPreferences;
 
     RecyclerView recyclerView;
     ArrayList<EventDTO> eventDTOs;
@@ -34,33 +38,12 @@ public class MyProfileListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_profile_list, container, false);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         removeSaved_imageView = root.findViewById(R.id.removeSaved_imageView);
         showevent_imageView_RV = root.findViewById(R.id.showevent_imageView_RV);
 
         recyclerView = new RecyclerView(getContext());
-
-        //TODO nedenstående slettes og erstattes med gemte i stedet for at hente alle.
-        // Er lavet så man kan se det virker
-
-        /*SearchCriteria searchCriteria = AppState.get().getSearchCriteria();
-        //Get events with DataController from BackgroundThread
-        Executor bgThread = Executors.newSingleThreadExecutor();
-        Handler uiThread = new Handler();
-        bgThread.execute(() -> {
-            //Gets event from searchCriteria via. DataController
-            eventDTOs = DataController.get().searchEvents(getContext(), searchCriteria);
-
-            uiThread.post(() -> {
-                // Inflate the layout (recyclerview) for this fragment
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(adapter);
-            });
-        });*/
-
-        //return recyclerview
         return recyclerView;
-
-        // return inflater.inflate(R.layout.fragment_my_profile_list, container, false);
     }
 
     RecyclerView.Adapter adapter = new RecyclerView.Adapter() {
@@ -70,16 +53,10 @@ public class MyProfileListFragment extends Fragment {
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             System.out.println("onCreateViewHolder ");
             View itemView = getLayoutInflater().inflate(R.layout.fragment_my_profile_list, parent, false);
             showevent_imageView_RV = itemView.findViewById(R.id.showevent_imageView_RV);
-
-            /*for(int index = 0; index < ((ViewGroup) itemView).getChildCount(); index++) {
-                View nextChild = ((ViewGroup) itemView).getChildAt(index);
-                System.out.println("");
-            }*/
-            //View nextChild = ((ViewGroup) itemView).getChildAt(0);
 
             //Set OnClickListener to inner class RVOnClickListener
             itemView.setOnLongClickListener(mOnLongClickListener);
@@ -131,23 +108,21 @@ public class MyProfileListFragment extends Fragment {
             b.putSerializable("event", event);
             f.setArguments(b);
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
+            //((MainActivity) getActivity()).loadFragmentRightEntering(f);
             ((MainActivity) getActivity()).loadFragment(f);
         }
 
         @Override
         public boolean onLongClick(View v) {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            //Gør intet
-                            break;
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Gør intet
+                        break;
 
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            //TODO Fjern eventet
-                            break;
-                    }
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //TODO Fjern eventet
+                        break;
                 }
             };
 

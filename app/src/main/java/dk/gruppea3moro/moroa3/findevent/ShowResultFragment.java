@@ -1,6 +1,8 @@
 package dk.gruppea3moro.moroa3.findevent;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,7 @@ public class ShowResultFragment extends Fragment {
 
     RecyclerView recyclerView;
     ShowResultViewModel showResultViewModel;
+    private boolean savedEvents = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,16 +43,22 @@ public class ShowResultFragment extends Fragment {
         recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        setBackgroundColor();
+        setBackgroundColor(savedEvents);
         //Get search criteria - either from "Right Now" or form parent fragment "Find Event"
         SearchCriteria sc = getSearchCriteria();
 
         //Set ViewModel
         showResultViewModel = ViewModelProviders.of(this).get(ShowResultViewModel.class);
-        showResultViewModel.init(sc);
+        showResultViewModel.init(sc,savedEvents);
         showResultViewModel.getResultEventsLD().observe(this, new Observer<List<EventDTO>>() {
             @Override
             public void onChanged(List<EventDTO> eventDTOS) {
+                if (showResultViewModel.getResultEventsLD().getValue() == null ||
+                        showResultViewModel.getResultEventsLD().getValue().size()==0 ){
+                    Toast toast = Toast.makeText(getActivity(),getString(R.string.no_event_found), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP,0,135);
+                    toast.show();
+                }
                 adapter.notifyDataSetChanged();
             }
         });
@@ -71,7 +80,7 @@ public class ShowResultFragment extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            System.out.println("onCreateViewHolder ");
+            //System.out.println("onCreateViewHolder ");
             View itemView = getLayoutInflater().inflate(R.layout.showevent_recyclerview, parent, false);
 
             //Set OnClickListener to inner class RVOnClickListener
@@ -83,16 +92,17 @@ public class ShowResultFragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
             //Get views
-            System.out.println("onBindViewHolder " + position);
+            //System.out.println("onBindViewHolder " + position);
             TextView titleTV = vh.itemView.findViewById(R.id.title_textView_RV);
             TextView areaTV = vh.itemView.findViewById(R.id.area_textView_RV);
             TextView dateTV = vh.itemView.findViewById(R.id.date_textView_RV);
             TextView timeTV = vh.itemView.findViewById(R.id.time_textView_RV);
+            TextView colorBox = vh.itemView.findViewById(R.id.colorBox_TextView_RV);
             ImageView imageView = vh.itemView.findViewById(R.id.showevent_imageView_RV);
 
             //Get current event
             EventDTO currentEvent = showResultViewModel.getResultEventsLD().getValue().get(position);
-            System.out.println(currentEvent);
+            //System.out.println(currentEvent);
 
             //Set views from current event data
             titleTV.setText(currentEvent.getTitle());
@@ -104,6 +114,18 @@ public class ShowResultFragment extends Fragment {
             Picasso.get().load(currentEvent.getImageLink())
                     .placeholder(R.drawable.moro_logo)
                     .into(imageView);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                //Set color
+                if (getParentFragment() instanceof FindEventFragment){
+                    colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkGreenBackground));
+                } else if (savedEvents){
+                    colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkGreenBackground));
+                } else {
+                    colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkBlueBackground));
+                }
+            }
+
         }
     };
 
@@ -123,7 +145,8 @@ public class ShowResultFragment extends Fragment {
             b.putSerializable("event", event);
             f.setArguments(b);
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
-            ((MainActivity) getActivity()).loadFragment(f);
+            //((MainActivity) getActivity()).loadFragment(f);
+            ((MainActivity) getActivity()).loadFragmentRightEntering(f);
 
         }
     }
@@ -142,11 +165,17 @@ public class ShowResultFragment extends Fragment {
     }
 
     //TODO fix
-    private void setBackgroundColor() {
-        if (getParentFragment() instanceof FindEventFragment) {
+    private void setBackgroundColor(boolean savedEvents) {
+        if (savedEvents){
+            recyclerView.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
+        } else if (getParentFragment() instanceof FindEventFragment) {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
         } else {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.moroBlueBackground));
         }
+    }
+
+    public void setSavedEvents(boolean savedEvents) {
+        this.savedEvents = savedEvents;
     }
 }
