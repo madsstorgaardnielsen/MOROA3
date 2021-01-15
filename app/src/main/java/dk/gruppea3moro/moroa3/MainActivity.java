@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void loadFragment(Fragment fragment) {
+        bottomNavigationView.getSelectedItemId();
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.right_entering,R.anim.left_exit)
