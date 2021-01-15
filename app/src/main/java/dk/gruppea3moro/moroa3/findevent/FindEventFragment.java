@@ -56,19 +56,17 @@ public class FindEventFragment extends Fragment {
                 AppState.get().setFindEventVPposition(position);
                 if (position == 3) {
                     findEventViewModel.setResultEvents();
-                }
-                //System.out.println("position = " + position);
-                changeTabLayoutColor(position);
 
+                }
+                changeTabLayoutColor(position);
             }
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                //System.out.println("position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
             }
         });
-        //viewPager.setCurrentItem(AppState.get().getFindEventVPposition());
+
     }
 
     public void getTabText(TabLayout.Tab tab, int position) {
@@ -128,11 +126,6 @@ class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapte
     @Override
     public Fragment createFragment(int position) {
 
-        //System.out.println("POSITION CREATE FRAG ->"+position);
-        //position = AppState.get().getFindEventVPposition();
-        //System.out.println("APPSTATE POSITION CREATE FRAG ->" + AppState.get().getFindEventVPposition());
-
-
         Fragment fragment = null;
         switch (position) {
             case 0:
@@ -148,11 +141,8 @@ class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapte
                 fragment = new ShowResultFragment();
                 break;
         }
-
-
         return fragment;
     }
-
 
     @Override
     public int getItemCount() {

@@ -83,13 +83,13 @@ public class GridAdapter extends BaseAdapter {
 
     public void formatTextView(TextView textView, TagDTO tagDTO) {
         if (tagDTO.isSelected()) { //If selected
-            if (category.equals(TagDTO.ZONE_CATEGORY)){
+            if (category.equals(TagDTO.ZONE_CATEGORY)) {
                 textView.setBackgroundResource(R.drawable.thickredborder);
             } else {
                 textView.setBackgroundResource(R.drawable.thickyellowborder);
             }
         } else { //If not seleceted
-            if (category.equals(TagDTO.ZONE_CATEGORY)){
+            if (category.equals(TagDTO.ZONE_CATEGORY)) {
                 textView.setBackgroundResource(R.drawable.redborder);
             } else {
                 textView.setBackgroundResource(R.drawable.yellowborder);

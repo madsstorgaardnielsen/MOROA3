@@ -92,7 +92,7 @@ public class EventRepository {
         Gson load = new Gson();
         String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
         ArrayList<String> eventIds = new ArrayList<>();
-        if (jsonLoad!=null) {
+        if (jsonLoad != null) {
             eventIds = load.fromJson(jsonLoad, EventIdList.class).eventIds;
         } else {
             return new ArrayList<>();

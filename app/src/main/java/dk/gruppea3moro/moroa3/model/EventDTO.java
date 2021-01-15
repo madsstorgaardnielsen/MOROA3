@@ -9,7 +9,6 @@ import java.util.Date;
 public class EventDTO implements Serializable {
     String title, subtext, eventLink, imageLink, zone, id;
 
-
     double price;
     DateTime start, end;
     AddressDTO addressDTO;

@@ -108,5 +108,4 @@ public class SearchCriteria {
             eventDTOS.removeAll(eventsToRemove);
         }
     }
-
 }

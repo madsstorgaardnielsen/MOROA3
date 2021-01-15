@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -55,7 +56,6 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         saved_imageView.setOnClickListener(this);
         address.setOnClickListener(this);
 
-
         //Setup ViewModel
         showEventViewModel = ViewModelProviders.of(this).get(ShowEventViewModel.class);
         showEventViewModel.init();
@@ -64,13 +64,10 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         checkIfEventIsSaved();
 
         if (!eventSaved) {
-            System.out.println("UNCHECKED!!!!");
             saved_imageView.setBackgroundResource(R.drawable.emptyheart);
         } else if (eventSaved) {
-            System.out.println("CHECKED!!!!");
             saved_imageView.setBackgroundResource(R.drawable.filledheart);
         } else {
-            System.out.println("Checked not set");
             sharedPreferences.edit().putString("checked", "unchecked").apply();
         }
         setupEventView();
@@ -80,7 +77,6 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     public void setupEventView() {
         //Get last viewed event from ViewModel
-        System.out.println(showEventViewModel.getShownEvent().getValue().toString());
         EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
 
         //Set text views
@@ -94,9 +90,10 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         }
 
         eventLink.setText("Læs mere: " + eventDTO.getEventLink());
-        startDay.setText("Dato: " + eventDTO.getStart().getDanishDayFormat());
-        startTime.setText("Start: " + eventDTO.getStart().getTimeFormat());
+        startDay.setText(eventDTO.getStart().getDanishDayFormat());
+        startTime.setText(eventDTO.getStart().getTimeFormat()+" - "+eventDTO.getEnd().getTimeFormat());
         address.setText(eventDTO.getAddressDTO().toString());
+        address.setPaintFlags(address.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
 
         //Let Picasso handle the image
         Picasso.get().load(eventDTO.getImageLink()).into(image);
@@ -108,8 +105,6 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         if (v == address) {
             EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
             String mapsAddress = eventDTO.getAddressDTO().getAddress();
-
-            System.out.println(mapsAddress);
 
             String formattedMapsStr = mapsAddress.replaceAll(" ","+").replaceAll("\n","+");
             String maps = "https://www.google.com/maps/place/"+formattedMapsStr;
@@ -123,9 +118,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
                 //TODO Tilføj til gemte events
                 saveEvent();
                 saved_imageView.setBackgroundResource(R.drawable.filledheart);
-                System.out.println("NOW CHECKED!!!!!!");
                 saved_imageView.setTag("Filled");
-                System.out.println("Eventsaved: "+eventSaved);
             } else if (eventSaved){
                 //TODO fjern fra gemte events
                 saved_imageView.setBackgroundResource(R.drawable.emptyheart);
@@ -134,11 +127,10 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                System.out.println("NOW UNCHECKED!!!!!");
                 saved_imageView.setTag("Unfilled");
-            } else{
-                System.out.println("NOT CHECKED OR UNCHECKED");
-            }
+            } /*else{
+                //System.out.println("NOT CHECKED OR UNCHECKED");
+            }*/
         }
     }
 
@@ -205,7 +197,5 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
             eventSaved = false;
             return false;
         }
-
     }
-
 }

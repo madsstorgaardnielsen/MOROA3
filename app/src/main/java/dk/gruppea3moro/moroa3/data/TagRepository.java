@@ -96,7 +96,7 @@ public class TagRepository {
 
     private void sortTags(List<TagDTO> tagDTOs){
         for (TagDTO tagDto : tagDTOs) {
-            System.out.println(tagDto);
+            //System.out.println(tagDto);
             String cat = tagDto.getCategory();
             if (cat.equals(TagDTO.MOOD_CATEGORY)){
                 moodsMLD.getValue().add(tagDto);

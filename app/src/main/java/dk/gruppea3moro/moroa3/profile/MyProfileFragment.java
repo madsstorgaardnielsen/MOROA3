@@ -15,18 +15,14 @@ import dk.gruppea3moro.moroa3.findevent.ShowResultFragment;
 
 public class MyProfileFragment extends Fragment {
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         ShowResultFragment showResultFragment = new ShowResultFragment();
         replaceFragment(showResultFragment);
         showResultFragment.setSavedEvents(true);
         return inflater.inflate(R.layout.fragment_my_profile, container, false);
 
     }
-
-
 
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
