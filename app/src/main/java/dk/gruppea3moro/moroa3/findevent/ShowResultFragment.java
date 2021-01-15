@@ -52,6 +52,12 @@ public class ShowResultFragment extends Fragment {
         showResultViewModel.getResultEventsLD().observe(this, new Observer<List<EventDTO>>() {
             @Override
             public void onChanged(List<EventDTO> eventDTOS) {
+                if (showResultViewModel.getResultEventsLD().getValue() == null ||
+                        showResultViewModel.getResultEventsLD().getValue().size()==0 ){
+                    Toast toast = Toast.makeText(getActivity(),getString(R.string.no_event_found), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP,0,0);
+                    toast.show();
+                }
                 adapter.notifyDataSetChanged();
             }
         });
@@ -65,11 +71,6 @@ public class ShowResultFragment extends Fragment {
         @Override
         public int getItemCount() {
             if (showResultViewModel.getResultEventsLD().getValue() == null) {
-
-                Toast toast = Toast.makeText(getActivity(),getString(R.string.no_event_found), Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP,0,0);
-                toast.show();
-
                 return 0;
             } else {
                 return showResultViewModel.getResultEventsLD().getValue().size();
