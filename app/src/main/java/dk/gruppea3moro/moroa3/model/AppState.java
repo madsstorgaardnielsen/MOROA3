@@ -32,6 +32,7 @@ public class AppState //extends Application
     private int findEventVPposition;
     private SearchCriteria searchCriteria;
     private boolean isKilled = true;
+    private boolean isBotNavSelectGreater;
 
     //STATIC METHODS--------------------------------------------------------------------------------
     public static AppState get() {
@@ -39,6 +40,14 @@ public class AppState //extends Application
             instance = new AppState();
         }
         return instance;
+    }
+
+    public boolean isBotNavSelectGreater() {
+        return isBotNavSelectGreater;
+    }
+
+    public void setBotNavSelectGreater(boolean botNavSelectGreater) {
+        isBotNavSelectGreater = botNavSelectGreater;
     }
 
     public boolean isIsKilled() {

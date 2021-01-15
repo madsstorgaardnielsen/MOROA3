@@ -128,9 +128,9 @@ class TabFragmentAdapter extends androidx.viewpager2.adapter.FragmentStateAdapte
     @Override
     public Fragment createFragment(int position) {
 
-        System.out.println("POSITION CREATE FRAG ->"+position);
+        //System.out.println("POSITION CREATE FRAG ->"+position);
         position = AppState.get().getFindEventVPposition();
-        System.out.println("APPSTATE POSITION CREATE FRAG ->" + AppState.get().getFindEventVPposition());
+        //System.out.println("APPSTATE POSITION CREATE FRAG ->" + AppState.get().getFindEventVPposition());
 
 
         Fragment fragment = null;

@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainActivityViewModel.getEventsAvailable().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean available) {
-                if (!available && appInUse){
+                if (!available && appInUse) {
                     Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
                     mainActivityViewModel.setEventDTOs();
                     mainActivityViewModel.setTagDTOs();
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainActivityViewModel.getTagsAvailable().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean available) {
-                if (!available && appInUse){
+                if (!available && appInUse) {
                     Toast.makeText(MainActivity.this, getString(R.string.msg_turn_network_on), Toast.LENGTH_LONG).show();
                     mainActivityViewModel.setTagDTOs();
                     mainActivityViewModel.setEventDTOs();
@@ -80,12 +79,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //Get selected item id
                         int id = item.getItemId();
                         int fragmentId = AppState.getFragmentLayoutId(id);
+                        int currectFragmentPosition = getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId());
+                        int chosenFragmentPosition = getFragmentBotNavPosition(id);
 
+
+                        System.out.println("NUVÆRENDE -> " + getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId()));
+                        System.out.println("VALGT -> " + getFragmentBotNavPosition(id));
+                        //avoid loading the fragment youre already on when pressing it agian
+                        if (bottomNavigationView.getSelectedItemId() == id) {
+                            return true;
+                        }
                         //Push fragment id to backstack deque
                         AppState.get().pushToBackstackDequeTop(fragmentId);
 
                         //load fragment
-                        loadFragment(AppState.getFragmentFromLayoutId(fragmentId));
+                        if (currectFragmentPosition < chosenFragmentPosition) {
+                            AppState.get().setBotNavSelectGreater(true);
+                            loadFragmentRightEntering(AppState.getFragmentFromLayoutId(fragmentId));
+                        } else {
+                            AppState.get().setBotNavSelectGreater(false);
+                            loadFragmentLeftEntering(AppState.getFragmentFromLayoutId(fragmentId));
+                        }
+                        //loadFragment(AppState.getFragmentFromLayoutId(fragmentId));
                         return true;
                     }
                 }
@@ -110,6 +125,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         width = metrics.widthPixels;
         height = metrics.heightPixels;
+    }
+
+    private int getFragmentBotNavPosition(int fragmentId) {
+        if (fragmentId == 2131296346) {
+            return 1;
+        }
+        if (fragmentId == 2131296349) {
+            return 2;
+        }
+        if (fragmentId == 2131296345) {
+            return 3;
+        }
+        if (fragmentId == 2131296348) {
+            return 4;
+        }
+        if (fragmentId == 2131296347) {
+            return 5;
+        } else
+            return 0;
+    }
+
+    public void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainFL, fragment)
+                .commit();
+    }
+
+    public void loadFragmentRightEntering(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.right_entering, R.anim.left_exit)
+                .replace(R.id.mainFL, fragment)
+                .commit();
+    }
+
+    public void loadFragmentLeftEntering(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.left_entering, R.anim.right_exit)
+                .replace(R.id.mainFL, fragment)
+                .commit();
+    }
+
+    public void onBackPressed() {
+        //Get integerDeqye from AppState
+        Deque<Integer> integerDeque = AppState.get().getIntegerDeque();
+
+        //Pop to previous fragment
+        integerDeque.pop();
+
+        if (!integerDeque.isEmpty()) {
+            //When deque is not empty
+            //load fragment
+            int id = integerDeque.peek();
+            setBottonNavSelection(id);
+
+            //To ensure the proper animation direction when back is pressed.
+            boolean b = AppState.get().isBotNavSelectGreater();
+            if (b) {
+                loadFragmentLeftEntering(AppState.getFragmentFromLayoutId(id));
+            } else {
+                loadFragmentRightEntering(AppState.getFragmentFromLayoutId(id));
+            }
+
+            //loadFragment(AppState.getFragmentFromLayoutId(id));
+        } else {
+            //When deque list is empty
+            //Finish activity
+            finish();
+        }
     }
 
     //Use to change between fragments and set the bottom navigation bar at the same time.
@@ -147,48 +233,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void loadFragment(Fragment fragment) {
-        bottomNavigationView.getSelectedItemId();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.right_entering,R.anim.left_exit)
-                .replace(R.id.mainFL, fragment)
-                .commit();
-    }
-
-    public void loadFragmentLeft(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.left_entering,R.anim.right_exit)
-                .replace(R.id.mainFL, fragment)
-                .commit();
-    }
-
-    public void onBackPressed() {
-        //Get integerDeqye from AppState
-        Deque<Integer> integerDeque = AppState.get().getIntegerDeque();
-
-        //Pop to previous fragment
-        integerDeque.pop();
-
-        if (!integerDeque.isEmpty()) {
-            //When deque is not empty
-            //load fragment
-            int id = integerDeque.peek();
-            setBottonNavSelection(id);
-            loadFragment(AppState.getFragmentFromLayoutId(id));
-        } else {
-            //When deque list is empty
-            //Finish activity
-            finish();
-        }
-    }
-
     @Override
     public void onClick(View v) {
 
     }
-    
+
     @Override
     public void onStart() {
         //Read AppState from PreferenceManager - it may be empty or it may be saved from when app was in use
@@ -231,6 +280,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
-        appInUse=true;
+        appInUse = true;
     }
 }
+
+       /* lad vær med at slet dem indtil videre :D
+
+       21 31 29 63 46 homepage
+
+        2131296349 lige nu
+
+        2131296345 finde event
+
+        2131296348 gemte events
+
+         menu*/
