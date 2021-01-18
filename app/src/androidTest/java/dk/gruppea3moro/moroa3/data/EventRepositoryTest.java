@@ -13,6 +13,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import dk.gruppea3moro.moroa3.model.AppState;
+import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
@@ -78,10 +79,13 @@ public class EventRepositoryTest {
 
     @Test
     public void searchEvents_now() {
+        //Tests that the right now criteria return events that has not yet ended.
+
 
         EventRepository eventRepository = new EventRepository();
         SearchCriteria searchCriteria = AppState.getRightNowSearchCriteria();
         ArrayList<EventDTO> searchResults;
+        DateTime rightNowDate = DateTime.getDateFromTimeMillis(System.currentTimeMillis());
 
 
         searchResults = eventRepository.searchEvents(searchCriteria, appContext);
@@ -90,13 +94,12 @@ public class EventRepositoryTest {
         boolean contains = false;
         for (EventDTO event :
                 searchResults) {
-            if (event.getEnd()) {
+            if (rightNowDate.isBefore(event.getEnd())) {
                 contains = true;
             }
 
             assertTrue(contains);
         }
-
 
     }
 
