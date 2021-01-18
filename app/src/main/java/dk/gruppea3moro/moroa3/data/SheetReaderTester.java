@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import dk.gruppea3moro.moroa3.model.EventDTO;
+import io.sentry.Sentry;
 
 public class SheetReaderTester {
     public static void main(String[] args) {
@@ -16,6 +17,7 @@ public class SheetReaderTester {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            Sentry.captureException(e);
         }
     }
 }
