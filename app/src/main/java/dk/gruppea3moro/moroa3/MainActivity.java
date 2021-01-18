@@ -32,16 +32,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
-        if(true){
-            try {
-                throw new Exception("Tester Sentry.io");
-            } catch (Exception e) {
-                e.printStackTrace();
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread paramThread, Throwable paramThrowable) {
+                Sentry.captureException(paramThrowable);
+                // Without System.exit() this will not work.
+                System.exit(2);
             }
-        }
+        });
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init();
