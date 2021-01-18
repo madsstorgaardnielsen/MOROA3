@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
-
+        <meta-data android:name="io.sentry.dsn" android:value="https://f451f6e999d2461a8cde2388e334ee93@o506701.ingest.sentry.io/5596728" />
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

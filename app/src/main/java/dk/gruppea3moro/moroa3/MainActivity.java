@@ -19,6 +19,7 @@ import java.util.Deque;
 
 import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.AppState;
+import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     BottomNavigationView bottomNavigationView;
@@ -31,7 +32,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+        if(true){
+            try {
+                throw new Exception("Tester Sentry.io");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init();
