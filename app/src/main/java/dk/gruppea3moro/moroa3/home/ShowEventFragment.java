@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.profile.EventIdList;
+import io.sentry.Sentry;
 
 //TODO hele klassen er ret rodet og trænger til en kærlig hånd
 public class ShowEventFragment extends Fragment implements View.OnClickListener {
@@ -125,6 +126,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
                     removeEvent();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Sentry.captureException(e);
                 }
                 saved_imageView.setTag("Unfilled");
             } /*else{

@@ -12,6 +12,7 @@ import dk.gruppea3moro.moroa3.model.AddressDTO;
 import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.TagDTO;
+import io.sentry.Sentry;
 
 public class SheetReader {
 
@@ -38,6 +39,7 @@ public class SheetReader {
             } catch (Exception e) {
                 //System.out.println("DATA: " + line);
                 e.printStackTrace();
+                Sentry.captureException(e);
             }
             line = br.readLine();
         }
@@ -100,6 +102,7 @@ public class SheetReader {
             } catch (Exception e) {
                 //System.out.println("DATA: " + line);
                 e.printStackTrace();
+                Sentry.captureException(e);
             }
             line = br.readLine();
         }

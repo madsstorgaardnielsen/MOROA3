@@ -23,6 +23,7 @@ import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 import dk.gruppea3moro.moroa3.profile.EventIdList;
+import io.sentry.Sentry;
 
 public class EventRepository {
 
@@ -177,6 +178,7 @@ public class EventRepository {
                 EventRepository.get().deleteAllFromDatabase(context);
             } catch (Exception e) {
                 e.printStackTrace();
+                Sentry.captureException(e);
             }
         }
 
