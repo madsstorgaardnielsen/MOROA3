@@ -37,7 +37,7 @@ public class EventRepository {
 
     public EventRepository() {
         sheetReader = new SheetReader();
-        couldRefresh.setValue(true);
+        couldRefresh.postValue(true);
     }
 
     public static EventRepository get() {
