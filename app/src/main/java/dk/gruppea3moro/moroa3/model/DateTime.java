@@ -155,15 +155,38 @@ public class DateTime implements Serializable {
         return hour + ":" + minute + ":00";
     }
 
-    public int getDayInt(){
+    public int getDayInt() {
         return Integer.parseInt(day);
     }
 
-    public int getMonthInt(){
+    public int getMonthInt() {
         return Integer.parseInt(month);
     }
 
-    public int getYearInt(){
+    public int getYearInt() {
         return Integer.parseInt(year);
+    }
+
+    public int getHourInt() {
+        return Integer.parseInt(hour);
+    }
+
+    public int getMinuteInt() {
+        return Integer.parseInt(minute);
+    }
+
+    public boolean isBefore(DateTime dateTime) {
+        if (dateTime.getYearInt() > this.getYearInt()) {
+            return true;
+        } else if (dateTime.getMonthInt() > this.getMonthInt()) {
+            return true;
+        } else if (dateTime.getDayInt() > this.getDayInt()) {
+            return true;
+        } else if (dateTime.getHourInt() > this.getHourInt()) {
+            return true;
+        } else if (dateTime.getMinuteInt() > this.getMinuteInt()) {
+            return true;
+        }
+        return false;
     }
 }
