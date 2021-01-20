@@ -121,6 +121,11 @@ public class DateTime implements Serializable {
         return day + "/" + month + "/" + year + " " + hour + ":" + minute;
     }
 
+    public String getDanishTimeDateFormat() {
+        adjustStrings();
+        return hour + ":" + minute + " " + day + "/" + month + "/" + year ;
+    }
+
     public String getDanishDayFormat() {
         adjustStrings();
         return day + "/" + month + "/" + year;

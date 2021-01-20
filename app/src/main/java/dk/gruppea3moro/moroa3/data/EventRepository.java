@@ -240,7 +240,7 @@ public class EventRepository {
                     + SQLiteContract.events.COLUMN_NAME_STARTDATE + " < ?";
 
             selArgsArrayList.add(fromDate.getSqlDateTimeFormat());
-            selArgsArrayList.add(fromDate.getSqlDateTimeFormat());
+            selArgsArrayList.add(toDate.getSqlDateTimeFormat());
         }
 
         if (searchCriteria.getZones().size() > 0) {

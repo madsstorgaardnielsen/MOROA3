@@ -27,9 +27,6 @@ public class FeaturedEventFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_featured_event, container, false);
         title = root.findViewById(R.id.featuredEventTitleTV);
 
-        time = root.findViewById(R.id.featuredEventTimeTV);
-        address = root.findViewById(R.id.featuredEventAddressTV);
-        date = root.findViewById(R.id.featuredEventDate);
         image = root.findViewById(R.id.featuredEventImageView);
         description = root.findViewById(R.id.descriptionTVShowEvent);
         featuredEventViewModel = ViewModelProviders.of(this).get(FeaturedEventViewModel.class);
@@ -50,9 +47,6 @@ public class FeaturedEventFragment extends Fragment {
 
         //Set text views
         title.setText(eventDTO.getTitle());
-        time.setText(eventDTO.getStart().getTimeFormat() + " - " + eventDTO.getEnd().getTimeFormat());
-        address.setText(eventDTO.getAddressDTO().toString());
-        date.setText(eventDTO.getStart().getDanishDayFormat());
         description.setText(eventDTO.getSubtext());
 
         //Let Picasso handle the image

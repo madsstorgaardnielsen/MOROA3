@@ -29,27 +29,6 @@
                 android:src="@drawable/moro_logo" />
 
 
-<!--            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/saved_imageView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/emptyheart"
-                    android:tag="Unfilled" />
-            </LinearLayout>-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,22 +84,12 @@
                     <TextView
                         android:id="@+id/dateTVShowEvent"
                         style="@style/AntonRegNormalTextViewStyle"
-                        android:layout_width="209dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="TextView"
                         android:textSize="16dp"
                         tools:text="1/1/2021" />
 
-                    <TextView
-                        android:id="@+id/timeTVShowEvent"
-                        style="@style/AntonRegNormalTextViewStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="TextView"
-                        android:textAlignment="textEnd"
-                        android:textSize="16dp"
-                        tools:text="13:30" />
                 </LinearLayout>
 
                 <TextView
