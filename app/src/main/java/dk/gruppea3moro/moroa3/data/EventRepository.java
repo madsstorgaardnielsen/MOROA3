@@ -56,12 +56,11 @@ public class EventRepository {
         return allEvents;
     }
 
-
     public MutableLiveData<EventDTO> getFeaturedEvent() {
         return featuredEventMLD;
     }
 
-
+    //Searches, finds and posts result events on a backgroundthread, posts to the UI thread when done to avoid errors.
     public void setResultEvents(SearchCriteria sc, Context context) {
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
@@ -73,8 +72,8 @@ public class EventRepository {
         });
     }
 
+    //Read saved events in a background thread, posts to UI thread when done.
     public void setSavedEvents(Context context) {
-
         Executor bgThread = Executors.newSingleThreadExecutor();
         Handler uiThread = new Handler();
         bgThread.execute(() -> {
@@ -89,9 +88,10 @@ public class EventRepository {
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getSharedPreferences("saveEvent", Context.MODE_PRIVATE);
 
+        //Loads data from SharedPreds into and arraylist, if null, empty arraylist is returned.
         Gson load = new Gson();
         String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
-        ArrayList<String> eventIds = new ArrayList<>();
+        ArrayList<String> eventIds;
         if (jsonLoad != null) {
             eventIds = load.fromJson(jsonLoad, EventIdList.class).eventIds;
         } else {
@@ -115,6 +115,8 @@ public class EventRepository {
 
         String[] selectionArgs = new String[eventIds.size()];
 
+
+        //Builds the SQL Query used to search the local SQLite DB
         for (int i = 0; i < eventIds.size(); i++)
             selectionArgs[i] = String.valueOf(eventIds.get(i));
 
@@ -148,7 +150,6 @@ public class EventRepository {
         eventsAvailable.postValue(true);
 
         return eventDTOS;
-
     }
 
     public MutableLiveData<List<EventDTO>> getResultEventsMLD() {
@@ -170,7 +171,6 @@ public class EventRepository {
 
         //Read all events from google sheet
         ArrayList<EventDTO> allEvents = getAllEvents();
-
 
         //TODO brug UPDATE i stedet for DELETE og INSERT
         if (allEvents != null) { //If it succeded - safe to delete from SQLite-database
@@ -209,6 +209,7 @@ public class EventRepository {
         System.out.println("done updating db");
     }
 
+    //Builds SQL Query string with the searchcriteria parameters to search the SQLite database for data matching the searchcriteria
     public ArrayList<EventDTO> searchEvents(SearchCriteria searchCriteria, Context context) {
         //Result arraylist
         ArrayList<EventDTO> eventDTOS = new ArrayList<>();
@@ -283,7 +284,6 @@ public class EventRepository {
         readSQLCursor(eventDTOS, cursor);
         db.close();
 
-
         //Remove the events, that don't match either a mood or a type (if these are not null)
         SearchCriteria.popEventsOnMoodsAndTypes(searchCriteria, eventDTOS);
 
@@ -337,7 +337,6 @@ public class EventRepository {
         cursor.close();
     }
 
-
     public void deleteAllFromDatabase(Context context) {
         //Create SQLiteHelper object
         SQLiteHelper dbHelper = new SQLiteHelper(context);
@@ -350,7 +349,6 @@ public class EventRepository {
 
     public void refreshDbInBackground(Context context) {
         Executor bgThread = Executors.newSingleThreadExecutor();
-
         bgThread.execute(() -> {
             try {
                 EventRepository.get().feedDatabase(context);
@@ -360,7 +358,6 @@ public class EventRepository {
                 couldRefresh.postValue(false);
             }
         });
-
     }
 
     public MutableLiveData<EventDTO> getLastViewedEventMLD() {
