@@ -20,18 +20,14 @@ public class SheetReader {
     final String TAG_SHEET_ID = "1omoan2jWUlqZ8AYA2HesJh8U-mUKXqwTwV_tOw8PdFU";
 
     public ArrayList<EventDTO> getAllEvents() throws IOException {
-        //Result arraylist
         ArrayList<EventDTO> events = new ArrayList<>();
-
-        //URL
         String url = "https://docs.google.com/spreadsheets/d/" + EVENT_SHEET_ID + "/export?format=tsv&id=" + EVENT_SHEET_ID;
-
-        //Reader
         BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
 
-        //Skip first line
         String line;
+        //Skip first line
         line = br.readLine();
+        //Loop the reads each row and adds each row as an event in the eventdto arraylist
         while (line != null) {
             try {
                 events.add(createEventDTO(line));
@@ -45,6 +41,7 @@ public class SheetReader {
         return events;
     }
 
+    //Creates the events, throws an exception if there are colums which have empty fields
     public EventDTO createEventDTO(String line) {
         EventDTO event = new EventDTO();
         String[] fields = line.split("\t", -1);
@@ -81,24 +78,17 @@ public class SheetReader {
     }
 
     public ArrayList<TagDTO> getAllTags() throws IOException {
-        //Result arraylist
         ArrayList<TagDTO> tags = new ArrayList<>();
-
-        //URL
         String url = "https://docs.google.com/spreadsheets/d/" + TAG_SHEET_ID + "/export?format=tsv&id=" + TAG_SHEET_ID;
-        //System.out.println(url);
-
-        //Reader
         BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
 
+        String line;
         //Skip first line
-        String line = br.readLine();
         line = br.readLine();
         while (line != null) {
             try {
                 tags.add(createTagDTO(line));
             } catch (Exception e) {
-                //System.out.println("DATA: " + line);
                 e.printStackTrace();
                 Sentry.captureException(e);
             }
@@ -114,5 +104,4 @@ public class SheetReader {
         tagDTO.setCategory(fields[0]);
         return tagDTO;
     }
-
 }
