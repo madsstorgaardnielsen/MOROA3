@@ -12,6 +12,7 @@ import dk.gruppea3moro.moroa3.model.AddressDTO;
 import dk.gruppea3moro.moroa3.model.DateTime;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.TagDTO;
+import io.sentry.Sentry;
 
 public class SheetReader {
 
@@ -19,25 +20,20 @@ public class SheetReader {
     final String TAG_SHEET_ID = "1omoan2jWUlqZ8AYA2HesJh8U-mUKXqwTwV_tOw8PdFU";
 
     public ArrayList<EventDTO> getAllEvents() throws IOException {
-        //Result arraylist
         ArrayList<EventDTO> events = new ArrayList<>();
-
-        //URL
         String url = "https://docs.google.com/spreadsheets/d/" + EVENT_SHEET_ID + "/export?format=tsv&id=" + EVENT_SHEET_ID;
-        //System.out.println(url);
-
-        //Reader
         BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
 
+        String line;
         //Skip first line
-        String line = br.readLine();
         line = br.readLine();
+        //Loop the reads each row and adds each row as an event in the eventdto arraylist
         while (line != null) {
             try {
                 events.add(createEventDTO(line));
             } catch (Exception e) {
-                //System.out.println("DATA: " + line);
                 e.printStackTrace();
+                Sentry.captureException(e);
             }
             line = br.readLine();
         }
@@ -45,12 +41,13 @@ public class SheetReader {
         return events;
     }
 
+    //Creates the events, throws an exception if there are colums which have empty fields
     public EventDTO createEventDTO(String line) {
         EventDTO event = new EventDTO();
-        String[] fields = line.split("\t",-1);
-        int[] mandatoryIndexes = {0,1,3,4,5,6,17,18};
-        for (int i = 0; i < mandatoryIndexes.length; i++) {
-            if (fields[mandatoryIndexes[i]].equals("")){
+        String[] fields = line.split("\t", -1);
+        int[] mandatoryIndexes = {0, 1, 3, 4, 5, 6, 17, 18};
+        for (int mandatoryIndex : mandatoryIndexes) {
+            if (fields[mandatoryIndex].equals("")) {
                 throw new NullPointerException("Mandatory field in event is empty" + fields);
             }
         }
@@ -81,25 +78,19 @@ public class SheetReader {
     }
 
     public ArrayList<TagDTO> getAllTags() throws IOException {
-        //Result arraylist
         ArrayList<TagDTO> tags = new ArrayList<>();
-
-        //URL
         String url = "https://docs.google.com/spreadsheets/d/" + TAG_SHEET_ID + "/export?format=tsv&id=" + TAG_SHEET_ID;
-        //System.out.println(url);
-
-        //Reader
         BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
 
+        String line;
         //Skip first line
-        String line = br.readLine();
         line = br.readLine();
         while (line != null) {
             try {
                 tags.add(createTagDTO(line));
             } catch (Exception e) {
-                //System.out.println("DATA: " + line);
                 e.printStackTrace();
+                Sentry.captureException(e);
             }
             line = br.readLine();
         }
@@ -113,5 +104,4 @@ public class SheetReader {
         tagDTO.setCategory(fields[0]);
         return tagDTO;
     }
-
 }

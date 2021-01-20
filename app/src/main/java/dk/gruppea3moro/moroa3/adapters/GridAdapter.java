@@ -69,10 +69,13 @@ public class GridAdapter extends BaseAdapter {
 
         //Logic for drawing boxes
         TextView textView = (TextView) grid.findViewById(R.id.grid_item_text_view);
+
         //Get TagDTO
         TagDTO tagDTO = getTagDto(category, position);
+
         //Set text formatted
         textView.setText(tagDTO.getFormattedText());
+
         //Set hint to id of tag
         textView.setHint(tagDTO.getId());
 
@@ -99,17 +102,21 @@ public class GridAdapter extends BaseAdapter {
 
     private TagDTO getTagDto(String category, int position) {
         TagDTO tagDTO;
-        if (category.equals(TagDTO.TYPE_CATEGORY)) {
-            tagDTO = mainActivityViewModel.getTypesMLD().getValue().get(position);
-        } else if (category.equals(TagDTO.MOOD_CATEGORY)) {
-            tagDTO = mainActivityViewModel.getMoodsMLD().getValue().get(position);
-        } else if (category.equals(TagDTO.ZONE_CATEGORY)) {
-            tagDTO = mainActivityViewModel.getZonesMLD().getValue().get(position);
-        } else {
-            System.out.println("FEJL I METODEN getTagDto() i GridAdapter - ikke korrekt kategori af tag");
-            tagDTO = new TagDTO("", "", "", "");
+        switch (category) {
+            case TagDTO.TYPE_CATEGORY:
+                tagDTO = mainActivityViewModel.getTypesMLD().getValue().get(position);
+                break;
+            case TagDTO.MOOD_CATEGORY:
+                tagDTO = mainActivityViewModel.getMoodsMLD().getValue().get(position);
+                break;
+            case TagDTO.ZONE_CATEGORY:
+                tagDTO = mainActivityViewModel.getZonesMLD().getValue().get(position);
+                break;
+            default:
+                System.out.println("FEJL I METODEN getTagDto() i GridAdapter - ikke korrekt kategori af tag");
+                tagDTO = new TagDTO("", "", "", "");
+                break;
         }
         return tagDTO;
     }
-
 }

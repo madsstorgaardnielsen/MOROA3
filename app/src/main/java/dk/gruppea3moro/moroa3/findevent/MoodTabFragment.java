@@ -34,9 +34,9 @@ public class MoodTabFragment extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.fragment_mood_tab, container, false);
 
         //MainAcitivityViewModel----------------------------------------------------------------
-        mainActivityViewModel = ((MainActivity)getActivity()).getMainActivityViewModel();
+        mainActivityViewModel = ((MainActivity) getActivity()).getMainActivityViewModel();
         //Create adapter
-        GridAdapter gridAdapter = new GridAdapter(getContext(), mainActivityViewModel,TagDTO.MOOD_CATEGORY);
+        GridAdapter gridAdapter = new GridAdapter(getContext(), mainActivityViewModel, TagDTO.MOOD_CATEGORY);
         mainActivityViewModel.getMoodsMLD().observe(this, new Observer<List<TagDTO>>() {
             @Override
             public void onChanged(List<TagDTO> tagDTOs) {
@@ -45,24 +45,21 @@ public class MoodTabFragment extends Fragment implements View.OnClickListener {
         });
 
         //Setup GridView
-        gridView=(GridView)root.findViewById(R.id.mood_tab_grid_view);
+        gridView = root.findViewById(R.id.mood_tab_grid_view);
 
         //Setup adapter
         gridView.setAdapter(gridAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                TextView textView =(TextView)((ViewGroup) view).getChildAt(0);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = (TextView) ((ViewGroup) view).getChildAt(0);
                 String mood = textView.getHint().toString();
-                findEventViewModel.tapOnTag(TagDTO.MOOD_CATEGORY,mood);
-                mainActivityViewModel.tapOnTag(TagDTO.MOOD_CATEGORY,mood);
+                findEventViewModel.tapOnTag(TagDTO.MOOD_CATEGORY, mood);
+                mainActivityViewModel.tapOnTag(TagDTO.MOOD_CATEGORY, mood);
             }
         });
 
-        findEventViewModel = ViewModelProviders.of(getParentFragment())
-                .get(FindEventViewModel.class);
+        findEventViewModel = ViewModelProviders.of(getParentFragment()).get(FindEventViewModel.class);
 
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
             @Override
@@ -70,7 +67,7 @@ public class MoodTabFragment extends Fragment implements View.OnClickListener {
                 int gridSize = gridView.getChildCount();
                 TextView[] textViews = new TextView[gridSize];
 
-                if (gridSize==0){
+                if (gridSize == 0) {
                     return;
                 }
 
@@ -86,24 +83,23 @@ public class MoodTabFragment extends Fragment implements View.OnClickListener {
                 //Find all textViews that need to be green
                 for (TextView textView : textViews) {
                     moodTextView = textView.getHint().toString();
-                    for (String mood:searchCriteria.getMoods()) {
+                    for (String mood : searchCriteria.getMoods()) {
                         if (mood.equals(moodTextView)) {
                             greenBoxes.add(mood);
                         }
                     }
                 }
 
-                //Make them green
-                for (TextView textView:textViews) {
-                    if (greenBoxes.contains(textView.getHint().toString())){ //If selected
+                //Changes border thickness if selected/unselected
+                for (TextView textView : textViews) {
+                    if (greenBoxes.contains(textView.getHint().toString())) {
                         textView.setBackgroundResource(R.drawable.thickyellowborder);
-                    } else { //If not selected
+                    } else {
                         textView.setBackgroundResource(R.drawable.yellowborder);
                     }
                 }
             }
         });
-
         return root;
     }
 

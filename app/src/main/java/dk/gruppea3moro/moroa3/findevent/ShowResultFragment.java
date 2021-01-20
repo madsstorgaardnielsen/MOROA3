@@ -49,25 +49,26 @@ public class ShowResultFragment extends Fragment {
 
         //Set ViewModel
         showResultViewModel = ViewModelProviders.of(this).get(ShowResultViewModel.class);
-        showResultViewModel.init(sc,savedEvents);
+        showResultViewModel.init(sc, savedEvents);
         showResultViewModel.getResultEventsLD().observe(this, new Observer<List<EventDTO>>() {
             @Override
             public void onChanged(List<EventDTO> eventDTOS) {
+                //If no events match the searchcriteria, makes a toast informing the user
                 if (showResultViewModel.getResultEventsLD().getValue() == null ||
-                        showResultViewModel.getResultEventsLD().getValue().size()==0 ){
-                    Toast toast = Toast.makeText(getActivity(),getString(R.string.no_event_found), Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP,0,135);
-                    toast.show();
+                        showResultViewModel.getResultEventsLD().getValue().size() == 0) {
+                    if (savedEvents || getParentFragment() instanceof FindEventFragment) {
+                        Toast toast = Toast.makeText(getActivity(), getString(R.string.no_event_found), Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 135);
+                        toast.show();
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
         });
-
-        //TODO lav LOADING-animation med MaterialIO eller lign.
-
         return recyclerView;
     }
 
+    //Gets the itemcount via showresultviewmodel list size
     RecyclerView.Adapter<?> adapter = new RecyclerView.Adapter() {
         @Override
         public int getItemCount() {
@@ -80,7 +81,6 @@ public class ShowResultFragment extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            //System.out.println("onCreateViewHolder ");
             View itemView = getLayoutInflater().inflate(R.layout.showevent_recyclerview, parent, false);
 
             //Set OnClickListener to inner class RVOnClickListener
@@ -92,7 +92,6 @@ public class ShowResultFragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
             //Get views
-            //System.out.println("onBindViewHolder " + position);
             TextView titleTV = vh.itemView.findViewById(R.id.title_textView_RV);
             TextView areaTV = vh.itemView.findViewById(R.id.area_textView_RV);
             TextView dateTV = vh.itemView.findViewById(R.id.date_textView_RV);
@@ -102,7 +101,6 @@ public class ShowResultFragment extends Fragment {
 
             //Get current event
             EventDTO currentEvent = showResultViewModel.getResultEventsLD().getValue().get(position);
-            //System.out.println(currentEvent);
 
             //Set views from current event data
             titleTV.setText(currentEvent.getTitle());
@@ -115,17 +113,14 @@ public class ShowResultFragment extends Fragment {
                     .placeholder(R.drawable.moro_logo)
                     .into(imageView);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                //Set color
-                if (getParentFragment() instanceof FindEventFragment){
-                    colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkGreenBackground));
-                } else if (savedEvents){
-                    colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkGreenBackground));
-                } else {
-                    colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkBlueBackground));
-                }
+            //Set color
+            if (getParentFragment() instanceof FindEventFragment) {
+                colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkGreenBackground));
+            } else if (savedEvents) {
+                colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkGreenBackground));
+            } else {
+                colorBox.setBackgroundColor(getActivity().getColor(R.color.moroDarkBlueBackground));
             }
-
         }
     };
 
@@ -145,9 +140,7 @@ public class ShowResultFragment extends Fragment {
             b.putSerializable("event", event);
             f.setArguments(b);
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
-            //((MainActivity) getActivity()).loadFragment(f);
             ((MainActivity) getActivity()).loadFragmentRightEntering(f);
-
         }
     }
 
@@ -164,9 +157,8 @@ public class ShowResultFragment extends Fragment {
         return sc;
     }
 
-    //TODO fix
     private void setBackgroundColor(boolean savedEvents) {
-        if (savedEvents){
+        if (savedEvents) {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
         } else if (getParentFragment() instanceof FindEventFragment) {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));

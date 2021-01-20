@@ -19,6 +19,7 @@ import java.util.Deque;
 
 import dk.gruppea3moro.moroa3.data.EventRepository;
 import dk.gruppea3moro.moroa3.model.AppState;
+import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     BottomNavigationView bottomNavigationView;
@@ -32,6 +33,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread paramThread, Throwable paramThrowable) {
+                Sentry.captureException(paramThrowable);
+                // Without System.exit() this will not work.
+                System.exit(2);
+            }
+        });
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init();
@@ -82,10 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int currectFragmentPosition = getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId());
                         int chosenFragmentPosition = getFragmentBotNavPosition(id);
 
-
-                        //System.out.println("NUVÆRENDE -> " + getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId()));
-                        //System.out.println("VALGT -> " + getFragmentBotNavPosition(id));
-                        //avoid loading the fragment youre already on when pressing it agian
+                        //avoid loading the fragment already selected when selection via bottomnav
                         if (bottomNavigationView.getSelectedItemId() == id) {
                             return true;
                         }
@@ -146,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return 0;
     }
 
+    //Load fragment without animation
     public void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -153,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
+    //Load fragment with animation
     public void loadFragmentRightEntering(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -161,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
+    //Load fragment with animation
     public void loadFragmentLeftEntering(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -283,15 +293,3 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appInUse = true;
     }
 }
-
-       /* lad vær med at slet dem indtil videre :D
-
-       21 31 29 63 46 homepage
-
-        2131296349 lige nu
-
-        2131296345 finde event
-
-        2131296348 gemte events
-
-         menu*/

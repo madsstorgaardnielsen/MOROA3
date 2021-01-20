@@ -31,6 +31,7 @@ public class FindEventFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_find_event, container, false);
         tabLayout = root.findViewById(R.id.findEventTabLayout);
 
+        //Sets up the viewmodel
         findEventViewModel = ViewModelProviders.of(this).get(FindEventViewModel.class);
         findEventViewModel.init();
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
@@ -43,20 +44,21 @@ public class FindEventFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Sets up the tabfragment adapter and viewpager
         tabFragmentAdapter = new TabFragmentAdapter(this);
         viewPager = view.findViewById(R.id.viewPager);
         viewPager.setAdapter(tabFragmentAdapter);
 
+        //Method which that handles the logic on specific pages
         TabLayout tabLayout = view.findViewById(R.id.findEventTabLayout);
         new TabLayoutMediator(tabLayout, viewPager, this::getTabText).attach();
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                AppState.get().setFindEventVPposition(position);
+                //Sets the searchresults, when user selects the last page
                 if (position == 3) {
                     findEventViewModel.setResultEvents();
-
                 }
                 changeTabLayoutColor(position);
             }
@@ -69,6 +71,7 @@ public class FindEventFragment extends Fragment {
 
     }
 
+    //Adding text to the tabs.
     public void getTabText(TabLayout.Tab tab, int position) {
         switch (position) {
             case 0:
@@ -88,12 +91,15 @@ public class FindEventFragment extends Fragment {
         }
     }
 
+    //If the view is destroyed, the searchcriteria is saved via appstate
+    //The user can return the the view and continue the search
     @Override
     public void onDestroy() {
         super.onDestroy();
         AppState.get().setSearchCriteria(findEventViewModel.getSearchCriteriaLD().getValue());
     }
 
+    //Makes sure the tab color is correct
     public void changeTabLayoutColor(int position) {
         switch (position) {
             case 0:

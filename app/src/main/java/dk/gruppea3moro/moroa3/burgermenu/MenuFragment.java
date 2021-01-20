@@ -33,6 +33,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         return root;
     }
 
+    //Changes the view according to user button input
     @Override
     public void onClick(View v) {
         MainActivity ma = ((MainActivity) getActivity());

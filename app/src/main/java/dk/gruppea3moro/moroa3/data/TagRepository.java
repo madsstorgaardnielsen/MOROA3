@@ -26,8 +26,7 @@ public class TagRepository {
     private final MutableLiveData<Boolean> couldRefresh = new MutableLiveData<>();
     private final MutableLiveData<Boolean> tagsAvalable = new MutableLiveData<>();
 
-
-    private TagRepository(){
+    private TagRepository() {
         //Initialze list in MLD's
         moodsMLD.setValue(new ArrayList<>());
         typesMLD.setValue(new ArrayList<>());
@@ -35,6 +34,7 @@ public class TagRepository {
     }
 
     private static TagRepository instance;
+
     public static TagRepository get() {
         if (instance == null) {
             instance = new TagRepository();
@@ -42,12 +42,13 @@ public class TagRepository {
         return instance;
     }
 
-    public void setAllTagDTOs(Context context){
+    //Sets the tags, if no internet is available, the tags will be set via the local SQLite database
+    public void setAllTagDTOs(Context context) {
         Handler uiThread = new Handler();
         Executor bgThread = Executors.newSingleThreadExecutor();
         bgThread.execute(() -> {
             try {
-                readTagsFromDB(context,uiThread);
+                readTagsFromDB(context, uiThread);
                 couldRefresh.postValue(true);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -57,22 +58,22 @@ public class TagRepository {
         });
     }
 
+    //Reads tags from the online sheet database, saves them locally
     private void readTagsFromDB(Context context, Handler uiThread) throws IOException {
-        ArrayList<TagDTO> allTags = new ArrayList<>();
-
+        ArrayList<TagDTO> allTags;
         allTags = sheetReader.getAllTags();
 
         ArrayList<TagDTO> finalAllTags = allTags;
         uiThread.post(() -> {
             sortTags(finalAllTags);
         });
-
         saveTagsLocally(finalAllTags, context);
     }
 
-    private void saveTagsLocally(ArrayList<TagDTO> allTags, Context context){
+    //Tags are saved locally via SharedPreferences
+    private void saveTagsLocally(ArrayList<TagDTO> allTags, Context context) {
         TagList tagList = new TagList(allTags);
-        SharedPreferences mPrefs = context.getSharedPreferences("tagList",MODE_PRIVATE);
+        SharedPreferences mPrefs = context.getSharedPreferences("tagList", MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(tagList);
@@ -81,11 +82,12 @@ public class TagRepository {
         tagsAvalable.postValue(true);
     }
 
-    private void readTagsLocally(Context context){
-        SharedPreferences mPrefs = context.getSharedPreferences("tagList",MODE_PRIVATE);
+    //Reads locally saved tags via SharedPreferences
+    private void readTagsLocally(Context context) {
+        SharedPreferences mPrefs = context.getSharedPreferences("tagList", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString("tagList", "");
-        if (json==""){
+        if (json.equals("")) {
             tagsAvalable.postValue(false);
         } else {
             tagsAvalable.postValue(true);
@@ -94,20 +96,22 @@ public class TagRepository {
         }
     }
 
-    private void sortTags(List<TagDTO> tagDTOs){
+    private void sortTags(List<TagDTO> tagDTOs) {
         for (TagDTO tagDto : tagDTOs) {
-            //System.out.println(tagDto);
             String cat = tagDto.getCategory();
-            if (cat.equals(TagDTO.MOOD_CATEGORY)){
-                moodsMLD.getValue().add(tagDto);
-            } else if (cat.equals(TagDTO.TYPE_CATEGORY)){
-                typesMLD.getValue().add(tagDto);
-            } else if (cat.equals(TagDTO.ZONE_CATEGORY)){
-                zonesMLD.getValue().add(tagDto);
+            switch (cat) {
+                case TagDTO.MOOD_CATEGORY:
+                    moodsMLD.getValue().add(tagDto);
+                    break;
+                case TagDTO.TYPE_CATEGORY:
+                    typesMLD.getValue().add(tagDto);
+                    break;
+                case TagDTO.ZONE_CATEGORY:
+                    zonesMLD.getValue().add(tagDto);
+                    break;
             }
         }
     }
-
 
     public MutableLiveData<List<TagDTO>> getMoodsMLD() {
         return moodsMLD;
@@ -121,10 +125,11 @@ public class TagRepository {
         return zonesMLD;
     }
 
-    private class TagList{
+    private class TagList {
         ArrayList<TagDTO> tags;
-        TagList(ArrayList<TagDTO> tags){
-            this.tags=tags;
+
+        TagList(ArrayList<TagDTO> tags) {
+            this.tags = tags;
         }
     }
 

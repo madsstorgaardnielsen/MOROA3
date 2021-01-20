@@ -41,7 +41,8 @@ public class TipUsFragment extends Fragment implements TextWatcher {
         eventLinkTv = root.findViewById(R.id.eventLink);
         phoneContactInfo = root.findViewById(R.id.phoneContactInfo);
 
-        //Hvis en bruger forlader formularen inden den er afsendt, vil det allerede indtastede data blive hentet fra appstate.
+        //If a user started filling the "tip us" formula, and left the fragment,
+        //the data is saved, when the fragment is recreated the view is initialized with this data
         if (AppState.get().getEventTipDTO() != null) {
             titleTv.setText(AppState.get().getEventTipDTO().getEventTitle());
             descriptionTv.setText(AppState.get().getEventTipDTO().getEventDescription());
@@ -60,6 +61,7 @@ public class TipUsFragment extends Fragment implements TextWatcher {
         eventLinkTv.addTextChangedListener(this);
         phoneContactInfo.addTextChangedListener(this);
 
+        //Onclick method for the date textfield, opens a datepicker dialog and saves userinput in the eventtipdto object
         whenTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +76,6 @@ public class TipUsFragment extends Fragment implements TextWatcher {
                         eventTipDTO.setEventDate(chosenDate);
                         String shownDate = selectedday + "/" + (selectedmonth + 1) + "/" + selectedyear;
                         whenTv.setText(shownDate);
-                        System.out.println(eventTipDTO.getEventDate());
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.show();
@@ -82,6 +83,8 @@ public class TipUsFragment extends Fragment implements TextWatcher {
         });
 
         sendEventTip = root.findViewById(R.id.eventSendButton);
+
+        //Toast to let the user know the tip was submitted
         sendEventTip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,10 +94,10 @@ public class TipUsFragment extends Fragment implements TextWatcher {
                 clearText();
             }
         });
-
         return root;
     }
 
+    //Used to clear text after the tip has been submitted
     public void clearText() {
         titleTv.setText("");
         descriptionTv.setText("");
@@ -107,14 +110,15 @@ public class TipUsFragment extends Fragment implements TextWatcher {
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        //skal ikke implementeres
+        //does not need implementation
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        //skal ikke implementeres
+        //does not need implementation
     }
 
+    //Saves userinput in appstate, so it isnt lost if the user accidentally leaves the fragment before submitting the tip
     @Override
     public void afterTextChanged(Editable s) {
         eventTipDTO.setEventTitle(titleTv.getText().toString());
@@ -125,6 +129,5 @@ public class TipUsFragment extends Fragment implements TextWatcher {
         eventTipDTO.setContactPhoneNumber(phoneContactInfo.getText().toString());
         eventTipDTO.setContactEmail(emailContactInfo.getText().toString());
         AppState.get().setTip(eventTipDTO);
-        System.out.println(eventTipDTO);
     }
 }

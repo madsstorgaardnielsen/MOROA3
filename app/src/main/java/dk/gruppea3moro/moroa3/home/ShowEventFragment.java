@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.gson.Gson;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.profile.EventIdList;
+import io.sentry.Sentry;
 
 //TODO hele klassen er ret rodet og trænger til en kærlig hånd
 public class ShowEventFragment extends Fragment implements View.OnClickListener {
@@ -37,8 +39,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
     private boolean eventSaved;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         sharedPreferences = getContext().getSharedPreferences("saveEvent", Context.MODE_PRIVATE);
         View root = inflater.inflate(R.layout.fragment_show_event, container, false);
@@ -58,18 +59,25 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         //Setup ViewModel
         showEventViewModel = ViewModelProviders.of(this).get(ShowEventViewModel.class);
         showEventViewModel.init();
-        showEventViewModel.getShownEvent();
+        showEventViewModel.getShownEvent().observe(this, new Observer<EventDTO>() {
+            @Override
+            public void onChanged(EventDTO eventDTO) {
+                if (eventDTO != null){
+                    checkIfEventIsSaved();
 
-        checkIfEventIsSaved();
+                    if (!eventSaved) {
+                        saved_imageView.setBackgroundResource(R.drawable.emptyheart);
+                    } else if (eventSaved) {
+                        saved_imageView.setBackgroundResource(R.drawable.filledheart);
+                    } else {
+                        sharedPreferences.edit().putString("checked", "unchecked").apply();
+                    }
+                    setupEventView();
+                }
 
-        if (!eventSaved) {
-            saved_imageView.setBackgroundResource(R.drawable.emptyheart);
-        } else if (eventSaved) {
-            saved_imageView.setBackgroundResource(R.drawable.filledheart);
-        } else {
-            sharedPreferences.edit().putString("checked", "unchecked").apply();
-        }
-        setupEventView();
+            }
+        });;
+
         return root;
     }
 
@@ -90,9 +98,9 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
 
         eventLink.setText("Læs mere: " + eventDTO.getEventLink());
         startDay.setText(eventDTO.getStart().getDanishDayFormat());
-        startTime.setText(eventDTO.getStart().getTimeFormat()+" - "+eventDTO.getEnd().getTimeFormat());
+        startTime.setText(eventDTO.getStart().getTimeFormat() + " - " + eventDTO.getEnd().getTimeFormat());
         address.setText(eventDTO.getAddressDTO().toString());
-        address.setPaintFlags(address.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         //Let Picasso handle the image
         Picasso.get().load(eventDTO.getImageLink()).into(image);
@@ -100,39 +108,42 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        //Åbner link til google maps når der trykkes på en addresse
+        //When the address is pressed by the user, google maps will be opened with the correct address and the correct event location will be shown
         if (v == address) {
             EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
             String mapsAddress = eventDTO.getAddressDTO().getAddress();
 
-            String formattedMapsStr = mapsAddress.replaceAll(" ","+").replaceAll("\n","+");
-            String maps = "https://www.google.com/maps/place/"+formattedMapsStr;
+            String formattedMapsStr = mapsAddress.replaceAll(" ", "+").replaceAll("\n", "+");
+            String maps = "https://www.google.com/maps/place/" + formattedMapsStr;
             Intent browserIntent = new Intent(Intent.ACTION_VIEW);
             browserIntent.setData(Uri.parse(maps));
             getActivity().startActivity(browserIntent);
         }
 
+        //If the user clicks the heart to save the event
         if (v == saved_imageView) {
             if (!eventSaved) {
-                //TODO Tilføj til gemte events
                 saveEvent();
                 saved_imageView.setBackgroundResource(R.drawable.filledheart);
                 saved_imageView.setTag("Filled");
-            } else if (eventSaved){
-                //TODO fjern fra gemte events
+
+                //if the user clicks the heart to unsave the event
+            } else if (eventSaved) {
                 saved_imageView.setBackgroundResource(R.drawable.emptyheart);
                 try {
                     removeEvent();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Sentry.captureException(e);
                 }
                 saved_imageView.setTag("Unfilled");
-            } /*else{
-                //System.out.println("NOT CHECKED OR UNCHECKED");
-            }*/
+            } else {
+                System.out.println("NOT CHECKED OR UNCHECKED");
+            }
         }
     }
 
+    //Saves the event via SharedPreferences
     public void saveEvent() {
         ArrayList<String> eventIds = new ArrayList<>();
         EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
@@ -150,9 +161,9 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         prefsEditor.putString(EventIdList.SAVEDLIST, json);
         prefsEditor.apply();
         eventSaved = true;
-
     }
 
+    //Removes the event from shared preferences
     public void removeEvent() throws Exception {
         ArrayList<String> events;
         EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
@@ -161,7 +172,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);
 
         if (jsonLoad != null) {
-            events = load.fromJson(jsonLoad,EventIdList.class).eventIds;
+            events = load.fromJson(jsonLoad, EventIdList.class).eventIds;
             events.remove(eventDTO.getId());
             SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
             String json = load.toJson(new EventIdList(events));
@@ -177,6 +188,9 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
     public boolean checkIfEventIsSaved() {
         ArrayList<String> events;
         EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+        if (eventDTO == null){
+            return false;
+        }
 
         Gson load = new Gson();
         String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);

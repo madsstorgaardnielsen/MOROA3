@@ -57,6 +57,7 @@ public class AboutUsFragment extends Fragment {
                 "        Mads Storgaard-Nielsen - s180076\n" +
                 "        Sebastian Bjerre - s163526";
 
+        //Creating a clickable string for the "her" in the about us text
         SpannableString ss = new SpannableString(clickableString);
         ClickableSpan cs = new ClickableSpan() {
             @Override
@@ -65,7 +66,7 @@ public class AboutUsFragment extends Fragment {
                 loadFragment(f);
             }
         };
-
+        //Setting the part of the string which is clickable
         ss.setSpan(cs, (ss.length() - 3), ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         tv.setText(ss);

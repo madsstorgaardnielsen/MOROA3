@@ -19,7 +19,7 @@ import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
-public class ShowResultViewModel extends AndroidViewModel {
+public class    ShowResultViewModel extends AndroidViewModel {
     private MutableLiveData<List<EventDTO>> resultEventsMLD;
     private Application application;
 
@@ -32,9 +32,9 @@ public class ShowResultViewModel extends AndroidViewModel {
         if (resultEventsMLD != null) {
             return;
         }
-        if (savedEvents){ //If it was "My profile"
+        if (savedEvents) { //If it was "My profile"
             setResultToSavedEvents();
-        } else{ //If it was "Right now" or "Find event"
+        } else { //If it was "Right now" or "Find event"
             setResultEvents(sc);
         }
         resultEventsMLD = EventRepository.get().getResultEventsMLD();
