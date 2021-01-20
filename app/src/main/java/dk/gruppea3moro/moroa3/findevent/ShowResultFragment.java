@@ -56,9 +56,11 @@ public class ShowResultFragment extends Fragment {
                 //If no events match the searchcriteria, makes a toast informing the user
                 if (showResultViewModel.getResultEventsLD().getValue() == null ||
                         showResultViewModel.getResultEventsLD().getValue().size() == 0) {
-                    Toast toast = Toast.makeText(getActivity(), getString(R.string.no_event_found), Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP, 0, 135);
-                    toast.show();
+                    if (savedEvents || getParentFragment() instanceof FindEventFragment) {
+                        Toast toast = Toast.makeText(getActivity(), getString(R.string.no_event_found), Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 135);
+                        toast.show();
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -155,7 +157,6 @@ public class ShowResultFragment extends Fragment {
         return sc;
     }
 
-    //TODO fix
     private void setBackgroundColor(boolean savedEvents) {
         if (savedEvents) {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.moroGreenBackground));
