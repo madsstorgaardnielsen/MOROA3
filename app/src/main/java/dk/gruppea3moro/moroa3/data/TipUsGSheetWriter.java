@@ -1,4 +1,4 @@
-package dk.gruppea3moro.moroa3.burgermenu;
+package dk.gruppea3moro.moroa3.data;
 
 import android.util.Log;
 

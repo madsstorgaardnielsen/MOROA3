@@ -1,15 +1,13 @@
 package dk.gruppea3moro.moroa3.profile;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import dk.gruppea3moro.moroa3.MyProfileListFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import dk.gruppea3moro.moroa3.R;
 import dk.gruppea3moro.moroa3.findevent.ShowResultFragment;
 
