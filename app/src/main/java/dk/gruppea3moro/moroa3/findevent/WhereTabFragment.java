@@ -45,15 +45,14 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
         });
 
         //Setup GridView
-        gridView = (GridView) root.findViewById(R.id.where_tab_grid_view);
+        gridView = root.findViewById(R.id.where_tab_grid_view);
 
         //Setup adapter
         gridView.setAdapter(gridAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView textView = (TextView) ((ViewGroup) view).getChildAt(0);
                 String zone = textView.getHint().toString();
                 findEventViewModel.tapOnTag("zone", zone);
@@ -91,7 +90,7 @@ public class WhereTabFragment extends Fragment implements View.OnClickListener {
                     }
                 }
 
-                //Make them green
+                //Changed border thickness if selected/unselected
                 for (TextView textView : textViews) {
                     if (textView == null) {
                         break;

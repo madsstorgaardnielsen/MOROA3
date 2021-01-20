@@ -35,14 +35,12 @@ public class FeaturedEventFragment extends Fragment {
         featuredEventViewModel = ViewModelProviders.of(this).get(FeaturedEventViewModel.class);
 
         featuredEventViewModel.init();
-
         featuredEventViewModel.getFeaturedEvent().observe(this, new Observer<EventDTO>() {
             @Override
             public void onChanged(EventDTO eventDTO) {
                 setupEventView(eventDTO);
             }
         });
-
         return root;
     }
 

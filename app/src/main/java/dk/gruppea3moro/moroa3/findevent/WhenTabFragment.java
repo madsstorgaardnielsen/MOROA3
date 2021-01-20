@@ -31,21 +31,25 @@ public class WhenTabFragment extends Fragment implements DatePicker.OnDateChange
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_when_tab, container, false);
-        picker = (DatePicker) root.findViewById(R.id.when_datePicker);
+        picker = root.findViewById(R.id.when_datePicker);
         DateTime today = DateTime.getDateFromTimeMillis(System.currentTimeMillis());
-        picker.init(today.getYearInt(),today.getMonthInt(),today.getDayInt(),this);
-        picker.setMinDate(System.currentTimeMillis() - 1000);
-        findEventViewModel = ViewModelProviders.of(getParentFragment())
-                .get(FindEventViewModel.class);
 
+        //initializes the datepicker with todays date
+        picker.init(today.getYearInt(), today.getMonthInt(), today.getDayInt(), this);
+
+        //Makes sure user wont be able to select past dates
+        picker.setMinDate(System.currentTimeMillis() - 1000);
+
+        //Onchange listener, updates date if user changes selected date
+        findEventViewModel = ViewModelProviders.of(getParentFragment()).get(FindEventViewModel.class);
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
             @Override
             public void onChanged(SearchCriteria searchCriteria) {
                 DateTime selectedDate = DateTime.getDateFromTimeMillis(System.currentTimeMillis());
-                if (findEventViewModel.getSearchCriteriaLD().getValue().getFromDate() != null){
+                if (findEventViewModel.getSearchCriteriaLD().getValue().getFromDate() != null) {
                     selectedDate = findEventViewModel.getSearchCriteriaLD().getValue().getFromDate();
                 }
-                picker.updateDate(selectedDate.getYearInt(),selectedDate.getMonthInt()-1,selectedDate.getDayInt());
+                picker.updateDate(selectedDate.getYearInt(), selectedDate.getMonthInt() - 1, selectedDate.getDayInt());
             }
         });
 
@@ -55,8 +59,8 @@ public class WhenTabFragment extends Fragment implements DatePicker.OnDateChange
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         //Set fromDate and toDate to the same day, but the first and last minute respectively
-        DateTime fromDate = new DateTime("" + dayOfMonth, "" + (monthOfYear+1), "" + year, "00", "00");
-        DateTime toDate = new DateTime("" + dayOfMonth, "" + (monthOfYear+1), "" + year, "23", "59");
+        DateTime fromDate = new DateTime("" + dayOfMonth, "" + (monthOfYear + 1), "" + year, "00", "00");
+        DateTime toDate = new DateTime("" + dayOfMonth, "" + (monthOfYear + 1), "" + year, "23", "59");
         findEventViewModel.setSCFromDate(fromDate);
         findEventViewModel.setSCToDate(toDate);
     }

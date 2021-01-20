@@ -20,8 +20,6 @@ public class FindEventViewModel extends AndroidViewModel {
     private MutableLiveData<SearchCriteria> searchCriteriaMLD;
     Application application;
 
-
-
     public FindEventViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
@@ -76,10 +74,11 @@ public class FindEventViewModel extends AndroidViewModel {
         super.onCleared();
     }
 
-    public void setSCFromDate(DateTime dateTime){
+    public void setSCFromDate(DateTime dateTime) {
         searchCriteriaMLD.getValue().setFromDate(dateTime);
     }
-    public void setSCToDate(DateTime dateTime){
+
+    public void setSCToDate(DateTime dateTime) {
         searchCriteriaMLD.getValue().setToDate(dateTime);
     }
 }

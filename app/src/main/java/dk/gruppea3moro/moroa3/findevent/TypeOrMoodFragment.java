@@ -34,6 +34,7 @@ public class TypeOrMoodFragment extends Fragment implements View.OnClickListener
         return root;
     }
 
+    //Changes the view when Type or Stemning is selected
     @Override
     public void onClick(View v) {
         if (v == type_textView) {

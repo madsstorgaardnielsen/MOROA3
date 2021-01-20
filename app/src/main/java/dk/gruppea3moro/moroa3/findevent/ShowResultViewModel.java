@@ -32,9 +32,9 @@ public class ShowResultViewModel extends AndroidViewModel {
         if (resultEventsMLD != null) {
             return;
         }
-        if (savedEvents){ //If it was "My profile"
+        if (savedEvents) { //If it was "My profile"
             setResultToSavedEvents();
-        } else{ //If it was "Right now" or "Find event"
+        } else { //If it was "Right now" or "Find event"
             setResultEvents(sc);
         }
         resultEventsMLD = EventRepository.get().getResultEventsMLD();

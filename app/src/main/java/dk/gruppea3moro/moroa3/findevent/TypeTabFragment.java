@@ -44,15 +44,14 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
         });
 
         //Setup GridView
-        gridView = (GridView) root.findViewById(R.id.type_tab_grid_view);
+        gridView = root.findViewById(R.id.type_tab_grid_view);
 
         //Setup adapter
         gridView.setAdapter(gridAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView textView = (TextView) ((ViewGroup) view).getChildAt(0);
                 String type = textView.getHint().toString();
                 findEventViewModel.tapOnTag(TagDTO.TYPE_CATEGORY, type);
@@ -60,8 +59,7 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        findEventViewModel = ViewModelProviders.of(getParentFragment())
-                .get(FindEventViewModel.class);
+        findEventViewModel = ViewModelProviders.of(getParentFragment()).get(FindEventViewModel.class);
 
         findEventViewModel.getSearchCriteriaLD().observe(this, new Observer<SearchCriteria>() {
             @Override
@@ -92,7 +90,7 @@ public class TypeTabFragment extends Fragment implements View.OnClickListener {
                     }
                 }
 
-                //Make them green
+                //Changes border thickness if selected/unselected
                 for (TextView textView : textViews) {
                     if (greenBoxes.contains(textView.getHint().toString())) { //If selected
                         textView.setBackgroundResource(R.drawable.thickyellowborder);
