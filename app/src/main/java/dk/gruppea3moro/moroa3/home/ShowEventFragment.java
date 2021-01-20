@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.gson.Gson;
@@ -59,18 +60,25 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         //Setup ViewModel
         showEventViewModel = ViewModelProviders.of(this).get(ShowEventViewModel.class);
         showEventViewModel.init();
-        showEventViewModel.getShownEvent();
+        showEventViewModel.getShownEvent().observe(this, new Observer<EventDTO>() {
+            @Override
+            public void onChanged(EventDTO eventDTO) {
+                if (eventDTO != null){
+                    checkIfEventIsSaved();
 
-        checkIfEventIsSaved();
+                    if (!eventSaved) {
+                        saved_imageView.setBackgroundResource(R.drawable.emptyheart);
+                    } else if (eventSaved) {
+                        saved_imageView.setBackgroundResource(R.drawable.filledheart);
+                    } else {
+                        sharedPreferences.edit().putString("checked", "unchecked").apply();
+                    }
+                    setupEventView();
+                }
 
-        if (!eventSaved) {
-            saved_imageView.setBackgroundResource(R.drawable.emptyheart);
-        } else if (eventSaved) {
-            saved_imageView.setBackgroundResource(R.drawable.filledheart);
-        } else {
-            sharedPreferences.edit().putString("checked", "unchecked").apply();
-        }
-        setupEventView();
+            }
+        });;
+
         return root;
     }
 
@@ -179,6 +187,9 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
     public boolean checkIfEventIsSaved() {
         ArrayList<String> events;
         EventDTO eventDTO = showEventViewModel.getShownEvent().getValue();
+        if (eventDTO == null){
+            return false;
+        }
 
         Gson load = new Gson();
         String jsonLoad = sharedPreferences.getString(EventIdList.SAVEDLIST, null);

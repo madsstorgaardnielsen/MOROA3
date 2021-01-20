@@ -19,7 +19,7 @@ import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventDTO;
 import dk.gruppea3moro.moroa3.model.SearchCriteria;
 
-public class ShowResultViewModel extends AndroidViewModel {
+public class    ShowResultViewModel extends AndroidViewModel {
     private MutableLiveData<List<EventDTO>> resultEventsMLD;
     private Application application;
 
