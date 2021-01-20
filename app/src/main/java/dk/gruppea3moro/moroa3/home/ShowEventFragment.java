@@ -96,9 +96,9 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
 
         eventLink.setText("Læs mere: " + eventDTO.getEventLink());
         String dateString;
-        if (eventDTO.getEnd().getDanishDayFormat().equals(eventDTO.getStart().getDanishDayFormat())){
-            dateString = eventDTO.getStart().getTimeFormat() + " - " + eventDTO.getEnd().getTimeFormat() + " " + eventDTO.getStart().getDanishDayFormat();
-        } else {
+        if (eventDTO.getEnd().getDanishDayFormat().equals(eventDTO.getStart().getDanishDayFormat())){ //If start and end date is the same
+            dateString = eventDTO.getStart().getDanishDayFormat() +" " + eventDTO.getStart().getTimeFormat() + " - " + eventDTO.getEnd().getTimeFormat();
+        } else { //If start and end date are not the same
              dateString = eventDTO.getStart().getDanishDateTimeFormat() + " - " +eventDTO.getEnd().getDanishDateTimeFormat();
         }
 
