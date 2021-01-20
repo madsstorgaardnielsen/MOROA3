@@ -137,9 +137,9 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
                     Sentry.captureException(e);
                 }
                 saved_imageView.setTag("Unfilled");
-            } /*else{
-                //System.out.println("NOT CHECKED OR UNCHECKED");
-            }*/
+            } else {
+                System.out.println("NOT CHECKED OR UNCHECKED");
+            }
         }
     }
 

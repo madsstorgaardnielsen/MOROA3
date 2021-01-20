@@ -32,8 +32,9 @@ public class WhenTabFragment extends Fragment implements DatePicker.OnDateChange
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_when_tab, container, false);
         picker = (DatePicker) root.findViewById(R.id.when_datePicker);
+        DateTime today = DateTime.getDateFromTimeMillis(System.currentTimeMillis());
+        picker.init(today.getYearInt(),today.getMonthInt(),today.getDayInt(),this);
         picker.setMinDate(System.currentTimeMillis() - 1000);
-        picker.setOnDateChangedListener(this);
         findEventViewModel = ViewModelProviders.of(getParentFragment())
                 .get(FindEventViewModel.class);
 
