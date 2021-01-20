@@ -87,7 +87,7 @@ public class MyProfileListFragment extends Fragment {
 
             //Let Picasso handle the image
             Picasso.get().load(currentEvent.getImageLink())
-                    .placeholder(R.drawable.default_event)
+                    .placeholder(R.drawable.moro_logo)
                     .into(imageView);
         }
     };
