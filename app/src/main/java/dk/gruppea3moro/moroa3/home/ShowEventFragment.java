@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ import io.sentry.Sentry;
 
 //TODO hele klassen er ret rodet og trænger til en kærlig hånd
 public class ShowEventFragment extends Fragment implements View.OnClickListener {
-    TextView title, subtext, price, startDay, startTime, address, eventLink;
+    TextView title, subtext, price, date, address, eventLink;
     ImageView image;
     ShowEventViewModel showEventViewModel;
     AppCompatImageView saved_imageView;
@@ -46,8 +45,7 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         title = root.findViewById(R.id.titleTVShowEvent);
         subtext = root.findViewById(R.id.descriptionTVShowEvent);
         price = root.findViewById(R.id.priceTVShowEvent);
-        startDay = root.findViewById(R.id.dateTVShowEvent);
-        startTime = root.findViewById(R.id.timeTVShowEvent);
+        date = root.findViewById(R.id.dateTVShowEvent);
         address = root.findViewById(R.id.addressTVShowEvent);
         image = root.findViewById(R.id.eventImageShowEvent);
         eventLink = root.findViewById(R.id.eventLinkShowEvent);
@@ -97,8 +95,16 @@ public class ShowEventFragment extends Fragment implements View.OnClickListener 
         }
 
         eventLink.setText("Læs mere: " + eventDTO.getEventLink());
-        startDay.setText(eventDTO.getStart().getDanishDayFormat());
-        startTime.setText(eventDTO.getStart().getTimeFormat() + " - " + eventDTO.getEnd().getTimeFormat());
+        String dateString;
+        if (eventDTO.getEnd().getDanishDayFormat().equals(eventDTO.getStart().getDanishDayFormat())){
+            dateString = eventDTO.getStart().getTimeFormat() + " - " + eventDTO.getEnd().getTimeFormat() + " " + eventDTO.getStart().getDanishDayFormat();
+        } else {
+             dateString = eventDTO.getStart().getDanishDateTimeFormat() + " - " +eventDTO.getEnd().getDanishDateTimeFormat();
+        }
+
+
+
+        date.setText(dateString);
         address.setText(eventDTO.getAddressDTO().toString());
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
