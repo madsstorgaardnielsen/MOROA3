@@ -28,8 +28,8 @@ public class MainActivityViewModel extends AndroidViewModel {
         this.application = application;
     }
 
-    public void init(){
-        if (moodsMLD ==null && typesMLD==null && zonesMLD==null){
+    public void init() {
+        if (moodsMLD == null && typesMLD == null && zonesMLD == null) {
             TagRepository.get().setAllTagDTOs(application);
             moodsMLD = TagRepository.get().getMoodsMLD();
             typesMLD = TagRepository.get().getTypesMLD();
@@ -59,9 +59,9 @@ public class MainActivityViewModel extends AndroidViewModel {
         return tagsAvailable;
     }
 
-    public void tapOnTag(String tagCategory, String tag){
+    public void tapOnTag(String tagCategory, String tag) {
         List<TagDTO> tags;
-        switch (tagCategory){
+        switch (tagCategory) {
             case TagDTO.TYPE_CATEGORY:
                 tags = typesMLD.getValue();
                 break;
@@ -72,7 +72,7 @@ public class MainActivityViewModel extends AndroidViewModel {
                 tags = zonesMLD.getValue();
                 break;
             default:
-                tags=new ArrayList<>();
+                tags = new ArrayList<>();
         }
         for (TagDTO i : tags) {
             if (i.getId().equals(tag)) {
@@ -81,11 +81,12 @@ public class MainActivityViewModel extends AndroidViewModel {
             }
         }
     }
-    public void setTagDTOs(){
+
+    public void setTagDTOs() {
         TagRepository.get().setAllTagDTOs(application);
     }
 
-    public void setEventDTOs(){
+    public void setEventDTOs() {
         EventRepository.get().refreshDbInBackground(application);
     }
 }

@@ -92,10 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         int currectFragmentPosition = getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId());
                         int chosenFragmentPosition = getFragmentBotNavPosition(id);
 
-
-                        //System.out.println("NUVÆRENDE -> " + getFragmentBotNavPosition(bottomNavigationView.getSelectedItemId()));
-                        //System.out.println("VALGT -> " + getFragmentBotNavPosition(id));
-                        //avoid loading the fragment youre already on when pressing it agian
+                        //avoid loading the fragment already selected when selection via bottomnav
                         if (bottomNavigationView.getSelectedItemId() == id) {
                             return true;
                         }
@@ -156,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return 0;
     }
 
+    //Load fragment without animation
     public void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -163,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
+    //Load fragment with animation
     public void loadFragmentRightEntering(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -171,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
+    //Load fragment with animation
     public void loadFragmentLeftEntering(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -293,15 +293,3 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appInUse = true;
     }
 }
-
-       /* lad vær med at slet dem indtil videre :D
-
-       21 31 29 63 46 homepage
-
-        2131296349 lige nu
-
-        2131296345 finde event
-
-        2131296348 gemte events
-
-         menu*/

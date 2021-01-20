@@ -25,7 +25,6 @@ import dk.gruppea3moro.moroa3.model.EventDTO;
 public class MyProfileListFragment extends Fragment {
 
     private final View.OnClickListener mOnClickListener = new RVOnClickListener();
-    private final View.OnLongClickListener mOnLongClickListener = new RVOnClickListener();
     SharedPreferences sharedPreferences;
 
     RecyclerView recyclerView;
@@ -34,8 +33,7 @@ public class MyProfileListFragment extends Fragment {
     ImageView removeSaved_imageView, showevent_imageView_RV;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_profile_list, container, false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -59,7 +57,6 @@ public class MyProfileListFragment extends Fragment {
             showevent_imageView_RV = itemView.findViewById(R.id.showevent_imageView_RV);
 
             //Set OnClickListener to inner class RVOnClickListener
-            itemView.setOnLongClickListener(mOnLongClickListener);
             itemView.setOnClickListener(mOnClickListener);
             return new RecyclerView.ViewHolder(itemView) {
             };
@@ -92,7 +89,7 @@ public class MyProfileListFragment extends Fragment {
         }
     };
 
-    class RVOnClickListener implements View.OnClickListener, View.OnLongClickListener {
+    class RVOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             //Get posistion of clicked event
@@ -108,28 +105,7 @@ public class MyProfileListFragment extends Fragment {
             b.putSerializable("event", event);
             f.setArguments(b);
             AppState.get().pushToBackstackDequeTop(R.id.fragment_show_event);
-            //((MainActivity) getActivity()).loadFragmentRightEntering(f);
             ((MainActivity) getActivity()).loadFragment(f);
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        //Gør intet
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //TODO Fjern eventet
-                        break;
-                }
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage("Vil du fjerne eventet fra dine gemte?").setNegativeButton("Ja", dialogClickListener)
-                    .setPositiveButton("Nej", dialogClickListener).show();
-            return false;
         }
     }
 }
