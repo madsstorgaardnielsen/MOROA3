@@ -2,9 +2,6 @@ package dk.gruppea3moro.moroa3.burgermenu;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,9 +12,12 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import java.util.Calendar;
 
 import dk.gruppea3moro.moroa3.R;
+import dk.gruppea3moro.moroa3.data.TipUsGSheetWriter;
 import dk.gruppea3moro.moroa3.model.AppState;
 import dk.gruppea3moro.moroa3.model.EventTipDTO;
 
