@@ -18,13 +18,15 @@ public class TipUsGSheetWriter {
         this.eventTipDTO = eventTipDTO;
     }
 
-    Retrofit retrofit = new Retrofit
+    //Builds the base url for retrofit
+    Retrofit urlBuilder = new Retrofit
             .Builder()
             .baseUrl("https://docs.google.com/forms/d/e/")
             .build();
 
-    final ITipUsSheetService postToSheet = retrofit.create(ITipUsSheetService.class);
+    final ITipUsSheetService postToSheet = urlBuilder.create(ITipUsSheetService.class);
 
+    //Makes the POST call with the inputted data
     public void postTip() {
         Call<Void> completeQuestionnaireCall = postToSheet
                 .completeQuestionnaire(
@@ -39,6 +41,7 @@ public class TipUsGSheetWriter {
         completeQuestionnaireCall.enqueue(callCallback);
     }
 
+    //Logs the POST response
     private final Callback<Void> callCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
@@ -52,13 +55,13 @@ public class TipUsGSheetWriter {
     };
 }
 
-//Interface bruges til at POST til sheet
+//Interface used to POST
 interface ITipUsSheetService {
-    //id til sheet
+    //id for the sheet where the data is posted
     @POST("1FAIpQLSdMpKKViQR4iGKqPoQX6EhUhZitLIacGGrMYGyKaHKJL9SJfw/formResponse")
     @FormUrlEncoded
     Call<Void> completeQuestionnaire(
-            //entries til kolonnerne
+            //entries to the columns and variables
             @Field("entry.227105424") String title,
             @Field("entry.1628213198") String description,
             @Field("entry.1967743796") String where,
